@@ -1,0 +1,12 @@
+{
+    "require": {
+        "slim/slim": "2.*",
+		"twig/twig": "1.*"
+    },
+    "autoload": {
+        "psr-0": { "": "src/"},
+		"files": [
+            "src/PHP/methods.php"
+        ]
+    }
+}
