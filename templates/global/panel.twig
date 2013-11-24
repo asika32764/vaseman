@@ -1,0 +1,28 @@
+{% extends "_index.twig" %}
+
+{% block body %}
+    <div id="{{ helper.page.getID(path) }}" class="container {{ helper.page.getClass(path) }}">
+
+        <div class="page-header">
+            {% block header %}
+            <h1>搜尋結果列表 <small>黃俊傑; Chun Chieh; Chun-Chieh; Huang</small></h1>
+            {% endblock %}
+        </div>
+
+        <div id="filter-bar" class="row">
+            {% block toolbar %}{% endblock %}
+        </div>
+
+        <hr />
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                {% block content %}
+                    Here is table content.
+                {% endblock %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

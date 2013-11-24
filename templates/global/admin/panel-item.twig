@@ -1,0 +1,27 @@
+{% extends "global/admin/panel.twig" %}
+
+{% block header %}
+    <h1>Item Page</h1>
+{% endblock %}
+
+{% block toolbar %}
+    <div class="col-lg-8">
+        {% block buttons %}
+            {#<a class="btn btn-default btn-success" href="edit">#}
+                {#<i class="glyphicon glyphicon-ok"></i>#}
+                {#儲存#}
+            {#</a>#}
+            {#<a class="btn btn-default btn-primary" href="index">#}
+                {#<i class="glyphicon glyphicon-floppy-disk"></i>#}
+                {#儲存並關閉#}
+            {#</a>#}
+            <a class="btn btn-default btn-danger" href="index">
+                <i class="glyphicon glyphicon-remove-circle"></i>
+                取消
+            </a>
+        {% endblock %}
+    </div>
+
+    <div class="col-lg-4">
+    </div>
+{% endblock %}
