@@ -36,11 +36,6 @@ class Page extends \Slim\View
     public function render($template)
     {
         $twig = $this->getTwig();
-
-	    if (!is_file(PROTOTYPE_ROOT . '/templates/' . $template . '.twig'))
-	    {
-		    $template = $template . '/index';
-	    }
         
         return $twig->render($template . '.twig', $this->data->all());
     }

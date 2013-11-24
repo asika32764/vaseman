@@ -7,6 +7,18 @@ use DI\BaseHelper as Helper;
 class Debug extends Helper
 {
 	/**
+	 * A proxy to php ver_dump().
+	 *
+	 * @return void
+	 */
+	public function var_dump()
+	{
+		$args = func_get_args();
+
+		call_user_func_array('var_dump', $args);
+	}
+
+	/**
 	 * recursive print variables and limit by level.
 	 *
 	 * @param   mixed  $data   The variable you want to dump.
@@ -16,7 +28,7 @@ class Debug extends Helper
 	 *
 	 * @return  string  Dumped data.
 	 */
-	function printRLevel($data, $level = 5)
+	public function printRLevel($data, $level = 5)
 	{
 		static $innerLevel = 1;
 
@@ -117,7 +129,7 @@ class Debug extends Helper
 	 * @since    1.0
 	 * @return  void
 	 */
-	function show($data)
+	public function show($data)
 	{
 		$args = func_get_args();
 

@@ -16,7 +16,7 @@
  */
 class Twig_Environment
 {
-    const VERSION = '1.14.1';
+    const VERSION = '1.14.2';
 
     protected $charset;
     protected $loader;
@@ -64,7 +64,7 @@ class Twig_Environment
      *
      *  * auto_reload: Whether to reload the template if the original source changed.
      *                 If you don't provide the auto_reload option, it will be
-     *                 determined automatically base on the debug value.
+     *                 determined automatically based on the debug value.
      *
      *  * strict_variables: Whether to ignore invalid variables in templates
      *                      (default to false).
@@ -802,11 +802,11 @@ class Twig_Environment
             $filter = $name;
             $name = $filter->getName();
         }
-        
+
         if ($this->extensionInitialized) {
             throw new LogicException(sprintf('Unable to add filter "%s" as extensions have already been initialized.', $name));
         }
-        
+
         $this->staging->addFilter($name, $filter);
     }
 
@@ -891,7 +891,7 @@ class Twig_Environment
             $test = $name;
             $name = $test->getName();
         }
-        
+
         if ($this->extensionInitialized) {
             throw new LogicException(sprintf('Unable to add test "%s" as extensions have already been initialized.', $name));
         }
@@ -949,11 +949,11 @@ class Twig_Environment
             $function = $name;
             $name = $function->getName();
         }
-        
+
         if ($this->extensionInitialized) {
             throw new LogicException(sprintf('Unable to add function "%s" as extensions have already been initialized.', $name));
         }
-        
+
         $this->staging->addFunction($name, $function);
     }
 
