@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="../../assets/ico/favicon.png" />
+        <link rel="shortcut icon" href="{{ uri.base }}assets/ico/favicon.ico" />
 
         <title>{% block title %}CSI Taipei{% endblock %}</title>
 
@@ -12,6 +12,9 @@
 
         <!-- Custom styles for this template -->
         <link href="{{ uri.base }}/assets/css/prototype.css" rel="stylesheet">
+        <link href="{{ uri.base }}/assets/css/project.css" rel="stylesheet">
+
+        {% block stylesheet %}{% endblock %}
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
