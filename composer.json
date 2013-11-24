@@ -1,7 +1,9 @@
 {
+	"minimum-stability" : "beta",
     "require": {
         "slim/slim": "2.*",
-		"twig/twig": "1.*"
+		"twig/twig": "1.*",
+	    "joomla/application": "1.0-beta3"
     },
     "autoload": {
         "psr-0": { "": "src/"},
