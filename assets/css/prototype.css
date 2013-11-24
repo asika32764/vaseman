@@ -13,11 +13,7 @@ h1, h2, h3, h4, h5{
 	font-family: "constantia", "微軟正黑體";
 }
 
-
-
-
 /* LAYOUT */
-
 #main-body {
     padding-top: 40px;
 }
@@ -30,8 +26,18 @@ h1, h2, h3, h4, h5{
 }
 
 /* FORM */
-
-#eng-name-form .form-control {
-    width: auto;
+.nav.nav-tabs {
+	margin-bottom: 25px;
 }
 
+label.btn-default.radio-no.active {
+	color: #fff;
+	background-color: #d2322d;
+	border-color: #ac2925;
+}
+
+label.btn-default.radio-yes.active {
+	color: #fff;
+	background-color: #47a447;
+	border-color: #398439;
+}
