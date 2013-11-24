@@ -15,7 +15,7 @@ h1, h2, h3, h4, h5{
 
 /* LAYOUT */
 #main-body {
-    padding-top: 40px;
+    padding-top: 10px;
 }
 
 
@@ -28,6 +28,10 @@ h1, h2, h3, h4, h5{
 /* FORM */
 .nav.nav-tabs {
 	margin-bottom: 25px;
+}
+
+#filter-bar {
+	margin-bottom: 30px;
 }
 
 label.btn-default.radio-no.active {

@@ -27,11 +27,21 @@
             {% endblock %}
         </div>
 
-        <div id="filter-bar" class="row">
+        <div id="toolbar" class="row">
             {% block toolbar %}{% endblock %}
         </div>
 
         <hr />
+
+        <div id="filter-bar" class="row">
+            <div class="col-lg-4">
+                {% block search %}{% endblock %}
+            </div>
+
+            <div class="col-lg-8 form-inline text-right">
+                {% block filter %}{% endblock %}
+            </div>
+        </div>
 
         <div class="row">
 

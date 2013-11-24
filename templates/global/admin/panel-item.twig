@@ -7,14 +7,26 @@
 {% block toolbar %}
     <div class="col-lg-8">
         {% block buttons %}
-            {#<a class="btn btn-default btn-success" href="edit">#}
-                {#<i class="glyphicon glyphicon-ok"></i>#}
-                {#儲存#}
-            {#</a>#}
-            {#<a class="btn btn-default btn-primary" href="index">#}
-                {#<i class="glyphicon glyphicon-floppy-disk"></i>#}
-                {#儲存並關閉#}
-            {#</a>#}
+            <a class="btn btn-default btn-success" href="edit">
+                <i class="glyphicon glyphicon-ok"></i>
+                Save
+            </a>
+
+            <a class="btn btn-default btn-info" href="index">
+                <i class="glyphicon glyphicon-floppy-disk"></i>
+                Save & Close
+            </a>
+
+            <a class="btn btn-default btn-info" href="edit">
+                <i class="glyphicon glyphicon-plus"></i>
+                Save & New
+            </a>
+
+            <a class="btn btn-default btn-info" href="edit">
+                <i class="glyphicon glyphicon-floppy-saved"></i>
+                Save as Copy
+            </a>
+
             <a class="btn btn-default btn-danger" href="index">
                 <i class="glyphicon glyphicon-remove-circle"></i>
                 取消
