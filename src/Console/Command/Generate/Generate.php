@@ -1,6 +1,6 @@
 <?php
 
-namespace Console\Command\Generate\Generate;
+namespace Console\Command\Generate;
 
 use Joomla\Console\Command\Command;
 

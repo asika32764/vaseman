@@ -13,12 +13,12 @@ abstract class CommandHelper
 		foreach ($files as $file)
 		{
 			/** @var $file \SplFileInfo */
-			if ($file->isDir())
+			if ($file->isFile())
 			{
 				continue;
 			}
 
-			$class = 'Console\\Command\\' . $file->getBasename('.php');
+			$class = 'Console\\Command\\' . $file->getBasename() . '\\' . $file->getBasename();
 
 			if (class_exists($class))
 			{
