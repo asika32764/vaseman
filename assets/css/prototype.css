@@ -15,7 +15,19 @@ h1, h2, h3, h4, h5{
 
 /* LAYOUT */
 #main-body {
-    padding-top: 10px;
+    padding-top: 20px;
+}
+
+#footer {
+	border-top: 1px solid #eeeeee;
+	margin-top: 100px;
+	padding-top: 70px;
+	padding-bottom: 70px;
+}
+
+#copyright {
+	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 

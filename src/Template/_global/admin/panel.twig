@@ -1,20 +1,16 @@
-{% extends "global/panel.twig" %}
+{% extends "_global/panel.twig" %}
 
 {% block nav %}
     <li>
         <a href="{{ uri.base }}index"><small><i class="glyphicon glyphicon-chevron-left"></i></small> Front-End</a>
     </li>
 
-    <li class="{{ helper.page.isActive(path, 'admin.entry') }}">
-        <a href="{{ uri.base }}admin/entry/index">Entry</a>
+    <li class="{{ helper.page.isActive(path, 'admin.article') }}">
+        <a href="{{ uri.base }}admin/article/index">Article</a>
     </li>
 
-    <li class="{{ helper.page.isActive(path, 'admin.task') }}">
-        <a href="{{ uri.base }}admin/task/index">Task</a>
-    </li>
-
-    <li class="{{ helper.page.isActive(path, 'admin.webpage') }}">
-        <a href="{{ uri.base }}admin/webpage/index">Webpage</a>
+    <li class="{{ helper.page.isActive(path, 'admin.category') }}">
+        <a href="{{ uri.base }}admin/category/index">Categories</a>
     </li>
 {% endblock %}
 

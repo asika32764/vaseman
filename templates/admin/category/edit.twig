@@ -1,7 +1,7 @@
 {% extends "_global/admin/panel-item.twig" %}
 
 {% block header %}
-    <h1>Article Edit <small>雲彩裡，許是懺悔，她多疼你！ </small></h1>
+    <h1>Category Edit <small>Sample Data-Articles</small></h1>
 {% endblock %}
 
 {% block buttons %}
@@ -11,15 +11,15 @@
 {% block content %}
     <!-- Nav tabs -->
     <ul id="editTabs" class="nav nav-tabs">
-        <li class="active"><a href="#basic" data-toggle="tab">Basic</a></li>
-        <li><a href="#advanced" data-toggle="tab">Advanced</a></li>
+        <li class="active"><a href="#category" data-toggle="tab">Category</a></li>
+        <li><a href="#published" data-toggle="tab">Published</a></li>
         <li><a href="#access" data-toggle="tab">Access</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
         {# TAB: BASIC #}
-        <div class="tab-pane fade in active" id="basic">
+        <div class="tab-pane fade in active" id="category">
             <div class="row">
 
                 {# LEFT COLUMN #}
@@ -27,13 +27,9 @@
                     <fieldset class="form-horizontal">
                         <legend>Information</legend>
 
-                        {{ helper.form.getText('title', 'Title', '雲彩裡，許是懺悔，她多疼你！')|raw }}
+                        {{ helper.form.getText('title', 'Title', 'Sample Data-Articles')|raw }}
 
-                        {{ helper.form.getText('alias', 'Alias', 'cloud-xu-repentance-her-pain-you')|raw }}
-
-                        {% set categories = helper.blog.getCategories() %}
-
-                        {{ helper.form.getList('category', 'Category', 2, ['Category A', 'Category B', 'Category C', 'Category D'], {'right': 5})|raw }}
+                        {{ helper.form.getText('alias', 'Alias', 'sample-data-articles')|raw }}
 
                     </fieldset>
 
@@ -62,6 +58,24 @@
 
                         {{ helper.form.getBool('published', 'Published Radio', 1, ['Published', 'Unpublished'])|raw }}
 
+                        {{ helper.form.getList('acccess', 'Access', 0, ['Public', 'Registered', 'Special'], {'right': 5})|raw }}
+
+                        {{ helper.form.getList('language', 'Language', 0, ['All', 'Chinese Traditional', 'English (UK)'], {'right': 5})|raw }}
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        {# TAB: ADVANCED #}
+        <div class="tab-pane fade" id="published">
+            <div class="row">
+
+                {# LEFT COLUMN #}
+                <div class="col-lg-7">
+                    <fieldset class="form-horizontal">
+                        <legend>Created</legend>
+
                         {{ helper.form.getText('id', 'ID', random(100), {'disabled' : true})|raw }}
 
                         {{ helper.form.getUser('user', 'User', 'Asika', {'disabled' : true})|raw }}
@@ -72,23 +86,7 @@
 
                         {{ helper.form.getCalendar('publish_down', 'Stop Publish', '2013-10-10 00:00:00')|raw }}
 
-                    </fieldset>
-                </div>
-            </div>
-        </div>
 
-        {# TAB: ADVANCED #}
-        <div class="tab-pane fade" id="advanced">
-            <div class="row">
-
-                {# LEFT COLUMN #}
-                <div class="col-lg-7">
-                    <fieldset class="form-horizontal">
-                        <legend>Created</legend>
-
-                        {{ helper.form.getList('acccess', 'Access', 0, ['Public', 'Registered', 'Special'], {'right': 5})|raw }}
-
-                        {{ helper.form.getList('language', 'Language', 0, ['All', 'Chinese Traditional', 'English (UK)'], {'right': 5})|raw }}
 
                     </fieldset>
                 </div>

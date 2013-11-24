@@ -69,4 +69,9 @@ JSON;
 			),
 		);
 	}
+
+	public function repeat($str, $num)
+	{
+		return str_repeat($str, $num);
+	}
 }
