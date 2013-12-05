@@ -1,51 +1,5 @@
 [
     {
-        "name": "slim/slim",
-        "version": "2.3.5",
-        "version_normalized": "2.3.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/codeguy/Slim.git",
-            "reference": "3dec4f9ee2e9c204a9f334afd72abc174c1b792e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/codeguy/Slim/zipball/3dec4f9ee2e9c204a9f334afd72abc174c1b792e",
-            "reference": "3dec4f9ee2e9c204a9f334afd72abc174c1b792e",
-            "shasum": ""
-        },
-        "require": {
-            "ext-mcrypt": "*",
-            "php": ">=5.3.0"
-        },
-        "time": "2013-10-31 02:05:09",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Slim": "."
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Josh Lockhart",
-                "email": "info@joshlockhart.com",
-                "homepage": "http://www.joshlockhart.com/"
-            }
-        ],
-        "description": "Slim Framework, a PHP micro framework",
-        "homepage": "http://github.com/codeguy/Slim",
-        "keywords": [
-            "microframework",
-            "rest",
-            "router"
-        ]
-    },
-    {
         "name": "twig/twig",
         "version": "v1.14.2",
         "version_normalized": "1.14.2.0",
@@ -645,6 +599,54 @@
             "application",
             "framework",
             "joomla"
+        ]
+    },
+    {
+        "name": "slim/slim",
+        "version": "2.4.0",
+        "version_normalized": "2.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/codeguy/Slim.git",
+            "reference": "ff7d7148848fa4f45712984d7b91ac3cbced586b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/codeguy/Slim/zipball/ff7d7148848fa4f45712984d7b91ac3cbced586b",
+            "reference": "ff7d7148848fa4f45712984d7b91ac3cbced586b",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "suggest": {
+            "ext-mcrypt": "Required for HTTP cookie encryption"
+        },
+        "time": "2013-11-29 20:33:36",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Slim": "."
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Josh Lockhart",
+                "email": "info@joshlockhart.com",
+                "homepage": "http://www.joshlockhart.com/"
+            }
+        ],
+        "description": "Slim Framework, a PHP micro framework",
+        "homepage": "http://github.com/codeguy/Slim",
+        "keywords": [
+            "microframework",
+            "rest",
+            "router"
         ]
     }
 ]

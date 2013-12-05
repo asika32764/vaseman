@@ -1,32 +1,8 @@
-# Compiled source #
+# System Files #
 ###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-
-# Logs #
-######################
-*.log
-
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-
-# Aptana Project #
-.settings
-.project
+.*
+!.htaccess
 
 # Project #
-/cache/*
-!/cache/index.html
-.idea/
+ vendor
+composer.lock
