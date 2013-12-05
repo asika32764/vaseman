@@ -1,11 +1,29 @@
 <?php
+/**
+ * Part of the Vaseman Prototype System files.
+ *
+ * @copyright  Copyright (C) 2013 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Helper;
 
 use DI\BaseHelper as Helper;
 
+/**
+ * Class Page
+ *
+ * @package Helper
+ */
 class Page extends Helper
 {
+	/**
+	 * getPageName
+	 *
+	 * @param $path
+	 *
+	 * @return string
+	 */
 	public function getPageName($path)
 	{
 		$path = implode('.', $path);
@@ -13,6 +31,13 @@ class Page extends Helper
 		return $path;
 	}
 
+	/**
+	 * getID
+	 *
+	 * @param $path
+	 *
+	 * @return string
+	 */
 	public function getID($path)
 	{
 		$path = implode('-', $path);
@@ -20,6 +45,13 @@ class Page extends Helper
 		return $path;
 	}
 
+	/**
+	 * getClass
+	 *
+	 * @param $path
+	 *
+	 * @return string
+	 */
 	public function getClass($path)
 	{
 		$path = implode(' ', $path);
@@ -27,6 +59,14 @@ class Page extends Helper
 		return $path;
 	}
 
+	/**
+	 * isActive
+	 *
+	 * @param $path
+	 * @param $key
+	 *
+	 * @return string
+	 */
 	public function isActive($path, $key)
 	{
 		$path = implode('.', $path);

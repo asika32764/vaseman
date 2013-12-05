@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of the Vaseman Prototype System files.
+ *
+ * @copyright  Copyright (C) 2013 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace DI;
 
@@ -11,6 +17,7 @@ class Helper extends SlimHelper
 {
     /**
      * Get data value with key
+     *
      * @param  string $key     The data key
      * @param  mixed  $default The value to return if data key does not exist
      * @return mixed           The data value, or the default value
@@ -29,8 +36,15 @@ class Helper extends SlimHelper
         
         return parent::get($key, $default);
     }
-    
-    public function __isset($key)
+
+	/**
+	 * __isset
+	 *
+	 * @param $key
+	 *
+	 * @return bool
+	 */
+	public function __isset($key)
     {
         return true;
     }

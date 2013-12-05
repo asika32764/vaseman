@@ -1,10 +1,21 @@
 <?php
+/**
+ * Part of the Vaseman Prototype System files.
+ *
+ * @copyright  Copyright (C) 2013 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Helper;
 
 use DI\BaseHelper as Helper;
 use Joomla\Utilities\ArrayHelper;
 
+/**
+ * Class Form
+ *
+ * @package Helper
+ */
 class Form extends Helper
 {
 	public function getText($name, $label, $value = '', $option = array())

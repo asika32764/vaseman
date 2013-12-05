@@ -1,7 +1,18 @@
 <?php
+/**
+ * Part of the Vaseman Prototype System files.
+ *
+ * @copyright  Copyright (C) 2013 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace View;
 
+/**
+ * Class Page
+ *
+ * @package View
+ */
 class Page extends \Slim\View
 {
     protected $twig;

@@ -4,9 +4,10 @@ Vaseman is nothing but only pretty face. He is a prototype system build by PHP S
 
 ## Installation
 
-### Download
+### Install by Download
 
-Please directly download all package and use.
+Please download from here:
+https://github.com/asika32764/vaseman/releases
 
 ### Install by Composer
 
@@ -74,13 +75,23 @@ class Myhelper extends Helper
 Then you can use this helper in templates:
 
 ``` twig
-<div class="{{ helper.myhelper.getSomeTHing('bar') }}"></div>
+<div class="{{ helper.myhelper.getSomeThing('bar') }}"></div>
 ```
 
-## About Slim
+## Requirement
+
+- Composer
+- PHP 5.4
+
+## License
+GNU General Public License version 2 or later;
+
+## Resources
+
+### About Slim
 
 http://www.slimframework.com/
 
-## About Twig
+### About Twig
 
 http://twig.sensiolabs.org/
