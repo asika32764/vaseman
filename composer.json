@@ -1,6 +1,7 @@
 {
 	"name": "asika32764/vaseman",
 	"description": "A prototype system. He is nothing but pretty face.",
+	"keywords": ["slim", "prototype", "joomla", "static pages"],
 	"authors": [
 		{
 			"name": "Simon Asika",
@@ -11,9 +12,11 @@
     "require": {
 	    "php": ">=5.4.0",
         "slim/slim": "2.*",
-		"twig/twig": "1.*",
-	    "joomla/application": "1.0-beta3"
+		"twig/twig": "1.*"
     },
+	"suggest": {
+		"joomla/application": "Install joomla/application 1.0 if you require Console support."
+	},
     "autoload": {
         "psr-0": { "": "src/"},
 		"files": [
