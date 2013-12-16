@@ -9,7 +9,7 @@ $app = new \Slim\Slim($config);
 $execute = function($path = array()) use($app)
 {
     // Get assets path
-    $base = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME'])) . '/';
+    $base = str_replace(__DIR__, '', dirname($_SERVER['SCRIPT_FILENAME'])) . '/';
     
     $template = implode('/', $path);
     
