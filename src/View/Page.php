@@ -40,11 +40,12 @@ class Page extends \Slim\View
      *
      * NOTE: This method should be overridden by custom view subclasses
      *
-     * @var    string $template     The template pathname, relative to the template base directory
+     * @param  string $template     The template pathname, relative to the template base directory
+     * @param  array  $data         Any additonal data to be passed to the template.
      * @return string               The rendered template
      * @throws \RuntimeException    If resolved template pathname is not a valid file
      */
-    public function render($template)
+    public function render($template, $data = null)
     {
         $twig = $this->getTwig();
         
