@@ -1,0 +1,3 @@
+page:
+  pattern: (*paths)
+  controller: 'Vaseman\Controller\Page'

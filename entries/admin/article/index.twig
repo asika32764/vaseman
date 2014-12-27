@@ -1,0 +1,96 @@
+{% extends "_global/admin/panel-list.twig" %}
+
+{% block header %}
+    <h1>Article List</h1>
+{% endblock %}
+
+{% block buttons %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="text-center"><input type="checkbox" /></th>
+            <th class="text-center">Title</th>
+            <th class="text-center">Published</th>
+            <th class="text-center">Category</th>
+            <th class="text-center">Access</th>
+            <th class="text-center">Create Date</th>
+            <th class="text-center">Auhor</th>
+            <th class="text-center">Language</th>
+            <th class="text-center">ID</th>
+        </tr>
+        </thead>
+
+        {% set articles = helper.blog.getArticles() %}
+        {% set categories = helper.blog.getCategories() %}
+        <tbody>
+        {% for item in articles %}
+            <tr>
+                {# CHECKBOX #}
+                <td class="text-center">
+                    <input type="checkbox" />
+                </td>
+
+                {# TITLE #}
+                <td class="">
+                    <a href="edit">{{ item.title }}</a>
+                    <br />
+                    <small class="text-muted">
+                        (Alias: {{ item.alias }})
+                    </small>
+                </td>
+
+                {# PUBLISHED #}
+                <td class="text-center">
+                    {# Here we use random published state. #}
+                    {% set pub = random([['ok', 'success'], ['remove', 'danger']]) %}
+                    <button class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-{{ pub[0] }} text-{{ pub[1] }}"></i>
+                    </button>
+                </td>
+
+                {# CATEGORY #}
+                <td class="">
+                    {{ categories[random(4)].title }}
+                </td>
+
+                {# ACCESS #}
+                <td class="text-center">
+                    {{ random(['Public', 'Registed', 'Special']) }}
+                </td>
+
+                {# CREATE DATE #}
+                <td class="text-center">
+                    {{ item.created|date("Y-m-d") }}
+                </td>
+
+                {# AUTHOR #}
+                <td class="text-center">
+                    {{ random(['Asika', 'Leo', 'Lewis', 'Tim', 'Benson', 'Michael']) }}
+                </td>
+
+                {# LANGUAGE #}
+                <td class="text-center">
+                    {{ random(['All', 'zh-TW', 'en-GB', 'zh-CN', 'ja-JP']) }}
+                </td>
+
+                {# ID #}
+                <td class="text-center">
+                    {{ loop.index + 1056 }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td class="text-center" colspan="10">
+                {% include "_global/blocks/pagination.twig" %}
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

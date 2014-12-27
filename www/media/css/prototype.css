@@ -1,0 +1,59 @@
+/* GLOBAL */
+body {
+    margin-top: 50px;
+}
+
+fieldset {
+    margin-bottom: 30px;
+}
+
+/* TYPO */
+body ,
+h1, h2, h3, h4, h5{
+	font-family: "constantia", "微軟正黑體";
+}
+
+/* LAYOUT */
+#main-body {
+    padding-top: 20px;
+}
+
+#footer {
+	border-top: 1px solid #eeeeee;
+	margin-top: 100px;
+	padding-top: 70px;
+	padding-bottom: 70px;
+}
+
+#copyright {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+
+/*HEADER*/
+.navbar-brand {
+	font-size: 180%;
+	text-transform: uppercase;
+}
+
+/* FORM */
+.nav.nav-tabs {
+	margin-bottom: 25px;
+}
+
+#filter-bar {
+	margin-bottom: 30px;
+}
+
+label.btn-default.radio-no.active {
+	color: #fff;
+	background-color: #d2322d;
+	border-color: #ac2925;
+}
+
+label.btn-default.radio-yes.active {
+	color: #fff;
+	background-color: #47a447;
+	border-color: #398439;
+}

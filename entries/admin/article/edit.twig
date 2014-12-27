@@ -1,0 +1,133 @@
+{% extends "_global/admin/panel-item.twig" %}
+
+{% block header %}
+    <h1>Article Edit <small>雲彩裡，許是懺悔，她多疼你！ </small></h1>
+{% endblock %}
+
+{% block buttons %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <!-- Nav tabs -->
+    <ul id="editTabs" class="nav nav-tabs">
+        <li class="active"><a href="#basic" data-toggle="tab">Basic</a></li>
+        <li><a href="#advanced" data-toggle="tab">Advanced</a></li>
+        <li><a href="#access" data-toggle="tab">Access</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        {# TAB: BASIC #}
+        <div class="tab-pane fade in active" id="basic">
+            <div class="row">
+
+                {# LEFT COLUMN #}
+                <div class="col-lg-7">
+                    <fieldset class="form-horizontal">
+                        <legend>Information</legend>
+
+                        {{ helper.form.getText('title', 'Title', '雲彩裡，許是懺悔，她多疼你！')|raw }}
+
+                        {{ helper.form.getText('alias', 'Alias', 'cloud-xu-repentance-her-pain-you')|raw }}
+
+                        {% set categories = helper.blog.getCategories() %}
+
+                        {{ helper.form.getList('category', 'Category', 2, ['Category A', 'Category B', 'Category C', 'Category D'], {'right': 5})|raw }}
+
+                    </fieldset>
+
+                    <fieldset class="form-inline">
+                        <legend>Text</legend>
+
+                        <label for="input-introtext">Intro Text</label>
+                        <textarea class="form-control editor col-lg-7" row="10" id="input-introtext" value="" placeholder="Intro Text"></textarea>
+                    </fieldset>
+                </div>
+
+                {# RIGHT COLUMN #}
+                <div class="col-lg-5">
+                    <fieldset class="form-horizontal">
+                        <legend>Published</legend>
+
+                        <div class="form-group">
+                            <label for="input-category" class="col-lg-3 control-label">Published Selector</label>
+                            <div class="col-lg-7">
+                                <select id="input-category" class="form-control">
+                                    <option value="">Published</option>
+                                    <option value="">Unpublished</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {{ helper.form.getBool('published', 'Published Radio', 1, ['Published', 'Unpublished'])|raw }}
+
+                        {{ helper.form.getText('id', 'ID', random(100), {'disabled' : true})|raw }}
+
+                        {{ helper.form.getUser('user', 'User', 'Asika', {'disabled' : true})|raw }}
+
+                        {{ helper.form.getCalendar('created', 'Created Date', '2013-10-10 00:00:00')|raw }}
+
+                        {{ helper.form.getCalendar('publish_up', 'Start Publish', '2013-10-10 00:00:00')|raw }}
+
+                        {{ helper.form.getCalendar('publish_down', 'Stop Publish', '2013-10-10 00:00:00')|raw }}
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        {# TAB: ADVANCED #}
+        <div class="tab-pane fade" id="advanced">
+            <div class="row">
+
+                {# LEFT COLUMN #}
+                <div class="col-lg-7">
+                    <fieldset class="form-horizontal">
+                        <legend>Created</legend>
+
+                        {{ helper.form.getList('acccess', 'Access', 0, ['Public', 'Registered', 'Special'], {'right': 5})|raw }}
+
+                        {{ helper.form.getList('language', 'Language', 0, ['All', 'Chinese Traditional', 'English (UK)'], {'right': 5})|raw }}
+
+                    </fieldset>
+                </div>
+
+                {# RIGHT COLUMN #}
+                <div class="col-lg-5">
+
+                </div>
+
+            </div>
+        </div>
+
+        {# ACCESS #}
+        <div class="tab-pane fade" id="access">
+            {# LEFT COLUMN #}
+            <div class="col-lg-7">
+                <fieldset class="form-horizontal">
+                    <legend>Access</legend>
+
+
+
+                </fieldset>
+            </div>
+
+            {# RIGHT COLUMN #}
+            <div class="col-lg-5">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: "textarea.editor",
+            height: 300
+        });
+    </script>
+{% endblock %}

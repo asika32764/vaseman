@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="assets/ico/favicon.ico" />
+
+        <title>SMS Prototype System</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/prototype.css" rel="stylesheet">
+        <link href="css/project.css" rel="stylesheet">
+
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+            <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: "textarea.editor",
+            height: 300
+        });
+    </script>
+    </head>
+    <body>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index">{site_name}</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                            <li>
+        <a href="index"><small><i class="glyphicon glyphicon-chevron-left"></i></small> Front-End</a>
+    </li>
+
+    <li class="">
+        <a href="admin/article/index">Article</a>
+    </li>
+
+    <li class="active">
+        <a href="admin/category/index">Categories</a>
+    </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="pull-right"><a href="admin/article/index">Admin</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>
+
+        <div id="main-body">
+            <div id="admin-category-edit" class="container admin category edit">
+
+        <div class="page-header">
+                <h1>Category Edit <small>Sample Data-Articles</small></h1>
+        </div>
+
+        <div id="toolbar" class="row">
+                <div class="col-lg-8">
+                        <a class="btn btn-default btn-success" href="edit">
+                <i class="glyphicon glyphicon-ok"></i>
+                Save
+            </a>
+
+            <a class="btn btn-default btn-info" href="index">
+                <i class="glyphicon glyphicon-floppy-disk"></i>
+                Save & Close
+            </a>
+
+            <a class="btn btn-default btn-info" href="edit">
+                <i class="glyphicon glyphicon-plus"></i>
+                Save & New
+            </a>
+
+            <a class="btn btn-default btn-info" href="edit">
+                <i class="glyphicon glyphicon-floppy-saved"></i>
+                Save as Copy
+            </a>
+
+            <a class="btn btn-default btn-danger" href="index">
+                <i class="glyphicon glyphicon-remove-circle"></i>
+                Cancel
+            </a>
+        
+    </div>
+
+    <div class="col-lg-4">
+    </div>
+        </div>
+
+        <hr />
+
+        <div id="filter-bar" class="row">
+            <div class="col-lg-4">
+                            </div>
+
+            <div class="col-lg-8 form-inline text-right">
+                            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                    <!-- Nav tabs -->
+    <ul id="editTabs" class="nav nav-tabs">
+        <li class="active"><a href="#category" data-toggle="tab">Category</a></li>
+        <li><a href="#published" data-toggle="tab">Published</a></li>
+        <li><a href="#access" data-toggle="tab">Access</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+                <div class="tab-pane fade in active" id="category">
+            <div class="row">
+
+                                <div class="col-lg-7">
+                    <fieldset class="form-horizontal">
+                        <legend>Information</legend>
+
+                        <div class="form-group">
+    <div class="col-lg-3 control-label">
+        <label for="input-title">Title</label>
+    </div>
+    <div class="col-lg-7">
+        <input type="text" class="form-control" id="input-title" value="Sample Data-Articles" placeholder="Title"   />
+    </div>
+</div>
+
+                        <div class="form-group">
+    <div class="col-lg-3 control-label">
+        <label for="input-alias">Alias</label>
+    </div>
+    <div class="col-lg-7">
+        <input type="text" class="form-control" id="input-alias" value="sample-data-articles" placeholder="Alias"   />
+    </div>
+</div>
+
+                    </fieldset>
+
+                    <fieldset class="form-inline">
+                        <legend>Text</legend>
+
+                        <label for="input-introtext">Intro Text</label>
+                        <textarea class="form-control editor col-lg-7" row="10" id="input-introtext" value="" placeholder="Intro Text"></textarea>
+                    </fieldset>
+                </div>
+
+                                <div class="col-lg-5">
+                    <fieldset class="form-horizontal">
+                        <legend>Published</legend>
+
+                        <div class="form-group">
+                            <label for="input-category" class="col-lg-3 control-label">Published Selector</label>
+                            <div class="col-lg-7">
+                                <select id="input-category" class="form-control">
+                                    <option value="">Published</option>
+                                    <option value="">Unpublished</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+    <div class="col-lg-3 control-label">
+        <label for="input-published">Published Radio</label>
+    </div>
+    <div class="col-lg-7">
+		<div class="btn-group" data-toggle="buttons">
+		    <label class="btn btn-default radio-yes active">
+		        <input type="radio" name="options" id="published-yes"> Published
+		    </label>
+		    <label class="btn btn-default radio-no ">
+		        <input type="radio" name="options" id="published-no"> Unpublished
+		    </label>
+		</div>
+    </div>
+</div>
+
+                        <div class="form-group">
+    <div class="col-lg-3 control-label">
+        <label for="input-acccess">Access</label>
+    </div>
+    <div class="col-lg-5">
+        <select name="acccess" id="input-acccess" class="form-control" placeholder="Access"   >
+            <option value="0" selected>Public</option>
+<option value="0" >Registered</option>
+<option value="0" >Special</option>
+        </select>
+    </div>
+</div>
+
+                        <div class="form-group">
+    <div class="col-lg-3 control-label">
+        <label for="input-language">Language</label>
+    </div>
+    <div class="col-lg-5">
+        <select name="language" id="input-language" class="form-control" placeholder="Language"   >
+            <option value="0" selected>All</option>
+<option value="0" >Chinese Traditional</option>
+<option value="0" >English (UK)</option>
+        </select>
+    </div>
+</div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+                <div class="tab-pane fade" id="published">
+            <div class="row">
+
+                                <div class="col-lg-7">
+                    <fieldset class="form-horizontal">
+                        <legend>Created</legend>
+
+                        <div class="form-group">
+    <div class="col-lg-3 control-label">
+        <label for="input-id">ID</label>
+    </div>
+    <div class="col-lg-7">
+        <input type="text" class="form-control" id="input-id" value="33" placeholder="ID" disabled  />
+    </div>
+</div>
+
+                        <div class="form-group">
+    <label for="input-category" class="col-lg-3 control-label">User</label>
+
+    <div class="col-lg-7">
+        <div class="input-group">
+            <input type="text" class="form-control" id="input-user" value="Asika" placeholder="User" disabled  />
+
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-user"></i></button>
+            </span>
+        </div>
+    </div>
+</div>
+
+                        <div class="form-group">
+    <label for="input-category" class="col-lg-3 control-label">Created Date</label>
+
+    <div class="col-lg-7">
+        <div class="input-group">
+            <input type="text" class="form-control" id="input-created" value="2013-10-10 00:00:00" placeholder="Created Date"   />
+
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+    </div>
+</div>
+
+                        <div class="form-group">
+    <label for="input-category" class="col-lg-3 control-label">Start Publish</label>
+
+    <div class="col-lg-7">
+        <div class="input-group">
+            <input type="text" class="form-control" id="input-publish_up" value="2013-10-10 00:00:00" placeholder="Start Publish"   />
+
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+    </div>
+</div>
+
+                        <div class="form-group">
+    <label for="input-category" class="col-lg-3 control-label">Stop Publish</label>
+
+    <div class="col-lg-7">
+        <div class="input-group">
+            <input type="text" class="form-control" id="input-publish_down" value="2013-10-10 00:00:00" placeholder="Stop Publish"   />
+
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+
+                    </fieldset>
+                </div>
+
+                                <div class="col-lg-5">
+
+                </div>
+
+            </div>
+        </div>
+
+                <div class="tab-pane fade" id="access">
+                        <div class="col-lg-7">
+                <fieldset class="form-horizontal">
+                    <legend>Access</legend>
+
+
+
+                </fieldset>
+            </div>
+
+                        <div class="col-lg-5">
+
+            </div>
+        </div>
+    </div>
+            </div>
+
+        </div>
+    </div>
+        </div>
+
+        <div id="footer">
+                    <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h3>現在只就所謂</h3>
+                        <p>
+                            有相當文化的根據，雖遇有些顛蹶，兄弟們到這樣時候，那人說，似皆出門去了，富豪是先天所賦與，兄弟們到這樣時候，
+                            不聲不響地，這一句千古名言，也看得見濃墨一樣高低的樹林，夢寐中也只見得金錢的寶光，這有什麼含義？不曉得順這機會，
+                            丙喝一喝茶，一個有年紀的人，保不定不鬧出事來，現時可說比較好些兒，他倆本無分別所行，經過了很久，住在福戶內的人。
+                        </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>不能成功，再鬧下去</h3>
+                        <p>
+                            完全打消了，身量雖然較高，也沒有走到自由之路的慾望，是道路或非道路，不能不倍加他的工作，
+                            明月已漸漸斜向西去，在這樣黑暗之下，去啊！也就分外著急，可不知道那就是培養反抗心的源泉，多亂惱惱地熱鬧著，就一味地吶喊著，
+                            愈覺得金錢的寶貴，橋柱是否有傾斜，當科白尼還未出世，再鬧一回亦好。家門有興騰的氣象，濃濃密密把空間充塞著，不是誰都很強硬嗎？
+                        </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>現在只就所謂</h3>
+                        <p>
+                            有相當文化的根據，雖遇有些顛蹶，兄弟們到這樣時候，那人說，似皆出門去了，富豪是先天所賦與，兄弟們到這樣時候，
+                            不聲不響地，這一句千古名言，也看得見濃墨一樣高低的樹林，夢寐中也只見得金錢的寶光，這有什麼含義？不曉得順這機會，
+                            丙喝一喝茶，一個有年紀的人，保不定不鬧出事來，現時可說比較好些兒，他倆本無分別所行，經過了很久，住在福戶內的人。
+                        </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <h3>不能成功，再鬧下去</h3>
+                        <p>
+                            完全打消了，身量雖然較高，也沒有走到自由之路的慾望，是道路或非道路，不能不倍加他的工作，
+                            明月已漸漸斜向西去，在這樣黑暗之下，去啊！也就分外著急，可不知道那就是培養反抗心的源泉，多亂惱惱地熱鬧著，就一味地吶喊著，
+                            愈覺得金錢的寶貴，橋柱是否有傾斜，當科白尼還未出世，再鬧一回亦好。家門有興騰的氣象，濃濃密密把空間充塞著，不是誰都很強硬嗎？
+                        </p>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+        <hr />
+
+        <div id="copyright">
+                            <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>
+                                SMS Taiwan Copyright (C) SMS Consulting Service Co.,Ltd.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+    </body>
+</html>

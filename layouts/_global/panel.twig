@@ -1,0 +1,26 @@
+{% extends "_global/html.twig" %}
+
+{% block body %}
+    <div id="{{ helper.page.getID(path) }}" class="container {{ helper.page.getClass(path) }}">
+
+        <div class="page-header">
+            {% block header %}{% endblock %}
+        </div>
+
+        <div id="filter-bar" class="row">
+            {% block toolbar %}{% endblock %}
+        </div>
+
+        <hr />
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                {% block content %}
+                    Here is table content.
+                {% endblock %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

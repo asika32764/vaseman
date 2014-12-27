@@ -1,0 +1,15 @@
+system:
+    debug: 1
+    timezone: 'UTC'
+cache:
+    enabled: 0
+    storage: file
+    handler: serialize
+    dir: cache
+    time: 15
+language:
+    debug: 1
+    locale: en-GB
+    default: en-GB
+    format: ini
+    path: resources/languages
