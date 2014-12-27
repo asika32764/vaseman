@@ -1,70 +1,97 @@
-# Windwalker Starter
+# The VaseMan Prototype System
 
-This is [Windwlaker Framework](https://github.com/ventoviro/windwalker) starter package.
+Vaseman is nothing but only pretty face. He is a prototype system build by PHP Slim Framework.
 
-## Installation Via Composer
+## Installation
+
+### Install by Download
+
+Please download from here:
+https://github.com/asika32764/vaseman/releases
+
+### Install by Composer
 
 ``` bash
-$ php composer.phar create-project windwalker/starter windwalker ~2.0
+$ php composer.phar create-project asika/vaseman [project-dir] 1.0.*
 ```
 
 ## Getting Started
 
-Open `http://{Your project root}/www`, you will see the sample page.
+### View Pages
 
-![img](https://cloud.githubusercontent.com/assets/1639206/5558343/48e86a7e-8d5e-11e4-86c6-43819ed5ccb7.jpg)
+Open project dir by browser, you can see the index page.
 
-Open `http://{Your project root}/www/dev.php`, you will enter the development mode.
+![index](http://cl.ly/SnuG/p2013-12-05-1.jpg)
 
-## Use Database
+And click *Admin* button on top left, this is a back-end page example.
 
-Copy `etc/secret.dist.yml` to `etc/secret.yml` and fill database information.
+![admin](http://cl.ly/SoKm/p2013-12-05-2.jpg)
 
-## Using Console
+### Writing Pages
 
-Type this command in your terminal:
+Just create your `*.twig` in `templates` folder.
 
-``` bash
-php bin/console
+The template file path are match the url path. If you go `path/to/your/page`, Vaseman will render `templates/path/to/your/page.twig` for you.
+
+### Base URI
+
+Using `{{ uri.base }}` to add subfolder for assets url.
+
+For Example, If you put your project in `http://localhost/subfolder`
+
+``` twig
+<script src="{{ uri.base }}assets/js/main.js"></script>
 ```
 
-You will see console usage:
+Will render as:
 
-```
-Windwalker Console - version: 2.0
-------------------------------------------------------------
-
-[console Help]
-
-The default application command
-
-Usage:
-  console <command> [option]
-
-
-Options:
-
-  -h | --help       Display this help message.
-  -q | --quiet      Do not output any message.
-  -v | --verbose    Increase the verbosity of messages.
-  --ansi            Set 'off' to suppress ANSI colors on unsupported terminals.
-
-Commands:
-
-  migration    Database migration system.
-  seed         The data seeder help you create fake data.
-  build        Some useful tools for building system.
-
-Welcome to Windwalker Console.
+``` html
+<script src="/subfolder/assets/js/main.js"></script>
 ```
 
-### Import Sample Schema
+That avoid the loading failure by relative path.
 
-``` bash
-php bin/console migration status
-php bin/console migration migrate
+### Helper
+
+Create your own helper class in `src/Helper`:
+
+``` php
+<?php
+// src/Helper/Myhelper.php
+
+namespace Helper;
+
+use DI\BaseHelper as Helper;
+
+class Myhelper extends Helper
+{
+    public function getSomeThing($foo = '')
+    {
+        return 'Something is ' . $foo;
+    }
+}
 ```
 
-## How To Use Windwalker
+Then you can use this helper in templates:
 
-Please see README in every [Windwalker packages](https://github.com/ventoviro) first.
+``` twig
+<div class="{{ helper.myhelper.getSomeThing('bar') }}"></div>
+```
+
+## Requirement
+
+- Composer
+- PHP 5.4
+
+## License
+GNU General Public License version 2 or later;
+
+## Resources
+
+### About Slim
+
+http://www.slimframework.com/
+
+### About Twig
+
+http://twig.sensiolabs.org/
