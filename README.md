@@ -1,6 +1,6 @@
 # The VaseMan Prototype System
 
-Vaseman is nothing but only pretty face. He is a prototype system build by PHP Slim Framework.
+Vaseman is nothing but only pretty face. He is a prototype system and static site generator.
 
 ## Installation
 
@@ -12,7 +12,7 @@ https://github.com/asika32764/vaseman/releases
 ### Install by Composer
 
 ``` bash
-$ php composer.phar create-project asika/vaseman [project-dir] 1.0.*
+$ php composer.phar create-project asika/vaseman [project-dir] 2.*
 ```
 
 ## Getting Started
@@ -29,9 +29,9 @@ And click *Admin* button on top left, this is a back-end page example.
 
 ### Writing Pages
 
-Just create your `*.twig` in `templates` folder.
+Just create your `*.twig` in `entries` folder.
 
-The template file path are match the url path. If you go `path/to/your/page`, Vaseman will render `templates/path/to/your/page.twig` for you.
+The template file path are match the url path. If you go `path/to/your/page`, Vaseman will render `entries/path/to/your/page.twig` for you.
 
 ### Base URI
 
@@ -59,11 +59,11 @@ Create your own helper class in `src/Helper`:
 <?php
 // src/Helper/Myhelper.php
 
-namespace Helper;
+namespace Vaseman\Helper;
 
-use DI\BaseHelper as Helper;
+use Vaseman\Helper\Set\AbstractHelper as Helper;
 
-class Myhelper extends Helper
+class Myhelper extends AbstractHelper
 {
     public function getSomeThing($foo = '')
     {
@@ -78,19 +78,14 @@ Then you can use this helper in templates:
 <div class="{{ helper.myhelper.getSomeThing('bar') }}"></div>
 ```
 
-## Requirement
-
-- Composer
-- PHP 5.4
-
 ## License
 GNU General Public License version 2 or later;
 
 ## Resources
 
-### About Slim
+### About Windwalker
 
-http://www.slimframework.com/
+https://github.com/ventoviro/windwalker
 
 ### About Twig
 
