@@ -1,6 +1,6 @@
-page:
-  pattern: (*paths)
-  controller: 'Vaseman\Controller\Page'
 page_with_format:
   pattern: (*paths).html
+  controller: 'Vaseman\Controller\Page'
+page:
+  pattern: (*paths)
   controller: 'Vaseman\Controller\Page'
