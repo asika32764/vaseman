@@ -8,7 +8,7 @@
 
 namespace Vaseman\Model;
 
-use Vaseman\Entry\Entry;
+use Vaseman\Asset\Asset;
 use Vaseman\Entry\Page;
 use Vaseman\View\Page\PageHtmlView;
 use Windwalker\Core\Model\Model;
@@ -25,7 +25,7 @@ class PageModel extends Model
 	/**
 	 * generateEntries
 	 *
-	 * @param   Entry[]  $entries
+	 * @param   Asset[]  $entries
 	 *
 	 * @return  Page[]
 	 */
@@ -44,11 +44,11 @@ class PageModel extends Model
 	/**
 	 * generateEntry
 	 *
-	 * @param   Entry $entry
+	 * @param   Asset $entry
 	 *
 	 * @return  Page
 	 */
-	public function generateEntry(Entry $entry)
+	public function generateEntry(Asset $entry)
 	{
 		$view = new PageHtmlView;
 

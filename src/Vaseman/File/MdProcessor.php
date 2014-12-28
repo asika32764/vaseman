@@ -9,19 +9,10 @@
 namespace Vaseman\File;
 
 /**
- * The CopyProcessor class.
+ * The MdProcessor class.
  * 
  * @since  {DEPLOY_VERSION}
  */
-class GeneralProcessor extends AbstractFileProcessor
+class MdProcessor extends MarkdownProcessor
 {
-	/**
-	 * render
-	 *
-	 * @return  string
-	 */
-	public function render()
-	{
-		return $this->output = file_get_contents($this->file->getPathname());
-	}
 }

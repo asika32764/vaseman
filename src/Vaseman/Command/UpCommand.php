@@ -9,20 +9,17 @@
 namespace Vaseman\Command;
 
 use Vaseman\Controller\Page\GetController;
-use Vaseman\Entry\Entry;
-use Vaseman\Entry\Page;
-use Vaseman\Model\PageModel;
-use Vaseman\View\Page\PageHtmlView;
+use Vaseman\Asset\Asset;
+use Vaseman\File\AbstractFileProcessor;
 use Windwalker\Console\Command\Command;
-use Windwalker\Core\Application\WebApplication;
-use Windwalker\Core\Error\ErrorHandler;
 use Windwalker\Core\Package\PackageHelper;
 use Windwalker\Core\Utilities\DateTimeHelper;
 use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Filesystem\Folder;
+use Windwalker\Filesystem\Path;
+use Windwalker\Filesystem\Path\PathCollection;
 use Windwalker\IO\Input;
-use Windwalker\Utilities\Queue\Priority;
 
 /**
  * The UpCommand class.
@@ -81,47 +78,54 @@ class UpCommand extends Command
 	{
 		DateTimeHelper::setDefaultTimezone();
 
-		$files = Folder::files(WINDWALKER_ENTRIES, true, Folder::PATH_RELATIVE);
+		$root = WINDWALKER_ROOT;
 
-		$entries = array();
-
-		/** @var \SplFileInfo $entry */
-		foreach ($files as $file)
-		{
-			$entries[] = new Entry($file, WINDWALKER_ENTRIES);
-		}
+		$folders = $this->app->get('folders', array());
 
 		$controller = new GetController();
 
 		$controller->setPackage(PackageHelper::getPackage('vaseman'));
 		$controller->setApplication($this->app);
 
-		$pages = array();
+		$assets = array();
+		$processors = array();
 
-		foreach ($entries as $entry)
+		foreach ($folders as $folder)
 		{
-			$layout = File::stripExtension($entry->getPath());
+			$files = Filesystem::files($root . '/' . $folder, true);
 
-			$input = new Input(array('paths' => explode('/', $layout)));
+			foreach ($files as $file)
+			{
+				$asset = new Asset($file, $root . '/' . $folder);
 
-			$html = $controller->setInput($input)->execute();
+				$layout = Path::clean(File::stripExtension($asset->getPath()), '/');
 
-			$pages[] = new Page($layout . '.html', $html);
+				$input = new Input(array('paths' => explode('/', $layout)));
+
+				$config = $controller->getConfig();
+				$config->set('layout.path', $asset->getRoot());
+				$config->set('layout.folder', $folder);
+
+				$controller->setInput($input)->execute();
+
+				$processors[] = $controller->getProcessor();
+			}
 		}
 
 		$dir = $this->getOption('dir');
 
-		$dir = WINDWALKER_ROOT . '/' . ltrim($dir. '/');
+		$dir = WINDWALKER_ROOT . '/' . $dir;
 
-		foreach ($pages as $page)
+		/** @var AbstractFileProcessor $processor */
+		foreach ($processors as $processor)
 		{
-			$file = $dir . '/' . $page->getFile();
+			$file = Path::clean($dir . '/' . $processor->getTarget());
 
 			$this->out('Write file: ' . $file);
 
 			Folder::create(dirname($file));
 
-			file_put_contents($dir . '/' . ltrim($page->getFile(), '/'), $page->getData());
+			file_put_contents($file, $processor->getOutput());
 		}
 
 		return 0;

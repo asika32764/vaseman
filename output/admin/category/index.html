@@ -3,27 +3,26 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="assets/ico/favicon.ico" />
+        <link rel="shortcut icon" href="../../media/assets/ico/favicon.ico" />
 
         <title>SMS Prototype System</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="../../media/css/bootstrap.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
-        <link href="css/prototype.css" rel="stylesheet">
-        <link href="css/project.css" rel="stylesheet">
+        <link href="../../media/css/prototype.css" rel="stylesheet">
+        <link href="../../media/css/project.css" rel="stylesheet">
 
         
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <script src="../../media/js/jquery.js"></script>
+        <script src="../../media/js/bootstrap.min.js"></script>
 
             </head>
     <body>
-
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -32,24 +31,24 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index">{site_name}</a>
+                    <a class="navbar-brand" href="../../index.html">{site_name}</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                             <li>
-        <a href="index"><small><i class="glyphicon glyphicon-chevron-left"></i></small> Front-End</a>
+        <a href="../../index.html"><small><i class="glyphicon glyphicon-chevron-left"></i></small> Front-End</a>
     </li>
 
     <li class="">
-        <a href="admin/article/index">Article</a>
+        <a href="../../admin/article/index.html">Article</a>
     </li>
 
-    <li class="">
-        <a href="admin/category/index">Categories</a>
+    <li class="active">
+        <a href="../../admin/category/index.html">Categories</a>
     </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="pull-right"><a href="admin/article/index">Admin</a></li>
+                        <li class="pull-right"><a href="../../admin/article/index.html">Admin</a></li>
                     </ul>
                 </div>
                 <!--/.nav-collapse -->
@@ -57,7 +56,7 @@
         </div>
 
         <div id="main-body">
-            <div id="admin\category\index" class="container admin\category\index">
+            <div id="admin-category-index" class="container admin category index">
 
         <div class="page-header">
                 <h1>Category List</h1>
@@ -65,12 +64,12 @@
 
         <div id="toolbar" class="row">
                 <div class="col-lg-12">
-                        <a class="btn btn-success" href="edit">
+                        <a class="btn btn-success" href="edit.html">
                 <i class="glyphicon glyphicon-plus"></i>
                 New
             </a>
 
-            <a class="btn btn-primary" href="edit">
+            <a class="btn btn-primary" href="edit.html">
                 <i class="glyphicon glyphicon-edit"></i>
                 Edit
             </a>
@@ -157,7 +156,7 @@
 
                                 <td class="text-center">
                                                             <button class="btn btn-default btn-sm">
-                        <i class="glyphicon glyphicon-ok text-success"></i>
+                        <i class="glyphicon glyphicon-remove text-danger"></i>
                     </button>
                 </td>
 
@@ -166,11 +165,11 @@
                 </td>
 
                                 <td class="text-center">
-                    Special
+                    Public
                 </td>
 
                                 <td class="text-center">
-                    zh-CN
+                    ja-JP
                 </td>
 
                                 <td class="text-center">
@@ -193,42 +192,15 @@
                 </td>
 
                                 <td class="text-center">
-                    Public
-                </td>
-
-                                <td class="text-center">
-                    zh-CN
-                </td>
-
-                                <td class="text-center">
-                    1058
-                </td>
-            </tr>
-                    <tr>
-                                <td class="text-center">
-                    <input type="checkbox" />
-                </td>
-
-                                <td class="text-center">
-                                                            <button class="btn btn-default btn-sm">
-                        <i class="glyphicon glyphicon-remove text-danger"></i>
-                    </button>
-                </td>
-
-                                <td class="">
-                    —— <a href="edit">Extensions</a> (Alias: extensions)
-                </td>
-
-                                <td class="text-center">
                     Registed
                 </td>
 
                                 <td class="text-center">
-                    All
+                    ja-JP
                 </td>
 
                                 <td class="text-center">
-                    1059
+                    1058
                 </td>
             </tr>
                     <tr>
@@ -243,6 +215,33 @@
                 </td>
 
                                 <td class="">
+                    —— <a href="edit">Extensions</a> (Alias: extensions)
+                </td>
+
+                                <td class="text-center">
+                    Special
+                </td>
+
+                                <td class="text-center">
+                    zh-TW
+                </td>
+
+                                <td class="text-center">
+                    1059
+                </td>
+            </tr>
+                    <tr>
+                                <td class="text-center">
+                    <input type="checkbox" />
+                </td>
+
+                                <td class="text-center">
+                                                            <button class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-remove text-danger"></i>
+                    </button>
+                </td>
+
+                                <td class="">
                     ——— <a href="edit">Modules</a> (Alias: modules)
                 </td>
 
@@ -251,7 +250,7 @@
                 </td>
 
                                 <td class="text-center">
-                    zh-TW
+                    zh-CN
                 </td>
 
                                 <td class="text-center">
@@ -274,7 +273,7 @@
                 </td>
 
                                 <td class="text-center">
-                    Registed
+                    Public
                 </td>
 
                                 <td class="text-center">

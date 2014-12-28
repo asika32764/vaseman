@@ -11,6 +11,7 @@ namespace Vaseman\File;
 use Vaseman\Twig\VasemanTwigLoader;
 use Windwalker\Core\Renderer\RendererHelper;
 use Windwalker\Core\View\Twig\WindwalkerExtension;
+use Windwalker\Filesystem\File;
 use Windwalker\Registry\Registry;
 use Windwalker\Renderer\TwigRenderer;
 use Windwalker\Utilities\Queue\Priority;
@@ -116,5 +117,22 @@ class TwigProcessor extends AbstractFileProcessor
 		$this->renderer = $renderer;
 
 		return $this;
+	}
+
+	/**
+	 * Method to get property Target
+	 *
+	 * @return  string
+	 */
+	public function getTarget()
+	{
+		if (!$this->target)
+		{
+			$this->target = ltrim($this->getLayout(), '\\/');
+
+			$this->target = File::stripExtension($this->target) . '.html';
+		}
+
+		return $this->target;
 	}
 }

@@ -50,14 +50,12 @@ class VasemanView extends HtmlView
 
 		$file = $this->findPaths();
 
-		try
+		if ($file === null)
 		{
-			$processor = AbstractFileProcessor::getInstance($file->getExtension(), $file, $this->path);
+			throw new \UnexpectedValueException('Layout: ' . $this->getLayout() . ' not found');
 		}
-		catch (\DomainException $e)
-		{
-			$processor = new GeneralProcessor($file, $this->path);
-		}
+
+		$processor = AbstractFileProcessor::getInstance($file->getExtension(), $file, $this->path, $this->config->get('layout.folder'));
 
 		$processor->setData($this->getData());
 		$processor->render();
@@ -109,12 +107,13 @@ class VasemanView extends HtmlView
 
 		$layout = explode('/', $this->getLayout());
 		array_pop($layout);
+
+		$uri['base'] = str_repeat('../', count($layout));
+		$uri['media'] = str_repeat('../', count($layout)) . 'media/';
+
 		$layout = implode('/', (array) $layout);
 
-		$uri['uri.base.path'] = $layout;
-		$uri['uri.media.path'] = 'media';
-
-		$this->data->uri = Ioc::get('system.uri');
+		$this->data->uri = $uri->toArray();
 		$this->data->helper = new HelperSet;
 		$this->data->path = explode('/', $this->getLayout());
 	}

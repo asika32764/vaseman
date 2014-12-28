@@ -54,25 +54,7 @@ class VasemanTwigLoader extends \Twig_Loader_Filesystem
 	{
 		$template = parent::getSource($name);
 
-		$template = explode('---', $template, 2);
-
-		try
-		{
-			$config = Yaml::parse($template[0]);
-
-			if ($config)
-			{
-				array_shift($template);
-			}
-
-			$this->processor->getData()->bind(array('config' => $config));
-
-			return implode('---', $template);
-		}
-		catch (ParseException $e)
-		{
-			return implode('---', $template);
-		}
+		return $this->processor->extractConfig($template);
 	}
 
 	/**

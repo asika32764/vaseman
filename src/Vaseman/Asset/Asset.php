@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Vaseman\Entry;
+namespace Vaseman\Asset;
 
 use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Path;
@@ -16,7 +16,7 @@ use Windwalker\Filesystem\Path;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class Entry
+class Asset
 {
 	/**
 	 * Property name.
@@ -55,7 +55,7 @@ class Entry
 	public function __construct($path, $root)
 	{
 		$this->root = $root;
-		$this->path = $path;
+		$this->path = ltrim(str_replace(realpath($root), '', realpath($path)), '/\\');
 
 		$this->fileInfo = new \SplFileInfo($root . '/' . $path);
 

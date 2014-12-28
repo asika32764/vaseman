@@ -11,7 +11,6 @@ namespace Vaseman\Controller\Page;
 use Vaseman\File\AbstractFileProcessor;
 use Vaseman\View\Page\PageHtmlView;
 use Windwalker\Core\Controller\Controller;
-use Windwalker\Utilities\Queue\Priority;
 
 /**
  * The GetController class.
@@ -63,14 +62,16 @@ class GetController extends Controller
 		$view = new PageHtmlView;
 		$view->setConfig($this->config);
 
-		$view->setPath($this->app->get('project.path.entries'));
+		$path = $this->config->get('layout.path', $this->app->get('project.path.entries'));
+
+		$view->setPath($path);
 		// $view->addPath($this->app->get('project.path.layouts'), Priority::NORMAL);
 
 		$view['path'] = (array) $paths;
 
 		$paths = $paths ? implode('/', (array) $paths) : 'index';
 
-		$processor = $view->setLayout($paths)->render();
+		$this->processor = $processor = $view->setLayout($paths)->render();
 
 		return $processor->getOutput();
 	}

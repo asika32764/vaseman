@@ -16,7 +16,6 @@ language:
     default: en-GB
     format: ini
     path: resources/languages
-dirs:
+folders:
     - entries
-    - layouts
     - media
