@@ -8,6 +8,7 @@
 
 namespace Windwalker\Console;
 
+use Vaseman\Command\UpCommand;
 use Windwalker\Core\Console\WindwalkerConsole;
 use Windwalker\Core\Provider\CacheProvider;
 use Windwalker\Core\Provider\DatabaseProvider;
@@ -97,6 +98,7 @@ HELP
 		 */
 
 		// Your commands here.
+		$this->addCommand(new UpCommand);
 	}
 
 	/**

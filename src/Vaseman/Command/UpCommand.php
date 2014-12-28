@@ -14,11 +14,9 @@ use Vaseman\File\AbstractFileProcessor;
 use Windwalker\Console\Command\Command;
 use Windwalker\Core\Package\PackageHelper;
 use Windwalker\Core\Utilities\DateTimeHelper;
-use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Filesystem\Folder;
 use Windwalker\Filesystem\Path;
-use Windwalker\Filesystem\Path\PathCollection;
 use Windwalker\IO\Input;
 
 /**
@@ -65,7 +63,6 @@ class UpCommand extends Command
 	{
 		$this->addOption('d')
 			->alias('dir')
-			->defaultValue('output')
 			->description('Directory to convert.');
 	}
 
@@ -78,7 +75,7 @@ class UpCommand extends Command
 	{
 		DateTimeHelper::setDefaultTimezone();
 
-		$root = WINDWALKER_ROOT;
+		$dataRoot = $this->app->get('project.path.data', WINDWALKER_ROOT);
 
 		$folders = $this->app->get('folders', array());
 
@@ -92,13 +89,13 @@ class UpCommand extends Command
 
 		foreach ($folders as $folder)
 		{
-			$files = Filesystem::files($root . '/' . $folder, true);
+			$files = Filesystem::files($dataRoot . '/' . $folder, true);
 
 			foreach ($files as $file)
 			{
-				$asset = new Asset($file, $root . '/' . $folder);
+				$asset = new Asset($file, $dataRoot . '/' . $folder);
 
-				$layout = Path::clean(File::stripExtension($asset->getPath()), '/');
+				$layout = Path::clean($asset->getPath(), '/');
 
 				$input = new Input(array('paths' => explode('/', $layout)));
 
@@ -114,7 +111,9 @@ class UpCommand extends Command
 
 		$dir = $this->getOption('dir');
 
-		$dir = WINDWALKER_ROOT . '/' . $dir;
+		$dir = $dir ? : $this->app->get('outer_project') ? "" : 'output';
+
+		$dir = $this->app->get('project.path.root') . '/' . $dir;
 
 		/** @var AbstractFileProcessor $processor */
 		foreach ($processors as $processor)

@@ -10,6 +10,7 @@ namespace Windwalker;
 
 use Symfony\Component\Yaml\Yaml;
 use Vaseman\VasemanPackage;
+use Windwalker\Environment\Environment;
 use Windwalker\Registry\Registry;
 use Windwalker\SystemPackage\SystemPackage;
 
@@ -86,8 +87,15 @@ class Windwalker extends \Windwalker\Core\Windwalker
 		$config['path.seeders']    = WINDWALKER_SEEDERS;
 		$config['path.languages']  = WINDWALKER_LANGUAGES;
 
-		$config->set('project.path.root', WINDWALKER_ROOT);
-		$config->set('project.path.data', WINDWALKER_ROOT);
+		$env = new Environment;
+		$root = $env->server->getWorkingDirectory();
+
+		$root = $root ? : WINDWALKER_ROOT;
+
+		$data = $config->get('outer_project') ? $config->get('project.path.root') . '/.vaseman' : $config->get('project.path.root');
+
+		$config->set('project.path.root', $root);
+		$config->set('project.path.data', $data);
 		$config->set('project.path.entries', WINDWALKER_ROOT . '/entries');
 		$config->set('project.path.layouts', WINDWALKER_ROOT . '/layouts');
 	}

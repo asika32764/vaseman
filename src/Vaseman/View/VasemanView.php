@@ -74,12 +74,17 @@ class VasemanView extends HtmlView
 	{
 		$layout = $layout ? : $this->getLayout();
 
+		if (is_file($this->getPath() . '/' . $layout))
+		{
+			return new \SplFileInfo(realpath($this->getPath() . '/' . $layout));
+		}
+
 		$layout = explode('/', $layout);
 		$name = array_pop($layout);
 
 		$layout = implode('/', $layout);
 
-		if (is_dir($this->path . '/' . $layout))
+		if (is_dir($this->getPath() . '/' . $layout))
 		{
 			$files = Filesystem::find($this->path . '/' . $layout, $name . '*');
 

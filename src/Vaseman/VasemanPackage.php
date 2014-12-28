@@ -8,6 +8,7 @@
 
 namespace Vaseman;
 
+use Windwalker\Console\Console;
 use Windwalker\Core\Package\AbstractPackage;
 
 /**
@@ -23,4 +24,15 @@ class VasemanPackage extends AbstractPackage
 	 * @var  string
 	 */
 	protected $name = 'vaseman';
+
+	/**
+	 * registerCommands
+	 *
+	 * @param Console $console
+	 *
+	 * @return  void
+	 */
+	public static function registerCommands(Console $console)
+	{
+	}
 }
