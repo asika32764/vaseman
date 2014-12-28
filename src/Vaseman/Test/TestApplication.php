@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Windwalker\Test;
+namespace Vaseman\Test;
 
 use Windwalker\Web\Application;
 
@@ -17,5 +17,15 @@ use Windwalker\Web\Application;
  */
 class TestApplication extends Application
 {
+	/**
+	 * initialise
+	 *
+	 * @return  void
+	 */
+	protected function initialise()
+	{
+		parent::initialise();
 
+		$this->set('project.path.entries', __DIR__ . '/entries');
+	}
 }

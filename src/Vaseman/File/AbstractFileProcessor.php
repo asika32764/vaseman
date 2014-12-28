@@ -10,6 +10,7 @@ namespace Vaseman\File;
 
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
+use Vaseman\File\Helper\ProcessorHelper;
 use Windwalker\Data\Data;
 use Windwalker\Registry\Registry;
 
@@ -146,10 +147,18 @@ abstract class AbstractFileProcessor
 			$this->config->loadArray($config);
 			$this->getData()->bind(array('config' => $config));
 
-			// Target
+			// Target permalink
 			if ($this->config['permalink'])
 			{
-				$this->target = rtrim($this->config['permalink'], '/') . '.html';
+				$this->target = rtrim($this->config['permalink'], '/');
+
+				if (substr($this->target, -5) != '.html')
+				{
+					$this->target .= '/index.html';
+				}
+
+				$this->data->uri['base'] = ProcessorHelper::getBackwards($this->target);
+				$this->data->uri['media'] = ProcessorHelper::getBackwards($this->target) . 'media/';
 			}
 			else
 			{

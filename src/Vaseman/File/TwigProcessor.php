@@ -39,9 +39,7 @@ class TwigProcessor extends AbstractFileProcessor
 	{
 		$renderer = $this->getRenderer();
 
-		$data = $this->getData();
-
-		$output = $renderer->render($this->getLayout(), iterator_to_array($data));
+		$output = $renderer->getEngine()->loadTemplate($this->getLayout())->render((array) $this->data);
 
 		$this->output = $this->renderLayout($output);
 

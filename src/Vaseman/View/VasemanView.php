@@ -12,6 +12,7 @@ use Vaseman\File\AbstractFileProcessor;
 use Vaseman\File\GeneralProcessor;
 use Vaseman\Helper\Set\HelperSet;
 use Windwalker\Core\Utilities\Iterator\PriorityQueue;
+use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Ioc;
 use Windwalker\Registry\Registry;
@@ -86,13 +87,15 @@ class VasemanView extends HtmlView
 
 		if (is_dir($this->getPath() . '/' . $layout))
 		{
-			$files = Filesystem::find($this->path . '/' . $layout, $name . '*');
+			$files = Filesystem::find($this->path . '/' . $layout, $name);
 
-			if (count($files) > 0)
+			/** @var \SplFileInfo $file */
+			foreach ($files as $file)
 			{
-				$files->rewind();
-
-				return $files->current();
+				if (File::stripExtension($file->getFilename()) == $name)
+				{
+					return $file;
+				}
 			}
 		}
 
