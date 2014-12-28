@@ -9,6 +9,7 @@
 namespace Vaseman\View\Page;
 
 use Vaseman\Helper\Set\HelperSet;
+use Vaseman\View\VasemanView;
 use Windwalker\Core\View\TwigHtmlView;
 use Windwalker\Ioc;
 use Windwalker\Registry\Registry;
@@ -18,7 +19,7 @@ use Windwalker\Registry\Registry;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class PageHtmlView extends TwigHtmlView
+class PageHtmlView extends VasemanView
 {
 	/**
 	 * prepareGlobals

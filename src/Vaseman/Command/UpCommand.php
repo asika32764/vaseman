@@ -8,17 +8,20 @@
 
 namespace Vaseman\Command;
 
+use Vaseman\Controller\Page\GetController;
 use Vaseman\Entry\Entry;
 use Vaseman\Entry\Page;
 use Vaseman\Model\PageModel;
 use Vaseman\View\Page\PageHtmlView;
 use Windwalker\Console\Command\Command;
+use Windwalker\Core\Application\WebApplication;
 use Windwalker\Core\Error\ErrorHandler;
 use Windwalker\Core\Package\PackageHelper;
 use Windwalker\Core\Utilities\DateTimeHelper;
 use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Filesystem\Folder;
+use Windwalker\IO\Input;
 use Windwalker\Utilities\Queue\Priority;
 
 /**
@@ -88,11 +91,10 @@ class UpCommand extends Command
 			$entries[] = new Entry($file, WINDWALKER_ENTRIES);
 		}
 
-		$view = new PageHtmlView;
-		$view->setPackage(PackageHelper::getPackage('vaseman'));
+		$controller = new GetController();
 
-		$view->addPath($this->app->get('project.path.data'), Priority::HIGH);
-		$view->addPath($this->app->get('project.path.root'), Priority::NORMAL);
+		$controller->setPackage(PackageHelper::getPackage('vaseman'));
+		$controller->setApplication($this->app);
 
 		$pages = array();
 
@@ -100,7 +102,9 @@ class UpCommand extends Command
 		{
 			$layout = File::stripExtension($entry->getPath());
 
-			$html = $view->setLayout($layout)->render();
+			$input = new Input(array('paths' => explode('/', $layout)));
+
+			$html = $controller->setInput($input)->execute();
 
 			$pages[] = new Page($layout . '.html', $html);
 		}

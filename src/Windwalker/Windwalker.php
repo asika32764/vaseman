@@ -85,5 +85,10 @@ class Windwalker extends \Windwalker\Core\Windwalker
 		$config['path.migrations'] = WINDWALKER_MIGRATIONS;
 		$config['path.seeders']    = WINDWALKER_SEEDERS;
 		$config['path.languages']  = WINDWALKER_LANGUAGES;
+
+		$config->set('project.path.root', WINDWALKER_ROOT);
+		$config->set('project.path.data', WINDWALKER_ROOT);
+		$config->set('project.path.entries', WINDWALKER_ROOT . '/entries');
+		$config->set('project.path.layouts', WINDWALKER_ROOT . '/layouts');
 	}
 }

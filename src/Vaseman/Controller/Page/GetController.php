@@ -8,6 +8,7 @@
 
 namespace Vaseman\Controller\Page;
 
+use Vaseman\File\AbstractFileProcessor;
 use Vaseman\View\Page\PageHtmlView;
 use Windwalker\Core\Controller\Controller;
 use Windwalker\Utilities\Queue\Priority;
@@ -20,6 +21,37 @@ use Windwalker\Utilities\Queue\Priority;
 class GetController extends Controller
 {
 	/**
+	 * Property processor.
+	 *
+	 * @var  AbstractFileProcessor
+	 */
+	protected $processor;
+
+	/**
+	 * Method to get property Processor
+	 *
+	 * @return  AbstractFileProcessor
+	 */
+	public function getProcessor()
+	{
+		return $this->processor;
+	}
+
+	/**
+	 * Method to set property processor
+	 *
+	 * @param   AbstractFileProcessor $processor
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setProcessor($processor)
+	{
+		$this->processor = $processor;
+
+		return $this;
+	}
+
+	/**
 	 * doExecute
 	 *
 	 * @return  mixed
@@ -31,13 +63,15 @@ class GetController extends Controller
 		$view = new PageHtmlView;
 		$view->setConfig($this->config);
 
-		$view->addPath($this->app->get('project.path.data'), Priority::HIGH);
-		$view->addPath($this->app->get('project.path.root'), Priority::NORMAL);
+		$view->setPath($this->app->get('project.path.entries'));
+		// $view->addPath($this->app->get('project.path.layouts'), Priority::NORMAL);
 
 		$view['path'] = (array) $paths;
 
 		$paths = $paths ? implode('/', (array) $paths) : 'index';
 
-		return $view->setLayout($paths)->render();
+		$processor = $view->setLayout($paths)->render();
+
+		return $processor->getOutput();
 	}
 }

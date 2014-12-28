@@ -1,0 +1,169 @@
+<?php
+/**
+ * Part of vaseman project. 
+ *
+ * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
+ * @license    GNU General Public License version 2 or later;
+ */
+
+namespace Vaseman\View;
+
+use Vaseman\File\AbstractFileProcessor;
+use Vaseman\File\GeneralProcessor;
+use Vaseman\Helper\Set\HelperSet;
+use Windwalker\Core\Utilities\Iterator\PriorityQueue;
+use Windwalker\Filesystem\Filesystem;
+use Windwalker\Ioc;
+use Windwalker\Registry\Registry;
+use Windwalker\Utilities\Queue\Priority;
+use Windwalker\View\HtmlView;
+
+/**
+ * The VasemanFileProcessor class.
+ * 
+ * @since  {DEPLOY_VERSION}
+ */
+class VasemanView extends HtmlView
+{
+	/**
+	 * Property config.
+	 *
+	 * @var Registry
+	 */
+	protected $config;
+
+	/**
+	 * Property paths.
+	 *
+	 * @var string
+	 */
+	protected $path;
+
+	/**
+	 * render
+	 *
+	 * @return  AbstractFileProcessor
+	 */
+	public function render()
+	{
+		$this->prepareGlobals($this->getData());
+
+		$file = $this->findPaths();
+
+		try
+		{
+			$processor = AbstractFileProcessor::getInstance($file->getExtension(), $file, $this->path);
+		}
+		catch (\DomainException $e)
+		{
+			$processor = new GeneralProcessor($file, $this->path);
+		}
+
+		$processor->setData($this->getData());
+		$processor->render();
+
+		return $processor;
+	}
+
+	/**
+	 * findPaths
+	 *
+	 * @param string $layout
+	 *
+	 * @return  \SplFileInfo
+	 */
+	public function findPaths($layout = null)
+	{
+		$layout = $layout ? : $this->getLayout();
+
+		$layout = explode('/', $layout);
+		$name = array_pop($layout);
+
+		$layout = implode('/', $layout);
+
+		if (is_dir($this->path . '/' . $layout))
+		{
+			$files = Filesystem::find($this->path . '/' . $layout, $name . '*');
+
+			if (count($files) > 0)
+			{
+				$files->rewind();
+
+				return $files->current();
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * prepareGlobals
+	 *
+	 * @param \Windwalker\Data\Data $data
+	 *
+	 * @return  void
+	 */
+	protected function prepareGlobals($data)
+	{
+		$uri = new Registry;
+
+		$layout = explode('/', $this->getLayout());
+		array_pop($layout);
+		$layout = implode('/', (array) $layout);
+
+		$uri['uri.base.path'] = $layout;
+		$uri['uri.media.path'] = 'media';
+
+		$this->data->uri = Ioc::get('system.uri');
+		$this->data->helper = new HelperSet;
+		$this->data->path = explode('/', $this->getLayout());
+	}
+
+	/**
+	 * Method to get property Config
+	 *
+	 * @return  Registry
+	 */
+	public function getConfig()
+	{
+		return $this->config;
+	}
+
+	/**
+	 * Method to set property config
+	 *
+	 * @param   Registry $config
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setConfig($config)
+	{
+		$this->config = $config;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Path
+	 *
+	 * @return  string
+	 */
+	public function getPath()
+	{
+		return $this->path;
+	}
+
+	/**
+	 * Method to set property path
+	 *
+	 * @param   string $path
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setPath($path)
+	{
+		$this->path = $path;
+
+		return $this;
+	}
+}

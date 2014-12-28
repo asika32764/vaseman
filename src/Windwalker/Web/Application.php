@@ -43,9 +43,6 @@ class Application extends WebApplication
 
 		// Start session
 		Ioc::getSession()->start();
-
-		$this->set('project.path.root', WINDWALKER_ROOT);
-		$this->set('project.path.data', WINDWALKER_ROOT . '/entries');
 	}
 
 	/**

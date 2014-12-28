@@ -48,9 +48,6 @@ Welcome to Vaseman Console.
 HELP
 );
 
-		$this->set('project.path.root', WINDWALKER_ROOT);
-		$this->set('project.path.data', WINDWALKER_ROOT . '/entries');
-
 		$this->container->set('system.router', new RestfulRouter);
 	}
 
