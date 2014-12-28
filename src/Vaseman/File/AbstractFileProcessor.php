@@ -12,6 +12,8 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use Vaseman\File\Helper\ProcessorHelper;
 use Windwalker\Data\Data;
+use Windwalker\Event\Event;
+use Windwalker\Ioc;
 use Windwalker\Registry\Registry;
 
 /**
@@ -131,7 +133,7 @@ abstract class AbstractFileProcessor
 	 *
 	 * @return  string
 	 */
-	public function extractConfig($template)
+	public function prepareData($template)
 	{
 		$template = explode('---', $template, 2);
 
@@ -165,12 +167,21 @@ abstract class AbstractFileProcessor
 				$this->target = $this->getTarget();
 			}
 
-			return implode('---', $template);
+			$template = implode('---', $template);
 		}
 		catch (ParseException $e)
 		{
-			return implode('---', $template);
+			$template = implode('---', $template);
 		}
+
+		$event = new Event('onContentPrepareData');
+		$event['data'] = $this->data;
+		$event['processor'] = $this;
+
+		$dispatcher = Ioc::getDispatcher();
+		$dispatcher->triggerEvent($event);
+
+		return $template;
 	}
 
 	/**

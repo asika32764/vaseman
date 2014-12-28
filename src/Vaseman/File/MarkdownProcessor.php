@@ -26,7 +26,7 @@ class MarkdownProcessor extends TwigProcessor
 	{
 		$md = file_get_contents($this->file->getPathname());
 
-		$md = $this->extractConfig($md);
+		$md = $this->prepareData($md);
 
 		$markdown = new MarkdownExtra;
 

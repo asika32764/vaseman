@@ -24,6 +24,8 @@ class TestApplication extends Application
 	 */
 	protected function initialise()
 	{
+		$this->set('mode', 'test');
+
 		parent::initialise();
 
 		$this->set('project.path.entries', __DIR__ . '/entries');

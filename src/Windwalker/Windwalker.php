@@ -87,12 +87,20 @@ class Windwalker extends \Windwalker\Core\Windwalker
 		$config['path.seeders']    = WINDWALKER_SEEDERS;
 		$config['path.languages']  = WINDWALKER_LANGUAGES;
 
-		$env = new Environment;
-		$root = $env->server->getWorkingDirectory();
+		switch ($config['mode'])
+		{
+			case 'test':
+				$root = WINDWALKER_ROOT;
+				break;
+			default:
+				$env = new Environment;
+				$root = $env->server->getWorkingDirectory();
 
-		$root = $root ? : WINDWALKER_ROOT;
+				$root = $root ? : WINDWALKER_ROOT;
+				break;
+		}
 
-		$data = $config->get('outer_project') ? $config->get('project.path.root') . '/.vaseman' : $config->get('project.path.root');
+		$data = $config->get('outer_project') ? $root . '/.vaseman' : $root;
 
 		$config->set('project.path.root', $root);
 		$config->set('project.path.data', $data);

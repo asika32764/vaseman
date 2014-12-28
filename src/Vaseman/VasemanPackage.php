@@ -11,6 +11,9 @@ namespace Vaseman;
 use Vaseman\Twig\VasemanTwigExtension;
 use Windwalker\Console\Console;
 use Windwalker\Core\Package\AbstractPackage;
+use Windwalker\Event\Dispatcher;
+use Windwalker\Ioc;
+use Windwalker\Loader\ClassLoader;
 use Windwalker\Renderer\Twig\GlobalContainer;
 
 /**
@@ -34,6 +37,14 @@ class VasemanPackage extends AbstractPackage
 	 */
 	public function initialise()
 	{
+		$loader = new ClassLoader;
+
+		$loader->register();
+
+		$config = Ioc::getConfig();
+
+		$loader->addPsr4('Vaseman\\Plugin\\', $config->get('project.path.data') . '/plugins');
+
 		parent::initialise();
 
 		GlobalContainer::addExtension('vaseman', new VasemanTwigExtension);
@@ -48,5 +59,27 @@ class VasemanPackage extends AbstractPackage
 	 */
 	public static function registerCommands(Console $console)
 	{
+	}
+
+	/**
+	 * registerListeners
+	 *
+	 * @param Dispatcher $dispatcher
+	 *
+	 * @return  void
+	 */
+	public function registerListeners(Dispatcher $dispatcher)
+	{
+		$config = Ioc::getConfig();
+
+		$plugins = $config->get('plugins', array());
+
+		foreach ($plugins as $plugin)
+		{
+			if (class_exists($plugin) && is_subclass_of($plugin, 'Vaseman\\Plugin\\AbstractPlugin') && $plugin::$isEnabled)
+			{
+				$dispatcher->addListener(new $plugin);
+			}
+		}
 	}
 }

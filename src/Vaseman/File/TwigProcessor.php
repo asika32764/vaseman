@@ -11,6 +11,7 @@ namespace Vaseman\File;
 use Vaseman\Twig\VasemanTwigLoader;
 use Windwalker\Core\Renderer\RendererHelper;
 use Windwalker\Core\View\Twig\WindwalkerExtension;
+use Windwalker\Event\Event;
 use Windwalker\Filesystem\File;
 use Windwalker\Registry\Registry;
 use Windwalker\Renderer\TwigRenderer;

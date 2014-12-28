@@ -19,3 +19,5 @@ language:
 folders:
     - entries
     - media
+plugins:
+    - Vaseman\Plugin\TestPlugin

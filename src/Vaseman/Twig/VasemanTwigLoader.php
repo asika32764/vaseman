@@ -54,7 +54,7 @@ class VasemanTwigLoader extends \Twig_Loader_Filesystem
 	{
 		$template = parent::getSource($name);
 
-		return $this->processor->extractConfig($template);
+		return $this->processor->prepareData($template);
 	}
 
 	/**
