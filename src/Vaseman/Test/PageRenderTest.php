@@ -160,4 +160,24 @@ HTML;
 
 		$this->assertEquals('foo/bar/baz/index.html', $processor->getTarget());
 	}
+
+	/**
+	 * testPermalinkIndex
+	 *
+	 * @return  void
+	 */
+	public function testParentLayout()
+	{
+		$this->controller->getInput()->set('paths', array('flower', 'index'));
+
+		$compare = <<<HTML
+<p>
+	File: flower/index
+	uri.base: ../
+	uri.media: ../media/
+</p>
+HTML;
+
+		$this->assertStringDataEquals($compare, $this->controller->execute());
+	}
 }

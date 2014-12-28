@@ -8,8 +8,10 @@
 
 namespace Vaseman;
 
+use Vaseman\Twig\VasemanTwigExtension;
 use Windwalker\Console\Console;
 use Windwalker\Core\Package\AbstractPackage;
+use Windwalker\Renderer\Twig\GlobalContainer;
 
 /**
  * The VasemanPackage class.
@@ -24,6 +26,18 @@ class VasemanPackage extends AbstractPackage
 	 * @var  string
 	 */
 	protected $name = 'vaseman';
+
+	/**
+	 * initialise
+	 *
+	 * @return  void
+	 */
+	public function initialise()
+	{
+		parent::initialise();
+
+		GlobalContainer::addExtension('vaseman', new VasemanTwigExtension);
+	}
 
 	/**
 	 * registerCommands

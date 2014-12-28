@@ -17,7 +17,7 @@ include_once $autoload;
 
 $_SERVER['HTTP_HOST'] = 'windwalker.io';
 
-include_once __DIR__ . '/../etc/define.php';
+include_once __DIR__ . '/define.php';
 
 new \Vaseman\Test\TestApplication;
 
