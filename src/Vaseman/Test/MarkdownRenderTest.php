@@ -11,7 +11,6 @@ namespace Vaseman\Test;
 use Vaseman\Controller\Page\GetController;
 use Windwalker\Core\Package\PackageHelper;
 use Windwalker\Core\Test\AbstractBaseTestCase;
-use Windwalker\Environment\PhpHelper;
 use Windwalker\Ioc;
 
 /**
@@ -35,12 +34,6 @@ class MarkdownRenderTest extends AbstractBaseTestCase
 	 */
 	public function setUp()
 	{
-		if (PhpHelper::isHHVM())
-		{
-			// @link https://github.com/ventoviro/windwalker/issues/149
-			$this->markTestSkipped('Test package not support HHVM now.');
-		}
-
 		$this->controller = new GetController(null, Ioc::getApplication(), Ioc::factory(), PackageHelper::getPackage('vaseman'));
 	}
 
@@ -51,8 +44,6 @@ class MarkdownRenderTest extends AbstractBaseTestCase
 	 */
 	public function testMarkdown()
 	{
-
-
 		$this->controller->getInput()->set('paths', array('olive', 'index'));
 
 		$compare = <<<HTML
@@ -64,11 +55,6 @@ HTML;
 		$this->assertStringDataEquals($compare, $this->controller->execute());
 	}
 
-	/**
-	 * testWithLayout
-	 *
-	 * @return  void
-	 */
 	public function testWithLayout()
 	{
 		$this->controller->getInput()->set('paths', array('olive', 'layout'));
