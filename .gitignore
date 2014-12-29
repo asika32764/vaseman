@@ -2,6 +2,7 @@
 .*
 !.gitignore
 !.gitkeep
+!.travis.yml
 !/www/.htaccess
 
 # Composer
