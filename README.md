@@ -2,6 +2,11 @@
 
 # The Vaseman Prototype System
 
+[![Latest Stable Version](https://poser.pugx.org/asika/vaseman/v/stable.svg)](https://packagist.org/packages/asika/vaseman) 
+[![Total Downloads](https://poser.pugx.org/asika/vaseman/downloads.svg)](https://packagist.org/packages/asika/vaseman) 
+[![Latest Unstable Version](https://poser.pugx.org/asika/vaseman/v/unstable.svg)](https://packagist.org/packages/asika/vaseman) 
+[![License](https://poser.pugx.org/asika/vaseman/license.svg)](https://packagist.org/packages/asika/vaseman)
+
 Vaseman is nothing but only pretty face. He is a prototype system and static site generator.
 
 ## Installation
