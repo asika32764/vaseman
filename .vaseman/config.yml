@@ -1,0 +1,14 @@
+system:
+    debug: 1
+    timezone: 'UTC'
+project:
+    name: Vaseman
+
+# Which folders you want to generate (Array)
+folders:
+    - entries
+    - media
+
+# Plugin classes with namespace (Array)
+plugins:
+    - Vaseman\Plugin\MenuPlugin

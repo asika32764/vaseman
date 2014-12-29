@@ -1,0 +1,52 @@
+{% extends "_global/panel.twig" %}
+
+{% block nav %}
+    <li>
+        <a href="{{ uri.base }}index.html"><small><i class="glyphicon glyphicon-chevron-left"></i></small> Front-End</a>
+    </li>
+
+    <li class="{{ helper.page.isActive(path, 'admin.article') }}">
+        <a href="{{ uri.base }}admin/article/index.html">Article</a>
+    </li>
+
+    <li class="{{ helper.page.isActive(path, 'admin.category') }}">
+        <a href="{{ uri.base }}admin/category/index.html">Categories</a>
+    </li>
+{% endblock %}
+
+{% block body %}
+    <div id="{{ helper.page.getID(path) }}" class="container {{ helper.page.getClass(path) }}">
+
+        <div class="page-header">
+            {% block header %}
+                <h1>Admin Panel</h1>
+            {% endblock %}
+        </div>
+
+        <div id="toolbar" class="row">
+            {% block toolbar %}{% endblock %}
+        </div>
+
+        <hr />
+
+        <div id="filter-bar" class="row">
+            <div class="col-lg-4">
+                {% block search %}{% endblock %}
+            </div>
+
+            <div class="col-lg-8 form-inline text-right">
+                {% block filter %}{% endblock %}
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                {% block content %}
+                    Here is table content.
+                {% endblock %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

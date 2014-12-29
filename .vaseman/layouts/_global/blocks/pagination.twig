@@ -1,0 +1,18 @@
+<ul class="pagination">
+    <li class="disabled">
+        <a href="javascript: return fasle;"><small><i class="glyphicon glyphicon-fast-backward"></i></small></a>
+    </li>
+    <li class="disabled">
+        <a href="javascript: return fasle;"><small><i class="glyphicon glyphicon-backward"></i></small></a>
+    </li>
+    <li class="active"><a href="javascript: return fasle;">1</a></li>
+    {% for i in 2..10 %}
+        <li><a href="#">{{ i }}</a></li>
+    {% endfor %}
+    <li>
+        <a href="#"><small><i class="glyphicon glyphicon-forward"></i></small></a>
+    </li>
+    <li>
+        <a href="#"><small><i class="glyphicon glyphicon-fast-forward"></i></small></a>
+    </li>
+</ul>

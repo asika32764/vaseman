@@ -1,0 +1,39 @@
+{% extends "_global/admin/panel.twig" %}
+
+{% block header %}
+    <h1>Item Page</h1>
+{% endblock %}
+
+{% block toolbar %}
+    <div class="col-lg-8">
+        {% block buttons %}
+            <a class="btn btn-default btn-success" href="edit.html">
+                <i class="glyphicon glyphicon-ok"></i>
+                Save
+            </a>
+
+            <a class="btn btn-default btn-info" href="index.html">
+                <i class="glyphicon glyphicon-floppy-disk"></i>
+                Save & Close
+            </a>
+
+            <a class="btn btn-default btn-info" href="edit.html">
+                <i class="glyphicon glyphicon-plus"></i>
+                Save & New
+            </a>
+
+            <a class="btn btn-default btn-info" href="edit.html">
+                <i class="glyphicon glyphicon-floppy-saved"></i>
+                Save as Copy
+            </a>
+
+            <a class="btn btn-default btn-danger" href="index.html">
+                <i class="glyphicon glyphicon-remove-circle"></i>
+                Cancel
+            </a>
+        {% endblock %}
+    </div>
+
+    <div class="col-lg-4">
+    </div>
+{% endblock %}

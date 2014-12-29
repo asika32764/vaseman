@@ -1,0 +1,13 @@
+<ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+    {% for title, section in menus %}
+    <li class="uk-nav-header">{{ title }}</li>
+
+        {% for id, item in section %}
+            <li class="{{ path|last == id ? 'uk-active' : '' }}">
+                <a href="{{ uri.base }}documentation/{{ id }}.html">{{ item }}</a>
+            </li>
+        {% endfor %}
+
+    <li class="uk-nav-divider"></li>
+   {% endfor %}
+</ul>
