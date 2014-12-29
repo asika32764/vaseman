@@ -1,4 +1,4 @@
-![vaseman-logo-1000](https://cloud.githubusercontent.com/assets/1639206/5567964/80ec8382-8f8a-11e4-8ada-500079753d69.png)
+![logo](https://cloud.githubusercontent.com/assets/1639206/5569131/c94743b8-8fa5-11e4-9e70-c56581354e83.png)
 
 # The Vaseman Prototype System
 
