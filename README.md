@@ -1,4 +1,6 @@
-# The VaseMan Prototype System
+![vaseman-logo-1000](https://cloud.githubusercontent.com/assets/1639206/5567964/80ec8382-8f8a-11e4-8ada-500079753d69.png)
+
+# The Vaseman Prototype System
 
 Vaseman is nothing but only pretty face. He is a prototype system and static site generator.
 
