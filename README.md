@@ -2,6 +2,7 @@
 
 # The Vaseman Prototype System
 
+[![Travis](https://travis-ci.org/asika32764/vaseman.svg)](https://travis-ci.org/asika32764/vaseman)
 [![Latest Stable Version](https://poser.pugx.org/asika/vaseman/v/stable.svg)](https://packagist.org/packages/asika/vaseman) 
 [![Total Downloads](https://poser.pugx.org/asika/vaseman/downloads.svg)](https://packagist.org/packages/asika/vaseman) 
 [![Latest Unstable Version](https://poser.pugx.org/asika/vaseman/v/unstable.svg)](https://packagist.org/packages/asika/vaseman) 
