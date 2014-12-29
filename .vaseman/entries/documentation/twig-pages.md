@@ -17,7 +17,7 @@ Now use browser open `http://localhost/{VASEMAN_PATH}/flower.html`. You will see
 <h1>Flower</h1>
 ```
 
-Now, we didn't generate ant static page, this is auto rendered dynamic page.
+We didn't generate any static page, this is auto rendered dynamic page.
 
 # Extends Layout
 

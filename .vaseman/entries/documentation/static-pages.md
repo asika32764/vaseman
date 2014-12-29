@@ -5,7 +5,7 @@ title: Generate Static Pages
 
 # Generate Pages In Vaseman Project
 
-Now we create many pages in `/entries`, all pages are render dynamically. If we want to put our site on static weg spaces
+Now we create many pages in `/entries`, all pages are render dynamically. If we want to put our site on static web spaces
 (like [GitHub Pages](https://pages.github.com/)), we can use command line to generate `.html` files.
 
 Open your terminal and type:
