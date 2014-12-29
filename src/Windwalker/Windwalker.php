@@ -80,7 +80,6 @@ class Windwalker extends \Windwalker\Core\Windwalker
 		$config['path.resources']  = WINDWALKER_RESOURCES;
 		$config['path.source']     = WINDWALKER_SOURCE;
 		$config['path.temp']       = WINDWALKER_TEMP;
-		$config['path.templates']  = WINDWALKER_TEMPLATES;
 		$config['path.vendor']     = WINDWALKER_VENDOR;
 		$config['path.public']     = WINDWALKER_PUBLIC;
 		$config['path.migrations'] = WINDWALKER_MIGRATIONS;
@@ -101,6 +100,8 @@ class Windwalker extends \Windwalker\Core\Windwalker
 		}
 
 		$data = $config->get('outer_project') ? $root . '/.vaseman' : $root;
+
+		$config['path.templates']  = $data . '/layouts';
 
 		$config->set('project.path.root', $root);
 		$config->set('project.path.data', $data);
