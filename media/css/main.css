@@ -153,6 +153,7 @@ dl dd {
 }
 #banner {
   background: url(../images/banner.jpg) center -343px no-repeat;
+  -webkit-filter: saturate(0.5);
   height: 200px;
 }
 #banner .banner-title {
@@ -197,6 +198,10 @@ dl dd {
   top: 0px;
   width: 100%;
   color: #fff;
+  z-index: 5;
+}
+.home #header .uk-navbar-brand img {
+  display: none;
 }
 .home #header a {
   color: #fff;
@@ -224,9 +229,26 @@ dl dd {
   background-position: center center;
 }
 @media (max-width: 767px) {
-  .home + #banner {
-    background-image: url(../media/img/banner/banner-mobile.jpg) !important;
-    background-size: auto 100%;
+  .home #mainmenu a {
+    color: #000000;
+  }
+  .home #banner {
+    background-position: -550px center;
+    -webkit-filter: saturate(0.3);
+  }
+  .home #banner .banner-title {
+    padding-top: 150px;
+  }
+  .home #banner .banner-inner h1 {
+    font-size: 50px;
+  }
+  .home #banner .banner-inner h2 {
+    margin-top: 50px;
+    font-size: 25px;
+  }
+  #banner .banner-inner-title h1 {
+    font-size: 40px;
+    padding-top: 30px;
   }
 }
 #main-body {
