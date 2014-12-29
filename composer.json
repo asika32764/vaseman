@@ -1,7 +1,8 @@
 {
     "name": "asika/vaseman",
     "description": "A prototype system. He is nothing but pretty face.",
-    "keywords": ["slim", "prototype", "windwalker", "static pages"],
+    "license": "LGPL-2.0+",
+    "keywords": ["static site", "prototype", "windwalker", "static pages"],
     "authors": [
         {
             "name" : "Simon Asika",
