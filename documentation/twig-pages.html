@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=2.0" />
         <link rel="shortcut icon" href="../media/images/ico/favicon.ico" />
 
-        <title>Getting Started | Vaseman, The PHP Static Site Generator</title>
+        <title>Use Twig Pages | Vaseman, The PHP Static Site Generator</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Vaseman, The PHP Static Site Generator">
+        <meta property="og:title" content="Use Twig Pages | Vaseman, The PHP Static Site Generator">
         <meta property="og:site_name" content="Vaseman">
 
         
@@ -71,7 +71,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>Use Twig Pages</h1>
     </div>
         </div>
     </section>
@@ -83,10 +83,10 @@
                 <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Basic</li>
 
-                                <li class="uk-active">
+                                <li class="">
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
-                                <li class="">
+                                <li class="uk-active">
                 <a href="../documentation/twig-pages.html">Use Twig Pages</a>
             </li>
                                 <li class="">
@@ -134,53 +134,107 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>Installation</h1>
+                    <h1>Create Twig Page</h1>
 
-<h2>Install by Download</h2>
+<p>All pages file located in <code>/entries</code> folder, for example, we can create a page named <code>/entries/flower.twig</code> with content:</p>
 
-<p>Please download from <a href="https://github.com/asika32764/vaseman/releases">Github</a></p>
-
-<h2>Install by Composer</h2>
-
-<pre><code class="bash">$ php composer.phar create-project asika/vaseman vaseman 2.*
+<pre><code class="twig">&lt;h1&gt;Flower&lt;/h1&gt;
 </code></pre>
 
-<h1>Default Pages</h1>
+<p>Now use browser open <code>http://localhost/{VASEMAN_PATH}/flower.html</code>. You will see this output:</p>
 
-<p>Now we can use browser open Vaseman root, Vaseman will redner page dynamically.</p>
-
-<h2>View Pages</h2>
-
-<p>Open project dir by browser, you can see the index page.</p>
-
-<p><img src="http://cl.ly/SnuG/p2013-12-05-1.jpg" alt="index" /></p>
-
-<p>And click <em>Admin</em> button on top left, this is a back-end page example.</p>
-
-<p><img src="http://cl.ly/SoKm/p2013-12-05-2.jpg" alt="admin" /></p>
-
-<h2>Writing Pages</h2>
-
-<p>Create your <code>*.twig</code> in <code>entries</code> folder.</p>
-
-<p>The template file path will matches the url path.
-If you go <code>path/to/your/page</code>, Vaseman will render <code>entries/path/to/your/page.twig</code> for you.</p>
-
-<h2>Base URI</h2>
-
-<p>Using <code>{{ uri.base }}</code> to add subfolder for assets url.</p>
-
-<p>For Example, If you are in a page <code>foo/bar/baz.html</code>, You can use this url as link href:</p>
-
-<pre><code class="twig">&lt;a href="{{ uri.base }}sakura.html"&gt;Link&lt;/a&gt;
+<pre><code class="html">&lt;h1&gt;Flower&lt;/h1&gt;
 </code></pre>
 
-<p>The link will render as:</p>
+<p>Now, we didn't generate ant static page, this is auto rendered dynamic page.</p>
 
-<pre><code class="html">&lt;a href="../../sakura.html"&gt;Link&lt;/a&gt;
+<h1>Extends Layout</h1>
+
+<p>We need a HTML layout to wrap our content, there has 2 ways to extends layouts.</p>
+
+<h2>Vaseman Layout Config</h2>
+
+<p>Add layout config on above:</p>
+
+<pre><code class="twig">layout: html.twig
+---
+&lt;h1&gt;Flower&lt;/h1&gt;
 </code></pre>
 
-<p>So the page link will not break in every pages.</p>
+<p>Create a <code>html.twig</code> file in <code>/layouts</code> and add <code>{{ content|raw }}</code> to show our content.</p>
+
+<pre><code class="twig">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Site&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    {{ content|raw }}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>The output is:</p>
+
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Site&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Flower&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<blockquote>
+  <p>NOTE: Layout files should all put in /layouts folder</p>
+</blockquote>
+
+<h2>Twig Extends Tag</h2>
+
+<p>We can also use <code>extends</code> tag to wrap our content, please see <a href="http://twig.sensiolabs.org/doc/tags/extends.html">Twig Extends Tutorial</a>.</p>
+
+<p>For example, create a file extends to <code>html2.twig</code> and a block <code>content</code> wrap our content.</p>
+
+<pre><code class="twig">{% extends 'html2.twig' %}
+
+{% block content %}
+&lt;h1&gt;Flower&lt;/h1&gt;
+{% endblock %}
+</code></pre>
+
+<p>Then we have to write a <code>layouts/html2.twig</code> file.</p>
+
+<pre><code class="twig">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Site&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    {% block content %}
+    Default Content
+    {% endblock %}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>The output will also look like:</p>
+
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Site&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Flower&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 
                 </article>
             </div>

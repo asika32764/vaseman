@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=2.0" />
         <link rel="shortcut icon" href="../media/images/ico/favicon.ico" />
 
-        <title>Getting Started | Vaseman, The PHP Static Site Generator</title>
+        <title>File Processors | Vaseman, The PHP Static Site Generator</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Vaseman, The PHP Static Site Generator">
+        <meta property="og:title" content="File Processors | Vaseman, The PHP Static Site Generator">
         <meta property="og:site_name" content="Vaseman">
 
         
@@ -71,7 +71,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>File Processors</h1>
     </div>
         </div>
     </section>
@@ -83,7 +83,7 @@
                 <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Basic</li>
 
-                                <li class="uk-active">
+                                <li class="">
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
                                 <li class="">
@@ -124,7 +124,7 @@
                                 <li class="">
                 <a href="../documentation/extensions.html">Twig Extensions</a>
             </li>
-                                <li class="">
+                                <li class="uk-active">
                 <a href="../documentation/processors.html">File Processor</a>
             </li>
         
@@ -134,53 +134,40 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>Installation</h1>
+                    <h1>The Default Processors</h1>
 
-<h2>Install by Download</h2>
+<p>Vaseman has these default file processors:</p>
 
-<p>Please download from <a href="https://github.com/asika32764/vaseman/releases">Github</a></p>
+<ul>
+<li>TwigProcessor</li>
+<li>MarkdownProcessor</li>
+<li>MdProcessor (Alias of MarkdownProcessor)</li>
+<li>GeneralProcessor (All files not defined)</li>
+</ul>
 
-<h2>Install by Composer</h2>
+<h1>Create Custom Processor</h1>
 
-<pre><code class="bash">$ php composer.phar create-project asika/vaseman vaseman 2.*
+<p>Create this class in <code>src/Vaseman/File/LessProcessor.php</code> or <code>src/File/LessProcessor.php</code> if in outer project.</p>
+
+<pre><code class="php">&lt;?php
+
+namespace Vaseman\File;
+
+class LessProcessor extends AbstractFileProcessor
+{
+    /**
+     * render
+     *
+     * @return  string
+     */
+    public function render()
+    {
+        return $this-&gt;output = Less::compile($this-&gt;file-&gt;getPathname());
+    }
+}
 </code></pre>
 
-<h1>Default Pages</h1>
-
-<p>Now we can use browser open Vaseman root, Vaseman will redner page dynamically.</p>
-
-<h2>View Pages</h2>
-
-<p>Open project dir by browser, you can see the index page.</p>
-
-<p><img src="http://cl.ly/SnuG/p2013-12-05-1.jpg" alt="index" /></p>
-
-<p>And click <em>Admin</em> button on top left, this is a back-end page example.</p>
-
-<p><img src="http://cl.ly/SoKm/p2013-12-05-2.jpg" alt="admin" /></p>
-
-<h2>Writing Pages</h2>
-
-<p>Create your <code>*.twig</code> in <code>entries</code> folder.</p>
-
-<p>The template file path will matches the url path.
-If you go <code>path/to/your/page</code>, Vaseman will render <code>entries/path/to/your/page.twig</code> for you.</p>
-
-<h2>Base URI</h2>
-
-<p>Using <code>{{ uri.base }}</code> to add subfolder for assets url.</p>
-
-<p>For Example, If you are in a page <code>foo/bar/baz.html</code>, You can use this url as link href:</p>
-
-<pre><code class="twig">&lt;a href="{{ uri.base }}sakura.html"&gt;Link&lt;/a&gt;
-</code></pre>
-
-<p>The link will render as:</p>
-
-<pre><code class="html">&lt;a href="../../sakura.html"&gt;Link&lt;/a&gt;
-</code></pre>
-
-<p>So the page link will not break in every pages.</p>
+<p>Processor will run every files, you can decide what you want to do for any file type.</p>
 
                 </article>
             </div>

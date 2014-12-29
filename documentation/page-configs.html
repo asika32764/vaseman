@@ -3,35 +3,28 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=2.0" />
-        <link rel="shortcut icon" href="{{ uri.media }}images/ico/favicon.ico" />
+        <link rel="shortcut icon" href="../media/images/ico/favicon.ico" />
 
-        <title>{% block title %}Vaseman, The PHP Static Site Generator{% endblock %}</title>
+        <title>Config And Data | Vaseman, The PHP Static Site Generator</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
-        <link href="{{ uri.media }}css/main.css" rel="stylesheet">
+        <link href="../media/css/main.css" rel="stylesheet">
 
-        <meta name="description" content="{{ config.meta.desc }}">
+        <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-{% if (config.og.image) %}
-        <meta property="og:image" content="{{ config.og.image }}">
-{% endif %}
-        <meta property="og:title" content="{{ block('title') }}">
+                <meta property="og:title" content="">
         <meta property="og:site_name" content="Vaseman">
-{% if (config.meta.desc) %}
-        <meta property="og:description" content="{{ config.meta.desc }}">
-{% endif %}
-
-        {% block stylesheet %}{% endblock %}
-
+        
+        
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="{{ uri.media }}js/jquery.js"></script>
+        <script src="../media/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
         <script>
@@ -42,37 +35,36 @@
             });
         </script>
 
-        {% block script %}{% endblock %}
-    </head>
-    <body class="{{ config.home ? 'home' : '' }}">
+            </head>
+    <body class="">
     <nav id="header" class="uk-navbar uk-navbar-attached">
         <div class="uk-container uk-container-center">
 
-            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="{{ uri.base }}">
-                <img class="uk-margin uk-margin-remove" src="{{ uri.media }}images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../">
+                <img class="uk-margin uk-margin-remove" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
 
             <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="">
-                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="{{ uri.media }}images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
-                {#<li class="{{ active == 'about' ? 'uk-ctive' : '' }}">#}
-                    {#<a href="{{ uri.base }}about.html">#}
-                        {#<span class="menu-item-title">About</span>#}
-                    {#</a>#}
-                {#</li>#}
+                <li class="">
+                    <a href="../about.html">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
 
                 <li class="">
-                    <a href="{{ uri.base }}documentation/getting-started.html">
+                    <a href="../documentation/getting-started.html">
                         <span class="menu-item-title">Documentation</span>
                     </a>
                 </li>
 
                 <li class="">
-                    <a href="http://github.com/asika32764/vaseman" target="_blank">
+                    <a href="http://gihub.com/asika32764/vaseman">
                         <span class="menu-item-title">Github</span>
                     </a>
                 </li>
@@ -83,23 +75,67 @@
 
     <section id="banner">
         <div class="banner-inner">
-            {% block banner %}
-            {% endblock %}
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Config And Data</h1>
+    </div>
         </div>
     </section>
 
     <div id="main-body">
-        {% block body %}
-        <section id="home" class="main-block">
             <div class="uk-container uk-container-center">
-                <div class="uk-grid" data-uk-grid-match>
-                    <div class="uk-width-medium-1-1">
-                        {{ content|raw }}
-                    </div>
-                </div>
+        <div class="uk-grid">
+            <div class="uk-width-medium-1-4 uk-container-center">
+                <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+        <li class="uk-nav-header">Basic</li>
+
+                                <li class="">
+                <a href="../documentation/getting-started.html">Getting Started</a>
+            </li>
+                                <li class="">
+                <a href="../documentation/twig-pages.html">Use Twig Pages</a>
+            </li>
+                                <li class="">
+                <a href="../documentation/markdown-pages.html">Use Markdown Pages</a>
+            </li>
+                                <li class="">
+                <a href="../documentation/config-data.html">Config And Data</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>            </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                
+                <article class="article-content">
+                    <h1>Add Page Config</h1>
+
+<p>We can use <a href="http://www.yaml.org/">YAML</a> format at top of every page to set config. Separate config and content by 3 dashes (<code>---</code>).</p>
+
+<p>For Example:</p>
+
+<pre><code class="twig">layout: html.twig
+title: My Site
+flower:
+    sakura: World
+
+---
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;{{ config.title }}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    Hello {{ config.flower.sakura }}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>All config data will put in <code>config</code> property.</p>
+
+                </article>
             </div>
-        </section>
-        {% endblock body %}
+        </div>
+    </div>
+
     </div>
 
     <footer id="footer">
@@ -107,7 +143,7 @@
 
             <div class="footer-logo">
                 <a href="#" data-uk-smooth-scroll>
-                    <img src="{{ uri.media }}images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
+                    <img src="../media/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
                 </a>
             </div>
 

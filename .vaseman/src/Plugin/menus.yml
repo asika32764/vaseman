@@ -1,2 +1,15 @@
 Basic:
-  getting-started.md: Getting Started
+  getting-started: Getting Started
+  twig-pages: Use Twig Pages
+  markdown-pages: Use Markdown Pages
+  config-data: Config And Data
+  debug: Debugging
+Static Pages:
+  static-pages: Generate Static Pages
+  outer-project: Create Project In Outer Folder
+  permalink: Permalink
+Extending:
+  helpers: View Helpers
+  plugins: Plugins And DataProvider
+  extensions: Twig Extensions
+  processors: File Processor

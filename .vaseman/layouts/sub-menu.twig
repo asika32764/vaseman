@@ -3,7 +3,8 @@
     <li class="uk-nav-header">{{ title }}</li>
 
         {% for id, item in section %}
-            <li class="{{ path|last == id ? 'uk-active' : '' }}">
+            {% set page = path|last %}
+            <li class="{{ page|slice(0, -3) == id ? 'uk-active' : '' }}">
                 <a href="{{ uri.base }}documentation/{{ id }}.html">{{ item }}</a>
             </li>
         {% endfor %}

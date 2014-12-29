@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=2.0" />
         <link rel="shortcut icon" href="../media/images/ico/favicon.ico" />
 
-        <title>Getting Started | Vaseman, The PHP Static Site Generator</title>
+        <title>Generate Static Pages | Vaseman, The PHP Static Site Generator</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Vaseman, The PHP Static Site Generator">
+        <meta property="og:title" content="Generate Static Pages | Vaseman, The PHP Static Site Generator">
         <meta property="og:site_name" content="Vaseman">
 
         
@@ -71,7 +71,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>Generate Static Pages</h1>
     </div>
         </div>
     </section>
@@ -83,7 +83,7 @@
                 <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Basic</li>
 
-                                <li class="uk-active">
+                                <li class="">
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
                                 <li class="">
@@ -105,7 +105,7 @@
                                 <li class="">
                 <a href="../documentation/static-pages.html">Generate Static Pages</a>
             </li>
-                                <li class="">
+                                <li class="uk-active">
                 <a href="../documentation/outer-project.html">Create Project In Outer Folder</a>
             </li>
                                 <li class="">
@@ -134,53 +134,116 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>Installation</h1>
+                    <h1>Use Vaseman As CLI Tools</h1>
 
-<h2>Install by Download</h2>
+<p>Vaseman can use as a CLI tools to generate multiple projects, that we don't necessary to clone Vaseman for every project.</p>
 
-<p>Please download from <a href="https://github.com/asika32764/vaseman/releases">Github</a></p>
+<p>First we can download vaseman to a path you want.</p>
 
-<h2>Install by Composer</h2>
-
-<pre><code class="bash">$ php composer.phar create-project asika/vaseman vaseman 2.*
+<pre><code class="bash">composer create-project asika/vaseman /path/to/vaseman
 </code></pre>
 
-<h1>Default Pages</h1>
+<p>For MAC, we can create a symbol link to Vaseman bin file:</p>
 
-<p>Now we can use browser open Vaseman root, Vaseman will redner page dynamically.</p>
-
-<h2>View Pages</h2>
-
-<p>Open project dir by browser, you can see the index page.</p>
-
-<p><img src="http://cl.ly/SnuG/p2013-12-05-1.jpg" alt="index" /></p>
-
-<p>And click <em>Admin</em> button on top left, this is a back-end page example.</p>
-
-<p><img src="http://cl.ly/SoKm/p2013-12-05-2.jpg" alt="admin" /></p>
-
-<h2>Writing Pages</h2>
-
-<p>Create your <code>*.twig</code> in <code>entries</code> folder.</p>
-
-<p>The template file path will matches the url path.
-If you go <code>path/to/your/page</code>, Vaseman will render <code>entries/path/to/your/page.twig</code> for you.</p>
-
-<h2>Base URI</h2>
-
-<p>Using <code>{{ uri.base }}</code> to add subfolder for assets url.</p>
-
-<p>For Example, If you are in a page <code>foo/bar/baz.html</code>, You can use this url as link href:</p>
-
-<pre><code class="twig">&lt;a href="{{ uri.base }}sakura.html"&gt;Link&lt;/a&gt;
+<pre><code class="bash">ln -s /path/to/vaseman/bin/vaseman /usr/local/bin/vaseman
 </code></pre>
 
-<p>The link will render as:</p>
+<p>For Windows, create a <code>vaseman.bat</code> file to a folder which has set in environment variable path.</p>
 
-<pre><code class="html">&lt;a href="../../sakura.html"&gt;Link&lt;/a&gt;
+<pre><code class="bat">php "C:\your\path\of\vaseman\bin\vaseman" %*
 </code></pre>
 
-<p>So the page link will not break in every pages.</p>
+<p>Now, type <code>vaseman</code> in everywhere, Vaseman will be a global command:</p>
+
+<pre><code class="bash">&gt; vaseman
+
+Vaseman - version: 2.0
+------------------------------------------------------------
+
+[vaseman Help]
+
+Vaseman console system.
+
+Usage:
+  vaseman &lt;command&gt; [option]
+
+
+Options:
+
+  -h | --help       Display this help message.
+  -q | --quiet      Do not output any message.
+  -v | --verbose    Increase the verbosity of messages.
+  --ansi            Set 'off' to suppress ANSI colors on unsupported terminals.
+
+Commands:
+
+  up      Generate site.
+  init    Initialise a site project.
+
+</code></pre>
+
+<p>Note there is a new <code>init</code> command if we use Vaseman as global tools.</p>
+
+<h2>Initialise A New Project</h2>
+
+<p>Type these commands.</p>
+
+<pre><code class="bash">$ mkdir mysite
+$ cd mysite
+$ vaseman init
+</code></pre>
+
+<p>Vaseman will create default pages:</p>
+
+<pre><code class="bash">This action will remove all current files, are you sure to continue? [Y/n]: y
+
+Start initialise Vaseman project.
+
+Create: /private/var/www/test/mysite/.vaseman/media
+Create: /private/var/www/test/mysite/.vaseman/entries
+Create: /private/var/www/test/mysite/.vaseman/layouts
+Create: /private/var/www/test/mysite/.vaseman/config.yml
+Create: /private/var/www/test/mysite/.vaseman/src/Plugin
+Create: /private/var/www/test/mysite/.vaseman/src/Helper
+Create: /private/var/www/test/mysite/.vaseman/src/Twig
+
+Project generated.
+
+</code></pre>
+
+<h2>Generate Pages</h2>
+
+<p>Generate pages in outer project is same as inner project:</p>
+
+<pre><code class="bash">$ vaseman up
+</code></pre>
+
+<p>Then Vaseman will generate all pages to root.</p>
+
+<pre><code class="bash">Vaseman generator
+-----------------------------
+
+Start generating site
+
+Write file: /private/var/www/test/mysite/admin/article/edit.html
+Write file: /private/var/www/test/mysite/admin/article/index.html
+Write file: /private/var/www/test/mysite/admin/category/edit.html
+Write file: /private/var/www/test/mysite/admin/category/index.html
+Write file: /private/var/www/test/mysite/article.html
+Write file: /private/var/www/test/mysite/index.html
+Write file: /private/var/www/test/mysite/media/css/bootstrap.css
+Write file: /private/var/www/test/mysite/media/css/project.css
+Write file: /private/var/www/test/mysite/media/fonts/glyphicons-halflings-regular.eot
+Write file: /private/var/www/test/mysite/media/fonts/glyphicons-halflings-regular.svg
+Write file: /private/var/www/test/mysite/media/fonts/glyphicons-halflings-regular.ttf
+Write file: /private/var/www/test/mysite/media/fonts/glyphicons-halflings-regular.woff
+Write file: /private/var/www/test/mysite/media/images/favicon.ico
+Write file: /private/var/www/test/mysite/media/js/bootstrap.js
+Write file: /private/var/www/test/mysite/media/js/jquery.js
+
+Complete
+
+</code></pre>
 
                 </article>
             </div>
