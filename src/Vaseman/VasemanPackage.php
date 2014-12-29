@@ -37,6 +37,9 @@ class VasemanPackage extends AbstractPackage
 	 */
 	public function initialise()
 	{
+		// A workaround before Windwalker Loader fix bug
+		class_alias('Windwalker\Loader\Loader\VasemanPsr4Loader', 'Windwalker\Loader\Loader\Psr4Loader');
+
 		$loader = new ClassLoader;
 
 		$loader->register();
