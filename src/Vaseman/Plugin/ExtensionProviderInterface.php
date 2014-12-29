@@ -11,21 +11,18 @@ namespace Vaseman\Plugin;
 use Windwalker\Event\Event;
 
 /**
- * The TestPlugin class.
- * 
+ * Interface ExtensionProviderInterface
+ *
  * @since  {DEPLOY_VERSION}
  */
-class TestPlugin extends AbstractPlugin implements DataProviderInterface
+interface ExtensionProviderInterface
 {
 	/**
-	 * onContentPrepareData
+	 * loadExtension
 	 *
-	 * @param   Event $event
+	 * @param Event $event
 	 *
 	 * @return  void
 	 */
-	public function onContentPrepareData(Event $event)
-	{
-		$event['data']->name = 'Flower';
-	}
+	public function loadExtensions(Event $event);
 }

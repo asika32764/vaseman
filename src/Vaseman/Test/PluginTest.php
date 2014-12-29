@@ -37,12 +37,33 @@ class PluginTest extends AbstractBaseTestCase
 		$this->controller = new GetController(null, Ioc::getApplication(), Ioc::factory(), PackageHelper::getPackage('vaseman'));
 	}
 
+	/**
+	 * testDataProvider
+	 *
+	 * @return  void
+	 */
 	public function testDataProvider()
 	{
 		$this->controller->getInput()->set('paths', array('provider'));
 
 		$compare = <<<HTML
 Hello, Flower
+HTML;
+
+		$this->assertStringDataEquals($compare, $this->controller->execute());
+	}
+
+	/**
+	 * testExtensionProvider
+	 *
+	 * @return  void
+	 */
+	public function testExtensionProvider()
+	{
+		$this->controller->getInput()->set('paths', array('extension'));
+
+		$compare = <<<HTML
+Hello, sakura
 HTML;
 
 		$this->assertStringDataEquals($compare, $this->controller->execute());

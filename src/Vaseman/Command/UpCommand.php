@@ -75,6 +75,10 @@ class UpCommand extends Command
 	{
 		DateTimeHelper::setDefaultTimezone();
 
+		$this->out()->out('Vaseman generator')
+			->out('-----------------------------')->out()
+			->out('<comment>Start generating site</comment>')->out();
+
 		$dataRoot = $this->app->get('project.path.data', WINDWALKER_ROOT);
 
 		$folders = $this->app->get('folders', array());
@@ -120,12 +124,14 @@ class UpCommand extends Command
 		{
 			$file = Path::clean($dir . '/' . $processor->getTarget());
 
-			$this->out('Write file: ' . $file);
+			$this->out('<info>Write file</info>: ' . $file);
 
 			Folder::create(dirname($file));
 
 			file_put_contents($file, $processor->getOutput());
 		}
+
+		$this->out()->out('<info>Complete</info>')->out();
 
 		return 0;
 	}

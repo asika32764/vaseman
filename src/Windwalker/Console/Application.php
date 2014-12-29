@@ -27,11 +27,19 @@ use Windwalker\Windwalker;
  */
 class Application extends WindwalkerConsole
 {
+	/**
+	 * Property name.
+	 *
+	 * @var  string
+	 */
 	protected $name = 'Vaseman';
 
+	/**
+	 * Property version.
+	 *
+	 * @var  string
+	 */
 	protected $version = '2.0';
-
-	protected $description = 'Vasemane console system.';
 
 	/**
 	 * initialise
@@ -48,6 +56,8 @@ class Application extends WindwalkerConsole
 Welcome to Vaseman Console.
 HELP
 );
+
+		$this->setDescription('Vaseman console system.');
 
 		$this->container->set('system.router', new RestfulRouter);
 	}

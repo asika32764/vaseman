@@ -43,7 +43,10 @@ class VasemanPackage extends AbstractPackage
 
 		$config = Ioc::getConfig();
 
-		$loader->addPsr4('Vaseman\\Plugin\\', $config->get('project.path.data') . '/plugins');
+		if ($config->get('outer_project') || $config->get('mode') == 'test')
+		{
+			$loader->addPsr4('Vaseman\\', $config->get('project.path.data') . '/src');
+		}
 
 		parent::initialise();
 

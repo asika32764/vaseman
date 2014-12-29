@@ -9,6 +9,8 @@
 namespace Vaseman\Command;
 
 use Windwalker\Console\Command\Command;
+use Windwalker\Console\IO\IOFactory;
+use Windwalker\Console\Prompter\BooleanPrompter;
 use Windwalker\Environment\Environment;
 use Windwalker\Filesystem\Exception\FilesystemException;
 use Windwalker\Filesystem\File;
@@ -60,12 +62,27 @@ class InitCommand extends Command
 
 		$systemRoot = WINDWALKER_ROOT;
 
+		$boolPrompter = new BooleanPrompter;
+
+		if (!$boolPrompter->ask('This action will remove all current files, are you sure to continue? [<comment>Y/n</comment>]: '))
+		{
+			$this->out('<comment>canceled.</comment>')->out();
+
+			return true;
+		}
+
+		$this->out()->out('<comment>Start initialise Vaseman project.</comment>')->out();
+
 		$this->copyFolder($systemRoot . '/media', $projectRoot . '/media');
 		$this->copyFolder($systemRoot . '/entries', $projectRoot . '/entries');
 		$this->copyFolder($systemRoot . '/layouts', $projectRoot . '/layouts');
 		$this->copyFile($systemRoot . '/etc/config.yml', $projectRoot . '/config.yml');
 
-		$this->createFolder($projectRoot . '/plugins');
+		$this->createFolder($projectRoot . '/src/Plugin');
+		$this->createFolder($projectRoot . '/src/Helper');
+		$this->createFolder($projectRoot . '/src/Twig');
+
+		$this->out()->out('<info>Project generated.</info>')->out();
 
 		return true;
 	}
@@ -80,7 +97,7 @@ class InitCommand extends Command
 	 */
 	protected function copyFolder($src, $dest)
 	{
-		$this->out('Create: ' . $dest);
+		$this->out('<info>Create</info>: ' . $dest);
 
 		if (is_dir($dest))
 		{
@@ -100,7 +117,7 @@ class InitCommand extends Command
 	 */
 	protected function copyFile($src, $dest)
 	{
-		$this->out('Create: ' . $dest);
+		$this->out('<info>Create</info>: ' . $dest);
 
 		if (is_file($dest))
 		{
@@ -119,7 +136,7 @@ class InitCommand extends Command
 	 */
 	protected function createFolder($dest)
 	{
-		$this->out('Create: ' . $dest);
+		$this->out('<info>Create</info>: ' . $dest);
 
 		Folder::create($dest);
 

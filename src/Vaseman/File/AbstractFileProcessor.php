@@ -174,7 +174,7 @@ abstract class AbstractFileProcessor
 			$template = implode('---', $template);
 		}
 
-		$event = new Event('onContentPrepareData');
+		$event = new Event('loadProvider');
 		$event['data'] = $this->data;
 		$event['processor'] = $this;
 

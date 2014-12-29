@@ -24,5 +24,5 @@ interface DataProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function onContentPrepareData(Event $event);
+	public function loadProvider(Event $event);
 }

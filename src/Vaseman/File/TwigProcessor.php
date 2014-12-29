@@ -13,6 +13,7 @@ use Windwalker\Core\Renderer\RendererHelper;
 use Windwalker\Core\View\Twig\WindwalkerExtension;
 use Windwalker\Event\Event;
 use Windwalker\Filesystem\File;
+use Windwalker\Ioc;
 use Windwalker\Registry\Registry;
 use Windwalker\Renderer\TwigRenderer;
 use Windwalker\Utilities\Queue\Priority;
@@ -40,7 +41,13 @@ class TwigProcessor extends AbstractFileProcessor
 	{
 		$renderer = $this->getRenderer();
 
-		$output = $renderer->getEngine()->loadTemplate($this->getLayout())->render((array) $this->data);
+		// @ loadExtensions event
+		$engine = $renderer->getEngine();
+
+		$this->loadExtensions($engine);
+
+		// Start render
+		$output = $engine->loadTemplate($this->getLayout())->render((array) $this->data);
 
 		$this->output = $this->renderLayout($output);
 
@@ -102,6 +109,23 @@ class TwigProcessor extends AbstractFileProcessor
 		}
 
 		return $this->renderer;
+	}
+
+	/**
+	 * loadExtensions
+	 *
+	 * @param \Twig_Environment $twig
+	 *
+	 * @return  Event
+	 */
+	protected function loadExtensions(\Twig_Environment $twig)
+	{
+		// @ loadExtensions event
+		$event = new Event('loadExtensions');
+
+		$event['twig'] = $twig;
+
+		return Ioc::getDispatcher()->triggerEvent($event);
 	}
 
 	/**
