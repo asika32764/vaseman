@@ -15,6 +15,14 @@ Please download from [Github](https://github.com/asika32764/vaseman/releases)
 $ php composer.phar create-project asika/vaseman vaseman 2.*
 ```
 
+## Install By Git
+
+``` bash
+git clone https://github.com/asika32764/vaseman vaseman
+cd vaseman
+composer update
+```
+
 # Default Pages
 
 Now we can use browser open Vaseman root, Vaseman will redner page dynamically.
