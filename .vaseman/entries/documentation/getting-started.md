@@ -25,7 +25,7 @@ composer update
 
 # Default Pages
 
-Now we can use browser open Vaseman root, Vaseman will redner page dynamically.
+Now we can use browser open Vaseman root, Vaseman will render page dynamically.
 
 ## View Pages
 
