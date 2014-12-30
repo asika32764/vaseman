@@ -77,6 +77,8 @@ Complete
 
 Now theses files can safely put on static web spaces.
 
+> We also provide phar file to quickly use: [Download Phar](https://github.com/asika32764/vaseman/releases)
+
 # Folder to Generate
 
 Open `/etc/config.yml` or `/.vaseman/config.yml`, you will see:

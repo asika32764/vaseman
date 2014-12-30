@@ -138,7 +138,9 @@
 
 <h2>Install by Download</h2>
 
-<p>Please download from <a href="https://github.com/asika32764/vaseman/releases">Github</a></p>
+<p>Please download from <a href="https://github.com/asika32764/vaseman/releases">Github</a>, then run <code>composer install</code> to install vendors.</p>
+
+<p>Or just use <a href="https://github.com/asika32764/vaseman/releases">Phar</a> file.</p>
 
 <h2>Install by Composer</h2>
 
@@ -149,7 +151,14 @@
 
 <pre><code class="bash">git clone https://github.com/asika32764/vaseman vaseman
 cd vaseman
-composer update
+composer install
+</code></pre>
+
+<h2>Build your phar file</h2>
+
+<p>After vendor installed. Run this command:</p>
+
+<pre><code class="bash">$ php bin/build.php -d=../../vaseman.phar
 </code></pre>
 
 <h1>Default Pages</h1>

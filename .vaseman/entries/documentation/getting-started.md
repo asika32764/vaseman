@@ -7,7 +7,9 @@ title: Getting Started
 
 ## Install by Download
 
-Please download from [Github](https://github.com/asika32764/vaseman/releases)
+Please download from [Github](https://github.com/asika32764/vaseman/releases), then run `composer install` to install vendors.
+
+Or just use [Phar](https://github.com/asika32764/vaseman/releases) file.
 
 ## Install by Composer
 
@@ -20,7 +22,15 @@ $ php composer.phar create-project asika/vaseman vaseman 2.*
 ``` bash
 git clone https://github.com/asika32764/vaseman vaseman
 cd vaseman
-composer update
+composer install
+```
+
+## Build your phar file
+
+After vendor installed. Run this command:
+
+``` bash
+$ php bin/build.php -d=../../vaseman.phar
 ```
 
 # Default Pages
