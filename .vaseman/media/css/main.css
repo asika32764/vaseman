@@ -349,6 +349,9 @@ dl dd {
   font-size: 15px;
   font-family: "monako", consolas, monspace;
 }
+.article-content blockquote {
+  color: #999;
+}
 #features {
   margin-bottom: 75px;
 }
