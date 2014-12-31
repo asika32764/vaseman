@@ -363,6 +363,11 @@ dl {
 	line-height: 1.5;
 	font-family: 'Roboto', 'Adobe 繁黑體 Std', 'AdobeFanHeitiStd-Bold', 'LiHei Pro', "Xin6", '微軟正黑體', sans-serif;
 	font-weight: 700;
+	margin: 1.5em 0 .5em 0;
+
+	&:first-child {
+		margin-top: 0;
+	}
 }
 .article-content :not(pre) code {
 	font-size: inherit;
@@ -376,8 +381,13 @@ dl {
 	color: #000;
 }
 .article-content p {
-	margin: 1.8em 0;
+	margin: 1em 0 1.3em 0;
 	word-wrap: break-word;
+	color: #333;
+
+	&:first-child {
+		margin-top: 0;
+	}
 }
 .article-content p img:only-child {
 	display: block;
@@ -434,6 +444,9 @@ dl {
 	padding: 20px;
 	font-size: 15px;
 	font-family: "monako", consolas, monspace;
+}
+.article-content blockquote {
+	color: #999;
 }
 
 // Features
