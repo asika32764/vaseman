@@ -159,7 +159,7 @@ abstract class AbstractFileProcessor
 					$this->target .= '/index.html';
 				}
 
-				$this->data->uri['base'] = ProcessorHelper::getBackwards($this->target);
+				$this->data->uri['base'] = ProcessorHelper::getBackwards($this->target) ? : '.';
 				$this->data->uri['media'] = ProcessorHelper::getBackwards($this->target) . 'media/';
 			}
 			else
