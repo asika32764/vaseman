@@ -2,15 +2,12 @@
 .*
 !.gitignore
 !.gitkeep
-!.travis.yml
-!/www/.htaccess
+!/.travis.yml
+!/.htaccess
 
 # Composer
 /vendor
 composer.lock
-
-#Windwalker
-/etc/secret.yml
 
 #Test
 /phpunit.xml
