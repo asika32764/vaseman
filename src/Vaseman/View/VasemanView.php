@@ -116,7 +116,7 @@ class VasemanView extends HtmlView
 		$layout = explode('/', $this->getLayout());
 		array_pop($layout);
 
-		$uri['base'] = str_repeat('../', count($layout)) ? : '.';
+		$uri['base'] = str_repeat('../', count($layout)) ? : './';
 		$uri['media'] = str_repeat('../', count($layout)) . 'media/';
 
 		$layout = implode('/', (array) $layout);
