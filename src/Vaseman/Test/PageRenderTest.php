@@ -48,7 +48,7 @@ class PageRenderTest extends AbstractBaseTestCase
 
 		$compare = <<<HTML
 No config Twig file
-uri.base:
+uri.base: .
 uri.media: media/
 HTML;
 
@@ -66,7 +66,7 @@ HTML;
 
 		$compare = <<<HTML
 Has config Twig file
-uri.base:
+uri.base: .
 uri.media: media/
 config.foo.bar: baz
 HTML;
