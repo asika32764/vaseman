@@ -14,10 +14,12 @@ use Vaseman\File\AbstractFileProcessor;
 use Windwalker\Console\Command\Command;
 use Windwalker\Core\Package\PackageHelper;
 use Windwalker\Core\Utilities\DateTimeHelper;
+use Windwalker\Event\Event;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Filesystem\Folder;
 use Windwalker\Filesystem\Path;
 use Windwalker\IO\Input;
+use Windwalker\Ioc;
 
 /**
  * The UpCommand class.
@@ -79,11 +81,17 @@ class UpCommand extends Command
 			->out('-----------------------------')->out()
 			->out('<comment>Start generating site</comment>')->out();
 
-		$dataRoot = $this->app->get('project.path.data', WINDWALKER_ROOT);
-
-		$folders = $this->app->get('folders', array());
-
 		$controller = new GetController();
+
+		$event = new Event('onBeforeRenderFiles');
+		$event['config'] = $this->app->getConfig();
+		$event['controller'] = $controller;
+		$event['io'] = $this->io;
+
+		Ioc::getDispatcher()->triggerEvent($event);
+
+		$dataRoot = $this->app->get('project.path.data', WINDWALKER_ROOT);
+		$folders = $this->app->get('folders', array());
 
 		$controller->setPackage(PackageHelper::getPackage('vaseman'));
 		$controller->setApplication($this->app);
@@ -113,6 +121,13 @@ class UpCommand extends Command
 			}
 		}
 
+		$event->setName('onAfterRenderFiles');
+		$event['processors'] = $processors;
+		Ioc::getDispatcher()->triggerEvent($event);
+
+		$event->setName('onBeforeWriteFiles');
+		Ioc::getDispatcher()->triggerEvent($event);
+
 		$dir = $this->getOption('dir');
 
 		$dir = $dir ? : $this->app->get('outer_project') ? "" : 'output';
@@ -130,6 +145,9 @@ class UpCommand extends Command
 
 			file_put_contents($file, $processor->getOutput());
 		}
+
+		$event->setName('onAfterWriteFiles');
+		Ioc::getDispatcher()->triggerEvent($event);
 
 		$this->out()->out('<info>Complete</info>')->out();
 

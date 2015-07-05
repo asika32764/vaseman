@@ -124,6 +124,8 @@ class VasemanView extends HtmlView
 		$this->data->uri = $uri->toArray();
 		$this->data->helper = new HelperSet;
 		$this->data->path = explode('/', $this->getLayout());
+
+		$this->data->bind(GlobalProvider::loadGlobalProvider());
 	}
 
 	/**

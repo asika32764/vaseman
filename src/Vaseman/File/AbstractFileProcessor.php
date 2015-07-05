@@ -135,7 +135,14 @@ abstract class AbstractFileProcessor
 	 */
 	public function prepareData($template)
 	{
-		$template = explode('---', $template, 2);
+		$template = explode('---', $template, 3);
+
+		if (!trim($template[0]))
+		{
+			array_shift($template);
+			$template = implode('---', $template);
+			$template = explode('---', $template, 2);
+		}
 
 		try
 		{
@@ -147,7 +154,8 @@ abstract class AbstractFileProcessor
 			}
 
 			$this->config->loadArray($config);
-			$this->getData()->bind(array('config' => $config));
+			$this->config->merge(Ioc::getConfig());
+			$this->getData()->bind(array('config' => $this->config->toArray()));
 
 			// Target permalink
 			if ($this->config['permalink'])
