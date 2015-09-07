@@ -9,14 +9,8 @@
             "email": "asika32764@gmail.com"
         }
     ],
-    "authors": [
-        {
-            "name": "Simon Asika",
-            "email": "asika32764@gmail.com"
-        }
-    ],
     "require": {
-        "windwalker/core": "~2.0@stable",
+        "windwalker/core": "2.0.*@stable",
         "symfony/yaml": "2.*@stable",
         "filp/whoops": "1.*@stable",
         "fzaninotto/faker": "1.4.*",
