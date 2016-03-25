@@ -12,6 +12,8 @@ use Vaseman\File\AbstractFileProcessor;
 use Vaseman\File\GeneralProcessor;
 use Vaseman\Helper\Set\HelperSet;
 use Windwalker\Core\Utilities\Iterator\PriorityQueue;
+use Windwalker\Core\View\AbstractView;
+use Windwalker\Data\Data;
 use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Ioc;
@@ -24,7 +26,7 @@ use Windwalker\View\HtmlView;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class VasemanView extends HtmlView
+class VasemanView extends AbstractView
 {
 	/**
 	 * Property config.
@@ -41,11 +43,13 @@ class VasemanView extends HtmlView
 	protected $path;
 
 	/**
-	 * render
+	 * doRender
 	 *
-	 * @return  AbstractFileProcessor
+	 * @param  Data $data
+	 *
+	 * @return string
 	 */
-	public function render()
+	protected function doRender($data)
 	{
 		$this->prepareGlobals($this->getData());
 
@@ -122,7 +126,7 @@ class VasemanView extends HtmlView
 		$layout = implode('/', (array) $layout);
 
 		$this->data->uri = $uri->toArray();
-		$this->data->helper = new HelperSet;
+		$this->data->helper = new HelperSet($this);
 		$this->data->path = explode('/', $this->getLayout());
 
 		$this->data->bind(GlobalProvider::loadGlobalProvider());

@@ -14,6 +14,8 @@ use Windwalker\Core\Provider\CacheProvider;
 use Windwalker\Core\Provider\DatabaseProvider;
 use Windwalker\Core\Provider\EventProvider;
 use Windwalker\Core\Provider\LanguageProvider;
+use Windwalker\Core\Provider\RouterProvider;
+use Windwalker\Core\Provider\TemplateEngineProvider;
 use Windwalker\Core\Router\RestfulRouter;
 use Windwalker\DI\ServiceProviderInterface;
 use Windwalker\Registry\Registry;
@@ -58,8 +60,6 @@ HELP
 );
 
 		$this->setDescription('Vaseman console system.');
-
-		$this->container->set('system.router', new RestfulRouter);
 	}
 
 	/**
@@ -67,7 +67,7 @@ HELP
 	 *
 	 * @return  ServiceProviderInterface[]
 	 */
-	public function loadProviders()
+	public static function loadProviders()
 	{
 		return array(
 			/*
@@ -81,6 +81,8 @@ HELP
 			'database' => new DatabaseProvider,
 			'lang'     => new LanguageProvider,
 			'cache'    => new CacheProvider,
+			'router'   => new RouterProvider,
+			'template' => new TemplateEngineProvider
 
 			/*
 			 * Custom Providers:
@@ -116,7 +118,7 @@ HELP
 	 *
 	 * @return  array
 	 */
-	public function loadPackages()
+	public static function loadPackages()
 	{
 		/*
 		 * Get Global Packages

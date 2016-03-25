@@ -12,6 +12,7 @@ use Vaseman\Controller\Page\GetController;
 use Vaseman\Asset\Asset;
 use Vaseman\File\AbstractFileProcessor;
 use Windwalker\Console\Command\Command;
+use Windwalker\Core\DateTime\DateTime;
 use Windwalker\Core\Package\PackageHelper;
 use Windwalker\Core\Utilities\DateTimeHelper;
 use Windwalker\Event\Event;
@@ -75,7 +76,7 @@ class UpCommand extends Command
 	 */
 	protected function doExecute()
 	{
-		DateTimeHelper::setDefaultTimezone();
+		DateTime::setDefaultTimezone();
 
 		$this->out()->out('Vaseman generator')
 			->out('-----------------------------')->out()
@@ -139,7 +140,7 @@ class UpCommand extends Command
 		{
 			$file = Path::clean($dir . '/' . $processor->getTarget());
 
-			$this->out('<info>Write file</info>: ' . $file);
+			$this->out('[<info>Write file</info>]: ' . $file);
 
 			Folder::create(dirname($file));
 

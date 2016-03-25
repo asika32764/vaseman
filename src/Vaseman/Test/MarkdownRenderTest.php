@@ -10,8 +10,8 @@ namespace Vaseman\Test;
 
 use Vaseman\Controller\Page\GetController;
 use Windwalker\Core\Package\PackageHelper;
-use Windwalker\Core\Test\AbstractBaseTestCase;
 use Windwalker\Ioc;
+use Windwalker\Test\TestCase\AbstractBaseTestCase;
 
 /**
  * The PageRenderTest class.

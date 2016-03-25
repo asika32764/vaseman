@@ -103,7 +103,7 @@ class TwigProcessor extends AbstractFileProcessor
 			$loader->setProcessor($this);
 
 			$twig->setLoader($loader);
-			$twig->addExtension(new WindwalkerExtension);
+//			$twig->addExtension(new WindwalkerExtension(Ioc::factory()));
 
 			$this->renderer = $renderer;
 		}

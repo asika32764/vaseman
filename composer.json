@@ -10,13 +10,13 @@
         }
     ],
     "require": {
-        "windwalker/core": "2.0.*@stable",
+        "windwalker/core": "2.*@stable",
         "symfony/yaml": "2.*@stable",
-        "filp/whoops": "1.*@stable",
+        "filp/whoops": "2.*@stable",
         "fzaninotto/faker": "1.4.*",
 
         "twig/twig": "~1.0@stable",
-        "michelf/php-markdown": "1.4.1"
+        "michelf/php-markdown": "1.*"
     },
     "require-dev": {
     },

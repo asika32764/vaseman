@@ -1,5 +1,5 @@
 system:
-    debug: 1
+    debug: 0
     timezone: 'UTC'
 project:
     name: Vaseman

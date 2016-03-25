@@ -5,6 +5,9 @@
 !/.travis.yml
 !/.htaccess
 
+# Config
+/etc/secret.yml
+
 # Composer
 /vendor
 composer.lock

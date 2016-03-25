@@ -9,7 +9,7 @@
 namespace Windwalker\Web;
 
 use Windwalker\Core\Application\WebApplication;
-use Windwalker\Core\Provider\AuthenticateProvider;
+use Windwalker\Core\Provider\AuthenticationProvider;
 use Windwalker\Core\Provider\CacheProvider;
 use Windwalker\Core\Provider\DatabaseProvider;
 use Windwalker\Core\Provider\EventProvider;
@@ -20,7 +20,6 @@ use Windwalker\Core\Provider\WhoopsProvider;
 use Windwalker\DI\ServiceProviderInterface;
 use Windwalker\Ioc;
 use Windwalker\Registry\Registry;
-use Windwalker\User\UserPackage;
 use Windwalker\Windwalker;
 
 /**
@@ -50,7 +49,7 @@ class Application extends WebApplication
 	 *
 	 * @return  ServiceProviderInterface[]
 	 */
-	public function loadProviders()
+	public static function loadProviders()
 	{
 		$providers = parent::loadProviders();
 
@@ -68,7 +67,7 @@ class Application extends WebApplication
 		$providers['lang']     = new LanguageProvider;
 		$providers['cache']    = new CacheProvider;
 		$providers['session']  = new SessionProvider;
-		$providers['auth']     = new AuthenticateProvider;
+		$providers['auth']     = new AuthenticationProvider;
 
 		/*
 		 * Custom Providers:
@@ -87,7 +86,7 @@ class Application extends WebApplication
 	 *
 	 * @return  array
 	 */
-	public function loadPackages()
+	public static function loadPackages()
 	{
 		/*
 		 * Get Global Packages

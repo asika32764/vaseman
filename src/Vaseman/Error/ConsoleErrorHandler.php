@@ -32,6 +32,11 @@ class ConsoleErrorHandler extends ErrorHandler
 	 */
 	public static function error($code, $message, $file, $line, $context)
 	{
+		if (error_reporting() === 0)
+		{
+			return;
+		}
+
 		$content = sprintf('%s. File: %s (line: %s)', $message, $file, $line);
 
 		throw new \ErrorException($content, $code, 1, $file, $line);
@@ -41,10 +46,11 @@ class ConsoleErrorHandler extends ErrorHandler
 	 * registerErrorHandler
 	 *
 	 * @param bool $restore
+	 * @param int  $type
 	 *
-	 * @return void
+	 * @return  void
 	 */
-	public static function register($restore = true)
+	public static function register($restore = true, $type = null)
 	{
 		if ($restore)
 		{

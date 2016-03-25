@@ -10,7 +10,7 @@ namespace Vaseman\Test;
 
 use Vaseman\Controller\Page\GetController;
 use Windwalker\Core\Package\PackageHelper;
-use Windwalker\Core\Test\AbstractBaseTestCase;
+use Windwalker\Test\TestCase\AbstractBaseTestCase;
 use Windwalker\Ioc;
 
 /**
