@@ -26,7 +26,7 @@ class HelperSet extends \Windwalker\Core\View\Helper\Set\HelperSet
 	 */
 	public function __get($name)
 	{
-		if (empty(static::$helpers[$name]))
+		if (empty($this->getHelper($name)))
 		{
 			$class = 'Vaseman\Helper\\' . ucfirst($name) . 'Helper';
 
@@ -35,9 +35,9 @@ class HelperSet extends \Windwalker\Core\View\Helper\Set\HelperSet
 				return false;
 			}
 
-			static::$helpers[$name] = new $class($this);
+			$this->helpers[$name] = new $class($this);
 		}
 
-		return static::$helpers[$name];
+		return $this->getHelper($name);
 	}
 }
