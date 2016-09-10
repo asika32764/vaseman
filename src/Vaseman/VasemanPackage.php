@@ -9,9 +9,8 @@
 namespace Vaseman;
 
 use Vaseman\Twig\VasemanTwigExtension;
-use Windwalker\Console\Console;
 use Windwalker\Core\Package\AbstractPackage;
-use Windwalker\Event\Dispatcher;
+use Windwalker\Event\DispatcherInterface;
 use Windwalker\Ioc;
 use Windwalker\Loader\ClassLoader;
 use Windwalker\Renderer\Twig\GlobalContainer;
@@ -35,57 +34,25 @@ class VasemanPackage extends AbstractPackage
 	 *
 	 * @return  void
 	 */
-	public function initialise()
+	public function boot()
 	{
 		// A workaround before Windwalker Loader fix bug
-		class_alias('Windwalker\Loader\Loader\VasemanPsr4Loader', 'Windwalker\Loader\Loader\Psr4Loader');
+//		class_alias('Windwalker\Loader\Loader\VasemanPsr4Loader', 'Windwalker\Loader\Loader\Psr4Loader');
 
-		$loader = new ClassLoader;
-
-		$loader->register();
-
-		$config = Ioc::getConfig();
-
-		if ($config->get('outer_project') || $config->get('mode') == 'test')
-		{
-			$loader->addPsr4('Vaseman\\', $config->get('project.path.data') . '/src');
-		}
-
-		parent::initialise();
+		parent::boot();
 
 		GlobalContainer::addExtension('vaseman', new VasemanTwigExtension);
 	}
 
 	/**
-	 * registerCommands
-	 *
-	 * @param Console $console
-	 *
-	 * @return  void
-	 */
-	public static function registerCommands(Console $console)
-	{
-	}
-
-	/**
 	 * registerListeners
 	 *
-	 * @param Dispatcher $dispatcher
+	 * @param DispatcherInterface $dispatcher
 	 *
 	 * @return  void
 	 */
-	public function registerListeners(Dispatcher $dispatcher)
+	public function registerListeners(DispatcherInterface $dispatcher)
 	{
 		$config = Ioc::getConfig();
-
-		$plugins = $config->get('plugins', array());
-
-		foreach ($plugins as $plugin)
-		{
-			if (class_exists($plugin) && is_subclass_of($plugin, 'Vaseman\\Plugin\\AbstractPlugin') && $plugin::$isEnabled)
-			{
-				$dispatcher->addListener(new $plugin);
-			}
-		}
 	}
 }

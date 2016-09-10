@@ -58,7 +58,7 @@ class InitCommand extends Command
 	 */
 	protected function doExecute()
 	{
-		$projectRoot = $this->app->get('project.path.data');
+		$projectRoot = $this->console->get('project.path.data');
 
 		$systemRoot = WINDWALKER_ROOT;
 

@@ -9,10 +9,13 @@
 namespace Vaseman\File;
 
 use Vaseman\Twig\VasemanTwigLoader;
+use Windwalker\Core\Renderer\EdgeRenderer;
 use Windwalker\Core\Renderer\RendererHelper;
+use Windwalker\Edge\Edge;
 use Windwalker\Event\Event;
 use Windwalker\Filesystem\File;
 use Windwalker\Ioc;
+use Windwalker\Renderer\AbstractEngineRenderer;
 use Windwalker\Renderer\TwigRenderer;
 use Windwalker\Structure\Structure;
 use Windwalker\Utilities\Queue\PriorityQueue;
@@ -22,12 +25,12 @@ use Windwalker\Utilities\Queue\PriorityQueue;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class TwigProcessor extends AbstractFileProcessor
+class EdgeProcessor extends AbstractFileProcessor
 {
 	/**
 	 * Property renderer.
 	 *
-	 * @var  TwigRenderer
+	 * @var  EdgeRenderer
 	 */
 	protected $renderer;
 
@@ -83,26 +86,18 @@ class TwigProcessor extends AbstractFileProcessor
 	/**
 	 * Method to get property Renderer
 	 *
-	 * @return  TwigRenderer
+	 * @return  EdgeRenderer
 	 */
 	public function getRenderer()
 	{
 		if (!$this->renderer)
 		{
-			$renderer = RendererHelper::getTwigRenderer();
+			$renderer = RendererHelper::getEdgeRenderer();
 
 			$twig = $renderer->getEngine();
 
 			$paths = RendererHelper::getGlobalPaths();
 			$paths->insert($this->getRoot(), PriorityQueue::HIGH);
-
-			$loader = new VasemanTwigLoader($paths->toArray());
-
-			$loader->setEnv($twig);
-			$loader->setProcessor($this);
-
-			$twig->setLoader($loader);
-//			$twig->addExtension(new WindwalkerExtension(Ioc::factory()));
 
 			$this->renderer = $renderer;
 		}
@@ -113,16 +108,16 @@ class TwigProcessor extends AbstractFileProcessor
 	/**
 	 * loadExtensions
 	 *
-	 * @param \Twig_Environment $twig
+	 * @param Edge $edge
 	 *
 	 * @return  Event
 	 */
-	protected function loadExtensions(\Twig_Environment $twig)
+	protected function loadExtensions(Edge $edge)
 	{
 		// @ loadExtensions event
-		$event = new Event('loadExtensions');
+		$event = new Event('loadEdgeExtensions');
 
-		$event['twig'] = $twig;
+		$event['edge'] = $edge;
 
 		return Ioc::getDispatcher()->triggerEvent($event);
 	}

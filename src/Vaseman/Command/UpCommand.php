@@ -21,6 +21,7 @@ use Windwalker\Filesystem\Folder;
 use Windwalker\Filesystem\Path;
 use Windwalker\IO\Input;
 use Windwalker\Ioc;
+use Windwalker\Web\Application;
 
 /**
  * The UpCommand class.
@@ -82,20 +83,33 @@ class UpCommand extends Command
 			->out('-----------------------------')->out()
 			->out('<comment>Start generating site</comment>')->out();
 
-		$controller = new GetController();
+		$dataRoot = $this->console->get('project.path.data', WINDWALKER_ROOT);
+		$folders = $this->console->get('folders', array());
+
+		$profile = Ioc::getProfile();
+
+		Ioc::setProfile('web');
+
+		/** @var Application $app */
+		$app = new Application;
+		$app->set('outer_project', 1);
+		$app->boot();
+		$app->getRouter();
+
+		$package = $app->getPackage('vaseman');
+
+		$container = $app->getContainer();
+
+		$container->share('current.package', $package);
+
+		$controller = $package->getController('Page/GetController');
 
 		$event = new Event('onBeforeRenderFiles');
-		$event['config'] = $this->app->getConfig();
+		$event['config'] = $this->console->getConfig();
 		$event['controller'] = $controller;
 		$event['io'] = $this->io;
 
 		Ioc::getDispatcher()->triggerEvent($event);
-
-		$dataRoot = $this->app->get('project.path.data', WINDWALKER_ROOT);
-		$folders = $this->app->get('folders', array());
-
-		$controller->setPackage(PackageHelper::getPackage('vaseman'));
-		$controller->setApplication($this->app);
 
 		$assets = array();
 		$processors = array();
@@ -106,6 +120,8 @@ class UpCommand extends Command
 
 			foreach ($files as $file)
 			{
+				$this->out('[<option>Rendering file</option>]: ' . $file);
+
 				$asset = new Asset($file, $dataRoot . '/' . $folder);
 
 				$layout = Path::clean($asset->getPath(), '/');
@@ -131,9 +147,9 @@ class UpCommand extends Command
 
 		$dir = $this->getOption('dir');
 
-		$dir = $dir ? : $this->app->get('outer_project') ? "" : 'output';
+		$dir = $dir ? : $this->console->get('outer_project') ? "" : 'output';
 
-		$dir = $this->app->get('project.path.root') . '/' . $dir;
+		$dir = $this->console->get('project.path.root') . '/' . $dir;
 
 		/** @var AbstractFileProcessor $processor */
 		foreach ($processors as $processor)

@@ -9,29 +9,23 @@
 namespace Vaseman\View;
 
 use Vaseman\File\AbstractFileProcessor;
-use Vaseman\File\GeneralProcessor;
 use Vaseman\Helper\Set\HelperSet;
-use Windwalker\Core\Utilities\Iterator\PriorityQueue;
-use Windwalker\Core\View\AbstractView;
 use Windwalker\Data\Data;
 use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Filesystem;
-use Windwalker\Ioc;
-use Windwalker\Registry\Registry;
-use Windwalker\Utilities\Queue\Priority;
-use Windwalker\View\HtmlView;
+use Windwalker\Structure\Structure;
 
 /**
  * The VasemanFileProcessor class.
  * 
  * @since  {DEPLOY_VERSION}
  */
-class VasemanView extends AbstractView
+class VasemanView extends \Windwalker\Core\View\HtmlView
 {
 	/**
 	 * Property config.
 	 *
-	 * @var Registry
+	 * @var Structure
 	 */
 	protected $config;
 
@@ -115,7 +109,7 @@ class VasemanView extends AbstractView
 	 */
 	protected function prepareGlobals($data)
 	{
-		$uri = new Registry;
+		$uri = new Structure;
 
 		$layout = explode('/', $this->getLayout());
 		array_pop($layout);
@@ -135,7 +129,7 @@ class VasemanView extends AbstractView
 	/**
 	 * Method to get property Config
 	 *
-	 * @return  Registry
+	 * @return  Structure
 	 */
 	public function getConfig()
 	{
@@ -145,7 +139,7 @@ class VasemanView extends AbstractView
 	/**
 	 * Method to set property config
 	 *
-	 * @param   Registry $config
+	 * @param   Structure $config
 	 *
 	 * @return  static  Return self to support chaining.
 	 */

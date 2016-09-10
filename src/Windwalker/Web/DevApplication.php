@@ -1,19 +1,22 @@
 <?php
 /**
- * Part of Windwalker project. 
+ * Part of Windwalker project.
  *
- * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
- * @license    GNU General Public License version 2 or later;
+ * @copyright  Copyright (C) 2014 - 2015 LYRASOFT. All rights reserved.
+ * @license    GNU Lesser General Public License version 3 or later.
  */
 
 namespace Windwalker\Web;
 
-use Windwalker\Registry\Registry;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Windwalker\Environment\WebEnvironment;
+use Windwalker\Structure\Structure;
+use Windwalker\Core\Provider;
 
 /**
  * The DevApplication class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1.1
  */
 class DevApplication extends Application
 {
@@ -22,19 +25,23 @@ class DevApplication extends Application
 	 *
 	 * @var  string
 	 */
-	public $mode = 'dev';
+	protected $name = 'dev';
 
 	/**
-	 * loadConfiguration
+	 * Class constructor.
 	 *
-	 * @param Registry $config
+	 * @param   Request        $request       An optional argument to provide dependency injection for the Http request object.
+	 * @param   Structure      $config        An optional argument to provide dependency injection for the application's
+	 *                                        config object.
+	 * @param   WebEnvironment $environment   An optional argument to provide dependency injection for the application's
+	 *                                        environment object.
 	 *
-	 * @return  void
+	 * @since   2.0
 	 */
-	protected function loadConfiguration(Registry $config)
+	public function __construct(Request $request = null, Structure $config = null, WebEnvironment $environment = null)
 	{
-		parent::loadConfiguration($config);
+		parent::__construct($request, $config, $environment);
 
-		$config->loadFile(WINDWALKER_ETC . '/dev/config.yml', 'yaml');
+		$this->boot();
 	}
 }

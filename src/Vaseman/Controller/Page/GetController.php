@@ -10,14 +10,14 @@ namespace Vaseman\Controller\Page;
 
 use Vaseman\File\AbstractFileProcessor;
 use Vaseman\View\Page\PageHtmlView;
-use Windwalker\Core\Controller\Controller;
+use Windwalker\Core\Controller\AbstractController;
 
 /**
  * The GetController class.
  * 
  * @since  {DEPLOY_VERSION}
  */
-class GetController extends Controller
+class GetController extends AbstractController
 {
 	/**
 	 * Property processor.

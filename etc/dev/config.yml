@@ -1,6 +1,7 @@
 system:
     debug: 1
     timezone: 'UTC'
+    error_reporting: -1
 cache:
     enabled: 0
     storage: file

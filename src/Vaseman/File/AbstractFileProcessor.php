@@ -14,12 +14,13 @@ use Vaseman\File\Helper\ProcessorHelper;
 use Windwalker\Data\Data;
 use Windwalker\Event\Event;
 use Windwalker\Ioc;
-use Windwalker\Registry\Registry;
+use Windwalker\String\StringHelper;
+use Windwalker\Structure\Structure;
 
 /**
  * The AbstractFileProcessor class.
  *
- * @property-read  Registry  $config  Page config.
+ * @property-read  Structure  $config  Page config.
  * 
  * @since  {DEPLOY_VERSION}
  */
@@ -63,7 +64,7 @@ abstract class AbstractFileProcessor
 	/**
 	 * Property config.
 	 *
-	 * @var Registry
+	 * @var Structure
 	 */
 	protected $config;
 
@@ -85,6 +86,11 @@ abstract class AbstractFileProcessor
 	 */
 	public static function getInstance($type = 'twig', $file = null, $root = null, $folder)
 	{
+		if ($type == 'php' && (StringHelper::endsWith($file, '.blade.php') || StringHelper::endsWith($file, '.edge.php')))
+		{
+			$type = 'Edge';
+		}
+
 		$class = sprintf(__NAMESPACE__ . '\%sProcessor', ucfirst($type));
 
 		if (!class_exists($class))
@@ -116,7 +122,7 @@ abstract class AbstractFileProcessor
 		$this->root = realpath($root);
 		$this->folder = $folder;
 
-		$this->config = new Registry;
+		$this->config = new Structure;
 	}
 
 	/**
@@ -153,14 +159,14 @@ abstract class AbstractFileProcessor
 				array_shift($template);
 			}
 
-			$this->config->loadArray($config);
+			$this->config->load($config);
 			$this->config->merge(Ioc::getConfig());
 			$this->getData()->bind(array('config' => $this->config->toArray()));
 
 			// Target permalink
-			if ($this->config['permalink'])
+			if ($this->config->get('permalink'))
 			{
-				$this->target = rtrim($this->config['permalink'], '/');
+				$this->target = rtrim($this->config->get('permalink'), '/');
 
 				if (substr($this->target, -5) != '.html')
 				{
@@ -277,7 +283,7 @@ abstract class AbstractFileProcessor
 	/**
 	 * Method to get property Config
 	 *
-	 * @return  Registry
+	 * @return  Structure
 	 */
 	public function getConfig()
 	{
@@ -287,7 +293,7 @@ abstract class AbstractFileProcessor
 	/**
 	 * Method to set property config
 	 *
-	 * @param   Registry $config
+	 * @param   Structure $config
 	 *
 	 * @return  static  Return self to support chaining.
 	 */
@@ -303,7 +309,7 @@ abstract class AbstractFileProcessor
 	 *
 	 * @param string $name
 	 *
-	 * @return  Registry
+	 * @return  Structure
 	 */
 	public function __get($name)
 	{

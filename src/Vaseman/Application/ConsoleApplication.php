@@ -11,8 +11,8 @@ namespace Vaseman\Application;
 use Vaseman\Command\InitCommand;
 use Vaseman\Error\ConsoleErrorHandler;
 use Windwalker\Console\Application;
-use Windwalker\Console\IO\IOFactory;
 use Windwalker\Environment\Environment;
+use Windwalker\Structure\Structure;
 
 /**
  * The ConsoleApplication class.
@@ -26,17 +26,17 @@ class ConsoleApplication extends Application
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	public function boot()
 	{
 		$this->set('outer_project', true);
 
 		ConsoleErrorHandler::register();
 
-		parent::initialise();
+		parent::boot();
 
 		$env = new Environment;
 
-		$root = $env->server->getWorkingDirectory();
+		$root = $env->platform->getWorkingDirectory();
 
 		$this->set('project.path.root', $root);
 		$this->set('project.path.data', $root . '/.vaseman');
@@ -57,17 +57,11 @@ class ConsoleApplication extends Application
 	/**
 	 * loadConfiguration
 	 *
-	 * @param \Windwalker\Registry\Registry $config
-	 *
-	 * @return  void
+	 * @param Structure $config
+	 * @param string    $name
 	 */
-	protected function loadConfiguration($config)
+	protected function loadConfiguration(Structure $config, $name = null)
 	{
-		$file = $this->get('project.path.root') . '/.vaseman/config.yml';
-
-		if (is_file($file))
-		{
-			$config->loadFile($file, 'yaml');
-		}
+		parent::loadConfiguration($config, $name);
 	}
 }

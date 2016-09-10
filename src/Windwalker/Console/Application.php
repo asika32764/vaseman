@@ -1,98 +1,51 @@
 <?php
 /**
- * Part of starter project. 
+ * Part of Windwalker project.
  *
- * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
- * @license    GNU General Public License version 2 or later;
+ * @copyright  Copyright (C) 2014 - 2015 LYRASOFT. All rights reserved.
+ * @license    GNU Lesser General Public License version 3 or later.
  */
 
 namespace Windwalker\Console;
 
-use Vaseman\Command\UpCommand;
-use Windwalker\Core\Console\WindwalkerConsole;
-use Windwalker\Core\Provider\CacheProvider;
-use Windwalker\Core\Provider\DatabaseProvider;
-use Windwalker\Core\Provider\EventProvider;
-use Windwalker\Core\Provider\LanguageProvider;
-use Windwalker\Core\Provider\RouterProvider;
-use Windwalker\Core\Provider\TemplateEngineProvider;
-use Windwalker\Core\Router\RestfulRouter;
-use Windwalker\DI\ServiceProviderInterface;
-use Windwalker\Registry\Registry;
-use Windwalker\User\UserPackage;
-use Windwalker\Windwalker;
+use Windwalker\Core\Console\CoreConsole;
+use Windwalker\Core\Provider;
+use Windwalker\Debugger\Helper\ComposerInformation;
+use Windwalker\VasemanTrait;
 
 /**
  * The WindwalkerConsole class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1.1
  */
-class Application extends WindwalkerConsole
+class Application extends CoreConsole
 {
-	/**
-	 * Property name.
-	 *
-	 * @var  string
-	 */
-	protected $name = 'Vaseman';
+	use VasemanTrait;
 
 	/**
-	 * Property version.
+	 * Property title.
 	 *
 	 * @var  string
 	 */
-	protected $version = '2.0';
+	protected $title = 'Vaseman';
+
+	/**
+	 * Property configPath.
+	 *
+	 * @var  string
+	 */
+	protected $rootPath = WINDWALKER_ROOT;
 
 	/**
 	 * initialise
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	protected function init()
 	{
-		Windwalker::prepareSystemPath($this->config);
+		parent::init();
 
-		parent::initialise();
-
-		$this->setHelp(<<<HELP
-Welcome to Vaseman Console.
-HELP
-);
-
-		$this->setDescription('Vaseman console system.');
-	}
-
-	/**
-	 * loadProviders
-	 *
-	 * @return  ServiceProviderInterface[]
-	 */
-	public static function loadProviders()
-	{
-		return array(
-			/*
-			 * Default Providers:
-			 * -----------------------------------------
-			 * This is some default service providers, we don't recommend to remove them,
-			 * But you can replace with yours, Make sure all the needed container key has
-			 * registered in your own providers.
-			 */
-			'event'    => new EventProvider,
-			'database' => new DatabaseProvider,
-			'lang'     => new LanguageProvider,
-			'cache'    => new CacheProvider,
-			'router'   => new RouterProvider,
-			'template' => new TemplateEngineProvider
-
-			/*
-			 * Custom Providers:
-			 * -----------------------------------------
-			 * You can add your own providers here. If you installed a 3rd party packages from composer,
-			 * but this package need some init logic, create a service provider to do this and register it here.
-			 */
-
-			// Custom Providers here...
-		);
+		$this->version = 3;
 	}
 
 	/**
@@ -102,6 +55,8 @@ HELP
 	 */
 	public function registerCommands()
 	{
+		parent::registerCommands();
+
 		/*
 		 * Register Commands
 		 * --------------------------------------------
@@ -110,34 +65,6 @@ HELP
 		 */
 
 		// Your commands here.
-		$this->addCommand(new UpCommand);
-	}
-
-	/**
-	 * getPackages
-	 *
-	 * @return  array
-	 */
-	public static function loadPackages()
-	{
-		/*
-		 * Get Global Packages
-		 * -----------------------------------------
-		 * If you want a package can be use in every applications (for example: Web and Console),
-		 * set it in Windwalker\Windwalker object.
-		 */
-		$packages = Windwalker::loadPackages();
-
-		/*
-		 * Get Packages for This Application
-		 * -----------------------------------------
-		 * If you want a package only use in this application or want to override a global package,
-		 * set it here. Example: $packages[] = new Flower\FlowerPackage;
-		 */
-
-		// Your packages here...
-
-		return $packages;
 	}
 
 	/**
@@ -147,6 +74,7 @@ HELP
 	 */
 	protected function prepareExecute()
 	{
+		parent::prepareExecute();
 	}
 
 	/**
@@ -159,18 +87,5 @@ HELP
 	protected function postExecute($result = null)
 	{
 		return $result;
-	}
-
-	/**
-	 * loadConfiguration
-	 *
-	 * @param Registry $config
-	 *
-	 * @throws  \RuntimeException
-	 * @return  void
-	 */
-	protected function loadConfiguration($config)
-	{
-		Windwalker::loadConfiguration($this->config);
 	}
 }
