@@ -31,6 +31,7 @@ class PhpProcessor extends AbstractEngineProcessor
 		if (StringHelper::endsWith($filename, '.edge.php'))
 		{
 			$subProcessor = AbstractFileProcessor::getInstance('edge', $this->file, $this->root, $this->folder);
+			$subProcessor->setData($this->getData());
 
 			$this->target = $subProcessor->getTarget();
 
@@ -39,6 +40,7 @@ class PhpProcessor extends AbstractEngineProcessor
 		elseif (StringHelper::endsWith($filename, '.blade.php'))
 		{
 			$subProcessor = AbstractFileProcessor::getInstance('blade', $this->file, $this->root, $this->folder);
+			$subProcessor->setData($this->getData());
 
 			$this->target = $subProcessor->getTarget();
 

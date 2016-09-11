@@ -14,7 +14,6 @@ use Vaseman\Processor\Helper\ProcessorHelper;
 use Windwalker\Data\Data;
 use Windwalker\Event\Event;
 use Windwalker\Ioc;
-use Windwalker\String\StringHelper;
 use Windwalker\Structure\Structure;
 
 /**
@@ -147,7 +146,7 @@ abstract class AbstractFileProcessor
 		}
 
 		// URI
-		$uri = Ioc::get('uri.data');
+		$uri = Ioc::get('view.data.uri');
 
 		try
 		{
@@ -188,6 +187,7 @@ abstract class AbstractFileProcessor
 		}
 
 		$this->data->uri = $uri;
+		$this->data->path = Ioc::get('view.data.path');
 
 		$event = new Event('loadProvider');
 		$event['data'] = $this->data;

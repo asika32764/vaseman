@@ -9,18 +9,10 @@
 namespace Vaseman\Processor;
 
 use Vaseman\Edge\VasemanEdgeLoader;
-use Vaseman\Twig\VasemanTwigLoader;
 use Windwalker\Core\Renderer\EdgeRenderer;
 use Windwalker\Core\Renderer\RendererHelper;
 use Windwalker\Edge\Cache\EdgeArrayCache;
-use Windwalker\Edge\Edge;
-use Windwalker\Edge\Loader\EdgeStringLoader;
-use Windwalker\Event\Event;
 use Windwalker\Filesystem\File;
-use Windwalker\Ioc;
-use Windwalker\Renderer\AbstractEngineRenderer;
-use Windwalker\Renderer\TwigRenderer;
-use Windwalker\Structure\Structure;
 use Windwalker\Utilities\Queue\PriorityQueue;
 
 /**
@@ -52,7 +44,7 @@ class EdgeProcessor extends AbstractEngineProcessor
 		{
 			$layout = substr($layout, 0, -strlen($this->ext));
 		}
-		
+
 		return $renderer->render($layout, (array) $this->data);
 	}
 

@@ -40,6 +40,11 @@ abstract class AbstractEngineProcessor extends AbstractFileProcessor
 		return $this->output = $this->renderParentLayout($output);
 	}
 
+	/**
+	 * doRender
+	 *
+	 * @return  string
+	 */
 	abstract protected function doRender();
 
 	/**

@@ -78,13 +78,15 @@ class GetController extends AbstractController
 		array_pop($layout);
 
 		// URI Path
-		$view['path'] = explode('/', str_replace('\\', '/', $paths));
+		$path = explode('/', str_replace('\\', '/', $paths));
+
+		Ioc::getContainer()->share('view.data.path', $path);
 
 		$uri = new Structure;
 		$uri['base'] = str_repeat('../', count($layout)) ? : './';
 		$uri['media'] = str_repeat('../', count($layout)) . 'media/';
 
-		Ioc::getContainer()->share('uri.data', $uri);
+		Ioc::getContainer()->share('view.data.uri', $uri);
 
 		$this->processor = $processor = $view->setLayout($paths)->render();
 
