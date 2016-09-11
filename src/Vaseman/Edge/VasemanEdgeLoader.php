@@ -34,7 +34,10 @@ class VasemanEdgeLoader extends EdgeFileLoader
 	 */
 	public function load($path)
 	{
-		return $this->processor->prepareData(file_get_contents($path));
+		$tmpl = $this->processor->prepareData(file_get_contents($path));
+
+		// Push new data to environment
+		return '<?php foreach ($this->loader->getProcessor()->getData()->dump() as $__key => $__value) { $$__key = $__value; }; ?> ' . $tmpl;
 	}
 
 	/**
