@@ -8,13 +8,10 @@
 
 namespace Vaseman\Command;
 
-use Vaseman\Controller\Page\GetController;
 use Vaseman\Asset\Asset;
-use Vaseman\File\AbstractFileProcessor;
+use Vaseman\Processor\AbstractFileProcessor;
 use Windwalker\Console\Command\Command;
 use Windwalker\Core\DateTime\DateTime;
-use Windwalker\Core\Package\PackageHelper;
-use Windwalker\Core\Utilities\DateTimeHelper;
 use Windwalker\Event\Event;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Filesystem\Folder;
@@ -92,7 +89,7 @@ class UpCommand extends Command
 
 		/** @var Application $app */
 		$app = new Application;
-		$app->set('outer_project', 1);
+		$app->set('outer_project', $this->console->get('outer_project'));
 		$app->boot();
 		$app->getRouter();
 

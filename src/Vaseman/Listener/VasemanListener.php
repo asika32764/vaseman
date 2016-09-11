@@ -8,10 +8,12 @@
 
 namespace Vaseman\Listener;
 
+use Windwalker\Core\Renderer\RendererHelper;
 use Windwalker\Environment\Environment;
 use Windwalker\Event\Event;
 use Windwalker\Ioc;
 use Windwalker\Loader\ClassLoader;
+use Windwalker\Utilities\Queue\PriorityQueue;
 
 /**
  * The VasemanListener class.

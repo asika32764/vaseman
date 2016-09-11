@@ -10,7 +10,7 @@ namespace Vaseman\Twig;
 
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
-use Vaseman\File\TwigProcessor;
+use Vaseman\Processor\TwigProcessor;
 
 /**
  * The VasemanTwigLoader class.

@@ -1,0 +1,154 @@
+<?php 
+
+return array (
+  'execution' => 
+  array (
+    'datetime' => '2016-09-11 09:26:47',
+    'timestamp' => 1473586007,
+    'start' => 1473586007.1967571,
+    'memory' => 3322536,
+  ),
+  'outer_project' => NULL,
+  'packages' => 
+  array (
+    'vaseman' => 'Vaseman\\VasemanPackage',
+  ),
+  'providers' => 
+  array (
+    'logger' => 'Windwalker\\Core\\Provider\\LoggerProvider',
+    'event' => 'Windwalker\\Core\\Provider\\EventProvider',
+    'mailer' => 'Windwalker\\Core\\Mailer\\MailerProvider',
+    'mailer_adapter' => 'Windwalker\\Core\\Mailer\\SwiftMailerProvider',
+    'web' => 'Windwalker\\Core\\Provider\\WebProvider',
+    'error' => 'Windwalker\\Core\\Error\\ErrorHandlingProvider',
+    'database' => 'Windwalker\\Core\\Provider\\DatabaseProvider',
+    'router' => 'Windwalker\\Core\\Provider\\RouterProvider',
+    'lang' => 'Windwalker\\Core\\Provider\\LanguageProvider',
+    'renderer' => 'Windwalker\\Core\\Provider\\RendererProvider',
+    'cache' => 'Windwalker\\Core\\Provider\\CacheProvider',
+    'session' => 'Windwalker\\Core\\Provider\\SessionProvider',
+    'auth' => 'Windwalker\\Core\\Provider\\UserProvider',
+    'security' => 'Windwalker\\Core\\Provider\\SecurityProvider',
+    'datetime' => 'Windwalker\\Core\\Provider\\DateTimeProvider',
+    'asset' => 'Windwalker\\Core\\Asset\\AssetProvider',
+  ),
+  'configs' => 
+  array (
+    100 => 'D:\\www\\vaseman/etc/config.yml',
+    800 => 'D:\\www\\vaseman/etc/secret.yml',
+  ),
+  'listeners' => 
+  array (
+    'vaseman' => 'Vaseman\\Listener\\VasemanListener',
+    500 => 'Windwalker\\Listener\\SystemListener',
+  ),
+  'di' => 
+  array (
+    'aliases' => 
+    array (
+      'application' => 'Windwalker\\Core\\Application\\WindwalkerApplicationInterface',
+      'app' => 'Windwalker\\Core\\Application\\WindwalkerApplicationInterface',
+      'config' => 'Windwalker\\Core\\Config\\Config',
+      'package.resolver' => 'Windwalker\\Core\\Package\\PackageResolver',
+      'input' => 'Windwalker\\IO\\Input',
+      'environment' => 'Windwalker\\Environment\\WebEnvironment',
+      'browser' => 'Windwalker\\Environment\\Browser\\Browser',
+      'platform' => 'Windwalker\\Environment\\Platform',
+      'uri' => 'Windwalker\\Uri\\UriData',
+      'error.handler' => 'Windwalker\\Core\\Error\\ErrorManager',
+      'logger' => 'Windwalker\\Core\\Logger\\LoggerManager',
+      'dispatcher' => 'Windwalker\\Core\\Event\\EventDispatcher',
+      'database' => 'Windwalker\\Database\\Driver\\AbstractDatabaseDriver',
+      'db' => 'Windwalker\\Database\\Driver\\AbstractDatabaseDriver',
+      'sql.exporter' => 'Windwalker\\Core\\Database\\Exporter\\AbstractExporter',
+      'router' => 'Windwalker\\Core\\Router\\MainRouter',
+      'language' => 'Windwalker\\Core\\Language\\CoreLanguage',
+      'renderer.manager' => 'Windwalker\\Core\\Renderer\\RendererManager',
+      'renderer' => 'Windwalker\\Core\\Renderer\\RendererManager',
+      'package.finder' => 'Windwalker\\Core\\Renderer\\Finder\\PackageFinder',
+      'widget.manager' => 'Windwalker\\Core\\Widget\\WidgetManager',
+      'cache.manager' => 'Windwalker\\Core\\Cache\\CacheManager',
+      'cache' => 'Windwalker\\Cache\\Cache',
+      'session' => 'Windwalker\\Session\\Session',
+      'authentication' => 'Windwalker\\Authentication\\AuthenticationInterface',
+      'authorisation' => 'Windwalker\\Authorisation\\AuthorisationInterface',
+      'user.manager' => 'Windwalker\\Core\\User\\UserManager',
+      'security.csrf' => 'Windwalker\\Core\\Security\\CsrfGuard',
+      'crypt' => 'Windwalker\\Crypt\\Crypt',
+      'datetime' => 'Windwalker\\Core\\DateTime\\DateTime',
+      'asset' => 'Windwalker\\Core\\Asset\\AssetManager',
+      'script.manager' => 'Windwalker\\Core\\Asset\\ScriptManager',
+      'mailer' => 'Windwalker\\Core\\Mailer\\MailerManager',
+    ),
+  ),
+  'path' => 
+  array (
+    'root' => 'D:\\www\\vaseman',
+    'bin' => 'D:\\www\\vaseman/bin',
+    'cache' => 'D:\\www\\vaseman/cache',
+    'etc' => 'D:\\www\\vaseman/etc',
+    'logs' => 'D:\\www\\vaseman/logs',
+    'resources' => 'D:\\www\\vaseman/resources',
+    'source' => 'D:\\www\\vaseman/src',
+    'temp' => 'D:\\www\\vaseman/tmp',
+    'templates' => 'D:\\www\\vaseman/layouts',
+    'vendor' => 'D:\\www\\vaseman/vendor',
+    'public' => 'D:\\www\\vaseman',
+    'migrations' => 'D:\\www\\vaseman/resources/migrations',
+    'seeders' => 'D:\\www\\vaseman/resources/seeders',
+    'languages' => 'D:\\www\\vaseman/resources/languages',
+  ),
+  'routing' => 
+  array (
+    'files' => 
+    array (
+      'web' => 'D:\\www\\vaseman/etc/routing.yml',
+    ),
+  ),
+  'middlewares' => 
+  array (
+    900 => 'Windwalker\\Core\\Application\\Middleware\\SessionRaiseMiddleware',
+    800 => 'Windwalker\\Core\\Application\\Middleware\\RoutingMiddleware',
+  ),
+  'error' => 
+  array (
+    'handlers' => 
+    array (
+    ),
+  ),
+  'user' => 
+  array (
+    'handler' => 'Windwalker\\Core\\User\\NullUserHandler',
+    'methods' => 
+    array (
+    ),
+    'policies' => 
+    array (
+    ),
+  ),
+  'system' => 
+  array (
+    'debug' => 0,
+    'timezone' => 'UTC',
+    'error_reporting' => -1,
+    'offline' => false,
+  ),
+  'project' => 
+  array (
+    'name' => 'Vaseman',
+  ),
+  'folders' => 
+  array (
+    0 => 'entries',
+    1 => 'media',
+  ),
+  'dev' => 
+  array (
+    'allow_ips' => 
+    array (
+      0 => '127.0.0.1',
+      1 => 'fe80::1',
+      2 => '::1',
+    ),
+  ),
+);

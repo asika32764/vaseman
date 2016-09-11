@@ -6,11 +6,11 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Vaseman\File;
+namespace Vaseman\Processor;
 
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
-use Vaseman\File\Helper\ProcessorHelper;
+use Vaseman\Processor\Helper\ProcessorHelper;
 use Windwalker\Data\Data;
 use Windwalker\Event\Event;
 use Windwalker\Ioc;
@@ -81,16 +81,12 @@ abstract class AbstractFileProcessor
 	 * @param string       $type
 	 * @param \SplFileInfo $file
 	 * @param string       $root
+	 * @param string       $folder
 	 *
 	 * @return AbstractFileProcessor
 	 */
-	public static function getInstance($type = 'twig', $file = null, $root = null, $folder)
+	public static function getInstance($type = 'twig', $file = null, $root = null, $folder = null)
 	{
-		if ($type == 'php' && (StringHelper::endsWith($file, '.blade.php') || StringHelper::endsWith($file, '.edge.php')))
-		{
-			$type = 'Edge';
-		}
-
 		$class = sprintf(__NAMESPACE__ . '\%sProcessor', ucfirst($type));
 
 		if (!class_exists($class))
@@ -150,6 +146,9 @@ abstract class AbstractFileProcessor
 			$template = explode('---', $template, 2);
 		}
 
+		// URI
+		$uri = Ioc::get('uri.data');
+
 		try
 		{
 			$config = Yaml::parse($template[0]);
@@ -173,8 +172,8 @@ abstract class AbstractFileProcessor
 					$this->target .= '/index.html';
 				}
 
-				$this->data->uri['base'] = ProcessorHelper::getBackwards($this->target) ? : './';
-				$this->data->uri['media'] = ProcessorHelper::getBackwards($this->target) . 'media/';
+				$uri['base'] = ProcessorHelper::getBackwards($this->target) ? : './';
+				$uri['media'] = ProcessorHelper::getBackwards($this->target) . 'media/';
 			}
 			else
 			{
@@ -187,6 +186,8 @@ abstract class AbstractFileProcessor
 		{
 			$template = implode('---', $template);
 		}
+
+		$this->data->uri = $uri;
 
 		$event = new Event('loadProvider');
 		$event['data'] = $this->data;
@@ -277,7 +278,7 @@ abstract class AbstractFileProcessor
 	 */
 	public function getLayout()
 	{
-		return str_replace($this->getRoot(), '', $this->file->getPathname());
+		return trim(str_replace($this->getRoot(), '', $this->file->getPathname()), '/\\');
 	}
 
 	/**

@@ -8,7 +8,7 @@
 
 namespace Vaseman\View;
 
-use Vaseman\File\AbstractFileProcessor;
+use Vaseman\Processor\AbstractFileProcessor;
 use Vaseman\Helper\Set\HelperSet;
 use Windwalker\Data\Data;
 use Windwalker\Filesystem\File;
@@ -35,6 +35,17 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
 	 * @var string
 	 */
 	protected $path;
+
+	/**
+	 * Property allowPageExts.
+	 *
+	 * @var  array
+	 */
+	protected $allowPageExts = [
+		'.twig',
+		'.blade.php',
+		'.edge.php'
+	];
 
 	/**
 	 * doRender
@@ -90,9 +101,16 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
 			/** @var \SplFileInfo $file */
 			foreach ($files as $file)
 			{
-				if (File::stripExtension($file->getFilename()) == $name)
+				$filename = $file->getFilename();
+
+				foreach ($this->allowPageExts as $ext)
 				{
-					return $file;
+					$lookName = $name . $ext;
+
+					if ($lookName == $filename)
+					{
+						return $file;
+					}
 				}
 			}
 		}
@@ -109,17 +127,6 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
 	 */
 	protected function prepareGlobals($data)
 	{
-		$uri = new Structure;
-
-		$layout = explode('/', $this->getLayout());
-		array_pop($layout);
-
-		$uri['base'] = str_repeat('../', count($layout)) ? : './';
-		$uri['media'] = str_repeat('../', count($layout)) . 'media/';
-
-		$layout = implode('/', (array) $layout);
-
-		$this->data->uri = $uri->toArray();
 		$this->data->helper = new HelperSet($this);
 		$this->data->path = explode('/', $this->getLayout());
 

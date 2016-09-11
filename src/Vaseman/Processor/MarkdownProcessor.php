@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Vaseman\File;
+namespace Vaseman\Processor;
 
 use Michelf\MarkdownExtra;
 
@@ -32,6 +32,6 @@ class MarkdownProcessor extends TwigProcessor
 
 		$content = $markdown->defaultTransform($md);
 
-		return $this->output = $this->renderLayout($content);
+		return $this->output = $this->renderParentLayout($content);
 	}
 }

@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Vaseman\File\Helper;
+namespace Vaseman\Processor\Helper;
 
 /**
  * The ProcessorHelper class.

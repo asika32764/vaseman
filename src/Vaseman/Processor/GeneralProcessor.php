@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Vaseman\File;
+namespace Vaseman\Processor;
 
 /**
  * The CopyProcessor class.

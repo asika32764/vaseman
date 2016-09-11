@@ -8,9 +8,11 @@
 
 namespace Vaseman\Controller\Page;
 
-use Vaseman\File\AbstractFileProcessor;
+use Vaseman\Processor\AbstractFileProcessor;
 use Vaseman\View\Page\PageHtmlView;
 use Windwalker\Core\Controller\AbstractController;
+use Windwalker\Ioc;
+use Windwalker\Structure\Structure;
 
 /**
  * The GetController class.
@@ -70,6 +72,16 @@ class GetController extends AbstractController
 		$view['path'] = (array) $paths;
 
 		$paths = $paths ? implode('/', (array) $paths) : 'index';
+
+		// URI
+		$layout = explode('/', str_replace('\\', '/', $paths));
+		array_pop($layout);
+
+		$uri = new Structure;
+		$uri['base'] = str_repeat('../', count($layout)) ? : './';
+		$uri['media'] = str_repeat('../', count($layout)) . 'media/';
+
+		Ioc::getContainer()->share('uri.data', $uri);
 
 		$this->processor = $processor = $view->setLayout($paths)->render();
 
