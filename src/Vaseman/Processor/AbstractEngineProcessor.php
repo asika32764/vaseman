@@ -66,8 +66,8 @@ abstract class AbstractEngineProcessor extends AbstractFileProcessor
 
 		$view = new PageHtmlView;
 
-		$view->setPath(WINDWALKER_LAYOUTS);
-		$view->addPath(WINDWALKER_LAYOUTS, PriorityQueue::HIGH);
+		$view->setPath($config['path.templates']);
+		$view->addPath($config['path.templates'], PriorityQueue::HIGH);
 		$view->getData()->bind($data);
 
 		$this->processor = $processor = $view->setLayout($config['layout'])->render();

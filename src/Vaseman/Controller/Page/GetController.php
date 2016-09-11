@@ -77,6 +77,9 @@ class GetController extends AbstractController
 		$layout = explode('/', str_replace('\\', '/', $paths));
 		array_pop($layout);
 
+		// URI Path
+		$view['path'] = explode('/', str_replace('\\', '/', $paths));
+
 		$uri = new Structure;
 		$uri['base'] = str_repeat('../', count($layout)) ? : './';
 		$uri['media'] = str_repeat('../', count($layout)) . 'media/';

@@ -128,7 +128,6 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
 	protected function prepareGlobals($data)
 	{
 		$this->data->helper = new HelperSet($this);
-		$this->data->path = explode('/', $this->getLayout());
 
 		$this->data->bind(GlobalProvider::loadGlobalProvider());
 	}
