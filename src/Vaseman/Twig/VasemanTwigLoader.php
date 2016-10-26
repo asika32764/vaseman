@@ -10,6 +10,7 @@ namespace Vaseman\Twig;
 
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
+use Twig_Source;
 use Vaseman\Processor\TwigProcessor;
 
 /**
@@ -55,6 +56,18 @@ class VasemanTwigLoader extends \Twig_Loader_Filesystem
 		$template = parent::getSource($name);
 
 		return $this->processor->prepareData($template);
+	}
+
+	/**
+	 * getSourceContext
+	 *
+	 * @param string $name
+	 *
+	 * @return  Twig_Source
+	 */
+	public function getSourceContext($name)
+	{
+		return new Twig_Source($this->getSource($name), $name, '');
 	}
 
 	/**
