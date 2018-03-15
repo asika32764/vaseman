@@ -110,13 +110,13 @@ class InitCommand extends Command
      */
     protected function copyFolder($src, $dest, $overwrite = true)
     {
-        $this->out('<info>Create</info>: ' . $dest);
-
         if (is_dir($dest) && $overwrite) {
             Folder::delete($dest);
         }
 
-        Folder::copy($src, $dest);
+        foreach (Folder::files($src, true, Folder::PATH_RELATIVE) as $file) {
+            $this->copyFile($src . '/' . $file, $dest . '/' . $file);
+        }
     }
 
     /**

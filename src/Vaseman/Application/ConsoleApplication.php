@@ -11,6 +11,8 @@ namespace Vaseman\Application;
 use Vaseman\Command\InitCommand;
 use Vaseman\Error\ConsoleErrorHandler;
 use Windwalker\Console\Application;
+use Windwalker\Console\IO\IOFactory;
+use Windwalker\Console\IO\NullInput;
 use Windwalker\Environment\Environment;
 use Windwalker\Structure\Structure;
 
@@ -39,6 +41,21 @@ class ConsoleApplication extends Application
         $this->set('project.path.working', $working);
 
         parent::boot();
+    }
+
+    /**
+     * prepareExecute
+     *
+     * @return  void
+     *
+     * @since  __DEPLOY_VERSION__
+     */
+    protected function prepareExecute()
+    {
+        // TODO: Use parent if core version getter fix
+        if ($this->getRootCommand()->getOption('n')) {
+            IOFactory::getIO()->setInput(new NullInput);
+        }
     }
 
     /**
