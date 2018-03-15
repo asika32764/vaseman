@@ -35,14 +35,15 @@ class MarkdownNode extends \Twig_Node
 	 * @param \Twig_Compiler $compiler
 	 *
 	 * @return  void
+	 * @throws \Exception
 	 */
 	public function compile(\Twig_Compiler $compiler)
 	{
 		$data = $this->getNode('value')->getAttribute('data');
 
-		$markdown = new MarkdownExtra;
+		$markdown = new \ParsedownExtra();
 
-		$data = $markdown->defaultTransform($data);
+		$data = $markdown->text($data);
 
 		$compiler->write('echo ')->string($data)->raw(';');
 	}

@@ -66,12 +66,40 @@ class PageHelper extends AbstractHelper
 	 * @param $key
 	 *
 	 * @return string
+	 *
+	 * @deprecated Use active()
 	 */
 	public function isActive($path, $key)
 	{
+		show($this->parent->getView()->get('paths'));
+		exit(' @Checkpoint');
+		
 		$path = implode('.', $path);
 
 		if (strpos($path, $key) !== false)
+		{
+			return 'active';
+		}
+
+		return '';
+	}
+
+	/**
+	 * active
+	 *
+	 * @param string $key
+	 *
+	 * @return  string
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function active($key)
+	{
+		$paths = $this->parent->getView()->get('paths');
+
+		$paths = implode('/', $paths);
+
+		if (strpos($paths, $key) !== false)
 		{
 			return 'active';
 		}

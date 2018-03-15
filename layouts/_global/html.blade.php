@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{{ $uri['asset'] }}images/favicon.ico" />
+    <link rel="shortcut icon" href="{{ $uri['asset'] }}/images/favicon.ico" />
 
     <title>@yield('title', 'Vaseman Prototype System')</title>
 
@@ -59,7 +59,9 @@
     @section('body')
     <div class="main-body pb-4">
         @section('content-wrapper')
-            @yield('content', 'Content')
+            @section('content')
+            {!! $content or 'Content' !!}
+            @show
         @show
     </div>
     @show

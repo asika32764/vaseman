@@ -14,15 +14,18 @@
         "symfony/yaml": "~3.0",
         "filp/whoops": "~1.0|~2.0",
         "fzaninotto/faker": "~1.0",
-
-        "twig/twig": "~1.0",
-        "michelf/php-markdown": "~1.0"
+        "erusev/parsedown": "^1.7",
+        "erusev/parsedown-extra": "^0.7.1"
     },
     "require-dev": {
+        "twig/twig": "~1.0"
     },
     "autoload": {
         "psr-4": {
             "": "src/"
         }
-    }
+    },
+    "bin": [
+        "bin/vaseman"
+    ]
 }

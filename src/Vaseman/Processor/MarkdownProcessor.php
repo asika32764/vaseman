@@ -8,7 +8,7 @@
 
 namespace Vaseman\Processor;
 
-use Michelf\MarkdownExtra;
+use ParsedownExtra;
 
 /**
  * The MarkdownProcessor class.
@@ -21,6 +21,7 @@ class MarkdownProcessor extends TwigProcessor
 	 * render
 	 *
 	 * @return  string
+	 * @throws \Exception
 	 */
 	public function render()
 	{
@@ -28,9 +29,9 @@ class MarkdownProcessor extends TwigProcessor
 
 		$md = $this->prepareData($md);
 
-		$markdown = new MarkdownExtra;
+		$markdown = new ParsedownExtra();
 
-		$content = $markdown->defaultTransform($md);
+		$content = $markdown->text($md);
 
 		return $this->output = $this->renderParentLayout($content);
 	}

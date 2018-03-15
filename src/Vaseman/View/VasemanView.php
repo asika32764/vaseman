@@ -43,6 +43,7 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
 	 */
 	protected $allowPageExts = [
 		'.twig',
+		'.md',
 		'.blade.php',
 		'.edge.php'
 	];
