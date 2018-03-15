@@ -88,7 +88,8 @@ class GetController extends AbstractController
 
 		Ioc::getContainer()->share('view.data.uri', $uri);
 
-		$this->processor = $processor = $view->setLayout($paths)->render();
+        /** @var AbstractFileProcessor $processor */
+        $this->processor = $processor = $view->setLayout($paths)->render();
 
 		return $processor->getOutput();
 	}

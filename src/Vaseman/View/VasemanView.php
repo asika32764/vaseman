@@ -47,13 +47,14 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
 		'.edge.php'
 	];
 
-	/**
-	 * doRender
-	 *
-	 * @param  Data $data
-	 *
-	 * @return string
-	 */
+    /**
+     * doRender
+     *
+     * @param  Data $data
+     *
+     * @return string
+     * @throws \UnexpectedValueException
+     */
 	protected function doRender($data)
 	{
 		$this->prepareGlobals($this->getData());

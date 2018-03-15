@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -10,6 +10,7 @@ namespace Vaseman\Processor;
 
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
+use Vaseman\Exception\NoConfigException;
 use Vaseman\Processor\Helper\ProcessorHelper;
 use Windwalker\Data\Data;
 use Windwalker\Event\Event;
@@ -19,8 +20,8 @@ use Windwalker\Structure\Structure;
 /**
  * The AbstractFileProcessor class.
  *
- * @property-read  Structure  $config  Page config.
- * 
+ * @property-read  Structure $config  Page config.
+ *
  * @since  {DEPLOY_VERSION}
  */
 abstract class AbstractFileProcessor
@@ -31,42 +32,36 @@ abstract class AbstractFileProcessor
 	 * @var  \SplFileInfo
 	 */
 	protected $file;
-
 	/**
 	 * Property data.
 	 *
 	 * @var Data
 	 */
 	protected $data;
-
 	/**
 	 * Property output.
 	 *
 	 * @var string
 	 */
 	protected $output;
-
 	/**
 	 * Property root.
 	 *
 	 * @var string
 	 */
 	protected $root;
-
 	/**
 	 * Property folder.
 	 *
 	 * @var  string
 	 */
 	protected $folder;
-
 	/**
 	 * Property config.
 	 *
 	 * @var Structure
 	 */
 	protected $config;
-
 	/**
 	 * Property target.
 	 *
@@ -114,7 +109,7 @@ abstract class AbstractFileProcessor
 			throw new \RuntimeException('Path: ' . $root . ' not exists.');
 		}
 
-		$this->root = realpath($root);
+		$this->root   = realpath($root);
 		$this->folder = $folder;
 
 		$this->config = new Structure;
@@ -138,22 +133,23 @@ abstract class AbstractFileProcessor
 	{
 		$template = explode('---', $template, 3);
 
-		if (!trim($template[0]))
-		{
-			array_shift($template);
-			$template = implode('---', $template);
-			$template = explode('---', $template, 2);
-		}
+		$config = null;
 
 		// URI
 		$uri = Ioc::get('view.data.uri');
 
 		try
 		{
-			$config = Yaml::parse($template[0]);
+			if (\count($template) !== 3)
+			{
+				throw new NoConfigException('No config');
+			}
+
+			$config = Yaml::parse($template[1]);
 
 			if ($config)
 			{
+				array_shift($template);
 				array_shift($template);
 			}
 
@@ -171,7 +167,7 @@ abstract class AbstractFileProcessor
 					$this->target .= '/index.html';
 				}
 
-				$uri['base'] = ProcessorHelper::getBackwards($this->target) ? : './';
+				$uri['base']  = ProcessorHelper::getBackwards($this->target) ?: './';
 				$uri['media'] = ProcessorHelper::getBackwards($this->target) . 'media/';
 			}
 			else
@@ -185,12 +181,16 @@ abstract class AbstractFileProcessor
 		{
 			$template = implode('---', $template);
 		}
+		catch (NoConfigException $e)
+		{
+			$template = implode('---', $template);
+		}
 
-		$this->data->uri = $uri;
+		$this->data->uri  = $uri;
 		$this->data->path = Ioc::get('view.data.path');
 
-		$event = new Event('loadProvider');
-		$event['data'] = $this->data;
+		$event              = new Event('loadProvider');
+		$event['data']      = $this->data;
 		$event['processor'] = $this;
 
 		$dispatcher = Ioc::getDispatcher();
