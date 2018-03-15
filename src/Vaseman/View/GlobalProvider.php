@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -14,35 +14,34 @@ use Windwalker\Ioc;
 
 /**
  * The GlobalProvider class.
- * 
+ *
  * @since  {DEPLOY_VERSION}
  */
 class GlobalProvider
 {
-	/**
-	 * Property data.
-	 *
-	 * @var  Data
-	 */
-	protected static $data;
+    /**
+     * Property data.
+     *
+     * @var  Data
+     */
+    protected static $data;
 
-	/**
-	 * loadGlobalProvider
-	 *
-	 * @return  Data
-	 */
-	public static function loadGlobalProvider()
-	{
-		if (static::$data)
-		{
-			return static::$data;
-		}
+    /**
+     * loadGlobalProvider
+     *
+     * @return  Data
+     */
+    public static function loadGlobalProvider()
+    {
+        if (static::$data) {
+            return static::$data;
+        }
 
-		$event = new Event('loadGlobalProvider');
-		$event['data'] = new Data;
+        $event         = new Event('loadGlobalProvider');
+        $event['data'] = new Data;
 
-		Ioc::getDispatcher()->triggerEvent($event);
+        Ioc::getDispatcher()->triggerEvent($event);
 
-		return static::$data = $event['data'];
-	}
+        return static::$data = $event['data'];
+    }
 }

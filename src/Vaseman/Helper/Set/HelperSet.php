@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -12,32 +12,30 @@ use Windwalker\Core\View\Helper\AbstractHelper;
 
 /**
  * The HelperSet class.
- * 
+ *
  * @since  {DEPLOY_VERSION}
  */
 class HelperSet extends \Windwalker\Core\View\Helper\Set\HelperSet
 {
-	/**
-	 * __get
-	 *
-	 * @param string $name
-	 *
-	 * @return AbstractHelper
-	 */
-	public function __get($name)
-	{
-		if (empty($this->getHelper($name)))
-		{
-			$class = 'Vaseman\Helper\\' . ucfirst($name) . 'Helper';
+    /**
+     * __get
+     *
+     * @param string $name
+     *
+     * @return AbstractHelper
+     */
+    public function __get($name)
+    {
+        if (empty($this->getHelper($name))) {
+            $class = 'Vaseman\Helper\\' . ucfirst($name) . 'Helper';
 
-			if (!class_exists($class))
-			{
-				return false;
-			}
+            if (!class_exists($class)) {
+                return false;
+            }
 
-			$this->helpers[$name] = new $class($this);
-		}
+            $this->helpers[$name] = new $class($this);
+        }
 
-		return $this->getHelper($name);
-	}
+        return $this->getHelper($name);
+    }
 }

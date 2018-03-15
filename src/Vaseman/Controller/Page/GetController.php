@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -16,81 +16,81 @@ use Windwalker\Structure\Structure;
 
 /**
  * The GetController class.
- * 
+ *
  * @since  {DEPLOY_VERSION}
  */
 class GetController extends AbstractController
 {
-	/**
-	 * Property processor.
-	 *
-	 * @var  AbstractFileProcessor
-	 */
-	protected $processor;
+    /**
+     * Property processor.
+     *
+     * @var  AbstractFileProcessor
+     */
+    protected $processor;
 
-	/**
-	 * Method to get property Processor
-	 *
-	 * @return  AbstractFileProcessor
-	 */
-	public function getProcessor()
-	{
-		return $this->processor;
-	}
+    /**
+     * Method to get property Processor
+     *
+     * @return  AbstractFileProcessor
+     */
+    public function getProcessor()
+    {
+        return $this->processor;
+    }
 
-	/**
-	 * Method to set property processor
-	 *
-	 * @param   AbstractFileProcessor $processor
-	 *
-	 * @return  static  Return self to support chaining.
-	 */
-	public function setProcessor($processor)
-	{
-		$this->processor = $processor;
+    /**
+     * Method to set property processor
+     *
+     * @param   AbstractFileProcessor $processor
+     *
+     * @return  static  Return self to support chaining.
+     */
+    public function setProcessor($processor)
+    {
+        $this->processor = $processor;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * doExecute
-	 *
-	 * @return  mixed
-	 */
-	protected function doExecute()
-	{
-		$paths = $this->input->getVar('paths', array());
+    /**
+     * doExecute
+     *
+     * @return  mixed
+     */
+    protected function doExecute()
+    {
+        $paths = $this->input->getVar('paths', []);
 
-		$view = new PageHtmlView;
-		$view->setConfig($this->config);
+        $view = new PageHtmlView;
+        $view->setConfig($this->config);
 
-		$path = $this->config->get('layout.path', $this->app->get('project.path.entries'));
+        $path = $this->config->get('layout.path', $this->app->get('project.path.entries'));
 
-		$view->setPath($path);
-		$view->addPath($this->app->get('project.path.layouts'));
+        $view->setPath($path);
+        $view->addPath($this->app->get('project.path.layouts'));
 
-		$view['path'] = (array) $paths;
+        $view['path'] = (array) $paths;
 
-		$paths = $paths ? implode('/', (array) $paths) : 'index';
+        $paths = $paths ? implode('/', (array) $paths) : 'index';
 
-		// URI
-		$layout = explode('/', str_replace('\\', '/', $paths));
-		array_pop($layout);
+        // URI
+        $layout = explode('/', str_replace('\\', '/', $paths));
+        array_pop($layout);
 
-		// URI Path
-		$path = explode('/', str_replace('\\', '/', $paths));
+        // URI Path
+        $path = explode('/', str_replace('\\', '/', $paths));
 
-		Ioc::getContainer()->share('view.data.path', $path);
+        Ioc::getContainer()->share('view.data.path', $path);
 
-		$uri = new Structure;
-		$uri['base'] = str_repeat('..', count($layout)) ? : '.';
-		$uri['asset'] = str_repeat('..', count($layout)) . '/asset';
+        $uri          = new Structure;
+        $uri['base']  = str_repeat('..', count($layout)) ?: '.';
+        $uri['asset'] = str_repeat('..', count($layout)) . '/asset';
 
-		Ioc::getContainer()->share('view.data.uri', $uri);
+        Ioc::getContainer()->share('view.data.uri', $uri);
 
         /** @var AbstractFileProcessor $processor */
         $this->processor = $processor = $view->setLayout($paths)->render();
 
-		return $processor->getOutput();
-	}
+        return $processor->getOutput();
+    }
 }

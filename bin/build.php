@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -17,37 +17,35 @@ Vaseman\Error\ConsoleErrorHandler::register();
  */
 class PharBuilder extends \Windwalker\Application\AbstractCliApplication
 {
-	/**
-	 * Method to run the application routines.  Most likely you will want to instantiate a controller
-	 * and execute it, or perform some sort of task directly.
-	 *
-	 * @return  void
-	 *
-	 * @since   2.0
-	 */
-	protected function doExecute()
-	{
-		if ($this->io->getOption('h') || $this->io->getOption('help'))
-		{
-			$this->help();
+    /**
+     * Method to run the application routines.  Most likely you will want to instantiate a controller
+     * and execute it, or perform some sort of task directly.
+     *
+     * @return  void
+     *
+     * @since   2.0
+     */
+    protected function doExecute()
+    {
+        if ($this->io->getOption('h') || $this->io->getOption('help')) {
+            $this->help();
 
-			return;
-		}
+            return;
+        }
 
-		$dir = $this->io->getOption('d', '../../vaseman.phar');
+        $dir = $this->io->getOption('d', '../../vaseman.phar');
 
-		$file = __DIR__ . '/' . $dir;
+        $file = __DIR__ . '/' . $dir;
 
-		if (is_file($file))
-		{
-			unlink($file);
-		}
+        if (is_file($file)) {
+            unlink($file);
+        }
 
-		$this->out('Start generating...');
+        $this->out('Start generating...');
 
-		$phar = new Phar($file);
+        $phar = new Phar($file);
 
-		$phar->setStub(<<<PHP
+        $phar->setStub(<<<PHP
 #!/usr/bin/env php
 <?php
 
@@ -55,23 +53,23 @@ Phar::mapPhar('vaseman.phar');
 
 require 'phar://vaseman.phar/bin/vaseman'; __HALT_COMPILER();
 PHP
-);
+        );
 
-		$phar->buildFromDirectory(__DIR__ . '/..');
+        $phar->buildFromDirectory(__DIR__ . '/..');
 
-		$phar->stopBuffering();
+        $phar->stopBuffering();
 
-		$this->out('Phar generated: ' . $file)->out();
-	}
+        $this->out('Phar generated: ' . $file)->out();
+    }
 
-	/**
-	 * help
-	 *
-	 * @return  void
-	 */
-	protected function help()
-	{
-		$help = <<<HELP
+    /**
+     * help
+     *
+     * @return  void
+     */
+    protected function help()
+    {
+        $help = <<<HELP
 
 Vaseman Phar Builder
 ---------------------------------
@@ -83,8 +81,8 @@ Options:
 
 HELP;
 
-		$this->io->out($help);
-	}
+        $this->io->out($help);
+    }
 }
 
 $app = new PharBuilder;

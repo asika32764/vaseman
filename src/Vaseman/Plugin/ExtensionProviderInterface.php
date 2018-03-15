@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -17,12 +17,12 @@ use Windwalker\Event\Event;
  */
 interface ExtensionProviderInterface
 {
-	/**
-	 * loadExtension
-	 *
-	 * @param Event $event
-	 *
-	 * @return  void
-	 */
-	public function loadExtensions(Event $event);
+    /**
+     * loadExtension
+     *
+     * @param Event $event
+     *
+     * @return  void
+     */
+    public function loadExtensions(Event $event);
 }

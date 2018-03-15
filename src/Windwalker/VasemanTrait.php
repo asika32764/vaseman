@@ -8,8 +8,6 @@
 
 namespace Windwalker;
 
-use Windwalker\Environment\Environment;
-
 /**
  * The VasemanTrait class.
  *
@@ -17,8 +15,8 @@ use Windwalker\Environment\Environment;
  */
 trait VasemanTrait
 {
-	public function bootVasemanTrait()
-	{
+    public function bootVasemanTrait()
+    {
 
-	}
+    }
 }

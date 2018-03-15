@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -22,179 +22,170 @@ use Windwalker\Web\Application;
 
 /**
  * The UpCommand class.
- * 
+ *
  * @since  {DEPLOY_VERSION}
  */
 class UpCommand extends Command
 {
-	/**
-	 * Property isEnabled.
-	 *
-	 * @var  boolean
-	 */
-	public static $isEnabled = true;
+    /**
+     * Property isEnabled.
+     *
+     * @var  boolean
+     */
+    public static $isEnabled = true;
 
-	/**
-	 * Property name.
-	 *
-	 * @var  string
-	 */
-	protected $name = 'up';
+    /**
+     * Property name.
+     *
+     * @var  string
+     */
+    protected $name = 'up';
 
-	/**
-	 * Property description.
-	 *
-	 * @var  string
-	 */
-	protected $description = 'Generate site.';
+    /**
+     * Property description.
+     *
+     * @var  string
+     */
+    protected $description = 'Generate site.';
 
-	/**
-	 * Property usage.
-	 *
-	 * @var  string
-	 */
-	protected $usage = 'up <cmd><path></cmd> <option>[options]</option>';
+    /**
+     * Property usage.
+     *
+     * @var  string
+     */
+    protected $usage = 'up <cmd><path></cmd> <option>[options]</option>';
 
-	/**
-	 * initialise
-	 *
-	 * @return  void
-	 */
-	protected function initialise()
-	{
-		$this->addOption('d')
-			->alias('dir')
-			->description('Directory to convert.');
-	}
+    /**
+     * initialise
+     *
+     * @return  void
+     */
+    protected function initialise()
+    {
+        $this->addOption('d')
+            ->alias('dir')
+            ->description('Directory to convert.');
+    }
 
-	/**
-	 * doExecute
-	 *
-	 * @return  integer
-	 */
-	protected function doExecute()
-	{
-		DateTime::setDefaultTimezone();
+    /**
+     * doExecute
+     *
+     * @return  integer
+     */
+    protected function doExecute()
+    {
+        DateTime::setDefaultTimezone();
 
-		$this->out()->out('Vaseman generator')
-			->out('-----------------------------')->out()
-			->out('<comment>Start generating site</comment>')->out();
+        $this->out()->out('Vaseman generator')
+            ->out('-----------------------------')->out()
+            ->out('<comment>Start generating site</comment>')->out();
 
-		$working = $this->console->get('project.path.working');
+        $working = $this->console->get('project.path.working');
 
-		$root = $this->getArgument(0);
+        $root = $this->getArgument(0);
 
-		if (!$root)
-		{
-			$root = $working;
-		}
-		else
-		{
-			if (!is_dir($root))
-			{
-				$root = $working . '/' . $root;
-			}
+        if (!$root) {
+            $root = $working;
+        } else {
+            if (!is_dir($root)) {
+                $root = $working . '/' . $root;
+            }
 
-			if (!is_dir($root))
-			{
-				$root = $working;
-			}
-		}
+            if (!is_dir($root)) {
+                $root = $working;
+            }
+        }
 
-		$dataRoot = $root . '/.vaseman';
+        $dataRoot = $root . '/.vaseman';
 
-		$this->console->set('project.path.root', realpath($root));
-		$this->console->set('project.path.data', realpath($dataRoot));
+        $this->console->set('project.path.root', realpath($root));
+        $this->console->set('project.path.data', realpath($dataRoot));
 
-		$folders = $this->console->get('folders', array());
+        $folders = $this->console->get('folders', []);
 
-		if (!is_dir($dataRoot))
-		{
-			throw new \RuntimeException(sprintf('%s is not a Vaseman project.', realpath($root) . '/.vaseman'));
-		}
+        if (!is_dir($dataRoot)) {
+            throw new \RuntimeException(sprintf('%s is not a Vaseman project.', realpath($root) . '/.vaseman'));
+        }
 
-		Ioc::setProfile('web');
+        Ioc::setProfile('web');
 
-		/** @var Application $app */
-		$app = new Application(null);
-		$app->set('outer_project', $this->console->get('outer_project'));
-		$app->set('path', $this->console->get('path'));
-		$app->set('project', $this->console->get('project'));
-		$app->boot();
-		$app->getRouter();
+        /** @var Application $app */
+        $app = new Application(null);
+        $app->set('outer_project', $this->console->get('outer_project'));
+        $app->set('path', $this->console->get('path'));
+        $app->set('project', $this->console->get('project'));
+        $app->boot();
+        $app->getRouter();
 
-		$package = $app->getPackage('vaseman');
+        $package = $app->getPackage('vaseman');
 
-		$container = $app->getContainer();
+        $container = $app->getContainer();
 
-		$container->share('current.package', $package);
+        $container->share('current.package', $package);
 
-		$controller = $package->getController('Page/GetController');
+        $controller = $package->getController('Page/GetController');
 
-		$event = new Event('onBeforeRenderFiles');
-		$event['config'] = $this->console->getConfig();
-		$event['controller'] = $controller;
-		$event['io'] = $this->io;
+        $event               = new Event('onBeforeRenderFiles');
+        $event['config']     = $this->console->getConfig();
+        $event['controller'] = $controller;
+        $event['io']         = $this->io;
 
-		Ioc::getDispatcher()->triggerEvent($event);
+        Ioc::getDispatcher()->triggerEvent($event);
 
-		$assets = array();
-		$processors = array();
+        $assets     = [];
+        $processors = [];
 
-		foreach ($folders as $folder)
-		{
-			$files = Filesystem::files($dataRoot . '/' . $folder, true);
+        foreach ($folders as $folder) {
+            $files = Filesystem::files($dataRoot . '/' . $folder, true);
 
-			foreach ($files as $file)
-			{
-				$this->out('[<option>Rendering file</option>]: ' . $file);
+            foreach ($files as $file) {
+                $this->out('[<option>Rendering file</option>]: ' . $file);
 
-				$asset = new Asset($file, $dataRoot . '/' . $folder);
+                $asset = new Asset($file, $dataRoot . '/' . $folder);
 
-				$layout = Path::clean($asset->getPath(), '/');
+                $layout = Path::clean($asset->getPath(), '/');
 
-				$input = new Input(array('paths' => explode('/', $layout)));
+                $input = new Input(['paths' => explode('/', $layout)]);
 
-				$config = $controller->getConfig();
-				$config->set('layout.path', $asset->getRoot());
-				$config->set('layout.folder', $folder);
+                $config = $controller->getConfig();
+                $config->set('layout.path', $asset->getRoot());
+                $config->set('layout.folder', $folder);
 
-				$controller->setInput($input)->execute();
+                $controller->setInput($input)->execute();
 
-				$processors[] = $controller->getProcessor();
-			}
-		}
+                $processors[] = $controller->getProcessor();
+            }
+        }
 
-		$event->setName('onAfterRenderFiles');
-		$event['processors'] = $processors;
-		Ioc::getDispatcher()->triggerEvent($event);
+        $event->setName('onAfterRenderFiles');
+        $event['processors'] = $processors;
+        Ioc::getDispatcher()->triggerEvent($event);
 
-		$event->setName('onBeforeWriteFiles');
-		Ioc::getDispatcher()->triggerEvent($event);
+        $event->setName('onBeforeWriteFiles');
+        Ioc::getDispatcher()->triggerEvent($event);
 
-		$dir = $this->getOption('dir');
+        $dir = $this->getOption('dir');
 
-		$dir = $dir ? : $this->console->get('outer_project') ? "" : 'output';
+        $dir = $dir ?: $this->console->get('outer_project') ? "" : 'output';
 
-		$dir = $this->console->get('project.path.root') . '/' . $dir;
+        $dir = $this->console->get('project.path.root') . '/' . $dir;
 
-		/** @var AbstractFileProcessor $processor */
-		foreach ($processors as $processor)
-		{
-			$file = Path::clean($dir . '/' . $processor->getTarget());
+        /** @var AbstractFileProcessor $processor */
+        foreach ($processors as $processor) {
+            $file = Path::clean($dir . '/' . $processor->getTarget());
 
-			$this->out('[<info>Write file</info>]: ' . $file);
+            $this->out('[<info>Write file</info>]: ' . $file);
 
-			Folder::create(dirname($file));
+            Folder::create(dirname($file));
 
-			file_put_contents($file, $processor->getOutput());
-		}
+            file_put_contents($file, $processor->getOutput());
+        }
 
-		$event->setName('onAfterWriteFiles');
-		Ioc::getDispatcher()->triggerEvent($event);
+        $event->setName('onAfterWriteFiles');
+        Ioc::getDispatcher()->triggerEvent($event);
 
-		$this->out()->out('<info>Complete</info>')->out();
+        $this->out()->out('<info>Complete</info>')->out();
 
-		return 0;
-	}
+        return 0;
+    }
 }

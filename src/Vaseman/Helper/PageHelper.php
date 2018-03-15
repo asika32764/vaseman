@@ -17,93 +17,91 @@ use Windwalker\Core\View\Helper\AbstractHelper;
  */
 class PageHelper extends AbstractHelper
 {
-	/**
-	 * getPageName
-	 *
-	 * @param $path
-	 *
-	 * @return string
-	 */
-	public function getPageName($path)
-	{
-		$path = implode('.', $path);
+    /**
+     * getPageName
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    public function getPageName($path)
+    {
+        $path = implode('.', $path);
 
-		return $path;
-	}
+        return $path;
+    }
 
-	/**
-	 * getID
-	 *
-	 * @param $path
-	 *
-	 * @return string
-	 */
-	public function getID($path)
-	{
-		$path = implode('-', $path);
+    /**
+     * getID
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    public function getID($path)
+    {
+        $path = implode('-', $path);
 
-		return $path;
-	}
+        return $path;
+    }
 
-	/**
-	 * getClass
-	 *
-	 * @param $path
-	 *
-	 * @return string
-	 */
-	public function getClass($path)
-	{
-		$path = implode(' ', $path);
+    /**
+     * getClass
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    public function getClass($path)
+    {
+        $path = implode(' ', $path);
 
-		return $path;
-	}
+        return $path;
+    }
 
-	/**
-	 * isActive
-	 *
-	 * @param $path
-	 * @param $key
-	 *
-	 * @return string
-	 *
-	 * @deprecated Use active()
-	 */
-	public function isActive($path, $key)
-	{
-		show($this->parent->getView()->get('paths'));
-		exit(' @Checkpoint');
-		
-		$path = implode('.', $path);
+    /**
+     * isActive
+     *
+     * @param $path
+     * @param $key
+     *
+     * @return string
+     *
+     * @deprecated Use active()
+     */
+    public function isActive($path, $key)
+    {
+        show($this->parent->getView()->get('paths'));
+        exit(' @Checkpoint');
 
-		if (strpos($path, $key) !== false)
-		{
-			return 'active';
-		}
+        $path = implode('.', $path);
 
-		return '';
-	}
+        if (strpos($path, $key) !== false) {
+            return 'active';
+        }
 
-	/**
-	 * active
-	 *
-	 * @param string $key
-	 *
-	 * @return  string
-	 *
-	 * @since  __DEPLOY_VERSION__
-	 */
-	public function active($key)
-	{
-		$paths = $this->parent->getView()->get('paths');
+        return '';
+    }
 
-		$paths = implode('/', $paths);
+    /**
+     * active
+     *
+     * @param string $key
+     *
+     * @return  string
+     *
+     * @since  __DEPLOY_VERSION__
+     */
+    public function active($key)
+    {
+        $paths = $this->parent->getView()->get('paths');
 
-		if (strpos($paths, $key) !== false)
-		{
-			return 'active';
-		}
+        $paths = implode('/', $paths);
 
-		return '';
-	}
+        if (strpos($paths, $key) !== false) {
+            return 'active';
+        }
+
+        return '';
+    }
 }

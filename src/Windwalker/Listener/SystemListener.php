@@ -24,50 +24,51 @@ use Windwalker\Http\Response\HtmlResponse;
  */
 class SystemListener
 {
-	/**
-	 * onAfterInitialise
-	 *
-	 * @param Event $event
-	 *
-	 * @return  void
-	 */
-	public function onAfterInitialise(Event $event)
-	{
-		/** @var WebApplication $app */
-		$app = $event['app'];
+    /**
+     * onAfterInitialise
+     *
+     * @param Event $event
+     *
+     * @return  void
+     */
+    public function onAfterInitialise(Event $event)
+    {
+        /** @var WebApplication $app */
+        $app = $event['app'];
 
-		// Remove index.php
-		if ($app->uri->script == 'index.php')
-		{
-			$app->uri->script = null;
-		}
-	}
+        // Remove index.php
+        if ($app->uri->script == 'index.php') {
+            $app->uri->script = null;
+        }
+    }
 
-	/**
-	 * onBeforeRouting
-	 *
-	 * @param Event $event
-	 *
-	 * @return  void
-	 */
-	public function onBeforeRouting(Event $event)
-	{
-		/** @var WebApplication $app */
-		$app = $event['app'];
+    /**
+     * onBeforeRouting
+     *
+     * @param Event $event
+     *
+     * @return  void
+     */
+    public function onBeforeRouting(Event $event)
+    {
+        /** @var WebApplication $app */
+        $app = $event['app'];
 
-		if ($app->get('system.offline', false) && !$app->get('system.debug'))
-		{
-			$app->server->setHandler(function (RequestInterface $request, ResponseInterface $response, callable $next = null)
-			{
-				$view = new HtmlView;
-				$view->setLayout('windwalker.offline.offline');
+        if ($app->get('system.offline', false) && !$app->get('system.debug')) {
+            $app->server->setHandler(function (
+                RequestInterface $request,
+                ResponseInterface $response,
+                callable $next = null
+            ) {
+                $view = new HtmlView;
+                $view->setLayout('windwalker.offline.offline');
 
-				return new HtmlResponse($view->render());
-			});
+                return new HtmlResponse($view->render());
+            });
 
-			$app->server->listen();
+            $app->server->listen();
 
-			die;
-		}
-	}
+            die;
+        }
+    }
 }

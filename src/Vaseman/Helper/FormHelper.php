@@ -18,25 +18,25 @@ use Windwalker\Utilities\ArrayHelper;
  */
 class FormHelper extends AbstractHelper
 {
-	/**
-	 * getText
-	 *
-	 * @param string $name
-	 * @param string $label
-	 * @param string $value
-	 * @param array  $option
-	 *
-	 * @return  string
-	 */
-	public function getText($name, $label, $value = '', $option = array())
-	{
-		$left        = ArrayHelper::getValue($option, 'left', 3);
-		$right       = ArrayHelper::getValue($option, 'right', 7);
-		$placeholder = ArrayHelper::getValue($option, 'placeholder', $label);
-		$disabled    = ArrayHelper::getValue($option, 'disabled') ? 'disabled' : '';
-		$readonly    = ArrayHelper::getValue($option, 'readonly') ? 'readonly' : '';
+    /**
+     * getText
+     *
+     * @param string $name
+     * @param string $label
+     * @param string $value
+     * @param array  $option
+     *
+     * @return  string
+     */
+    public function getText($name, $label, $value = '', $option = [])
+    {
+        $left        = ArrayHelper::getValue($option, 'left', 3);
+        $right       = ArrayHelper::getValue($option, 'right', 7);
+        $placeholder = ArrayHelper::getValue($option, 'placeholder', $label);
+        $disabled    = ArrayHelper::getValue($option, 'disabled') ? 'disabled' : '';
+        $readonly    = ArrayHelper::getValue($option, 'readonly') ? 'readonly' : '';
 
-		return <<<TEXT
+        return <<<TEXT
 <div class="form-group">
     <div class="col-lg-{$left} control-label">
         <label for="input-{$name}">{$label}</label>
@@ -46,30 +46,48 @@ class FormHelper extends AbstractHelper
     </div>
 </div>
 TEXT;
-	}
+    }
 
-	/**
-	 * getBool
-	 *
-	 * @param string $name
-	 * @param string $label
-	 * @param string $value
-	 * @param array  $option
-	 *
-	 * @return  string
-	 */
-	public function getBool($name, $label, $value, $options, $option = array())
-	{
-		$left           = ArrayHelper::getValue($option, 'left', 3);
-		$right          = ArrayHelper::getValue($option, 'right', 7);
+    /**
+     * getInput
+     *
+     * @param string  $name
+     * @param string  $value
+     * @param string  $placeholder
+     * @param boolean $disabled
+     * @param boolean $readonly
+     *
+     * @return  string
+     */
+    public function getInput($name, $value, $placeholder, $disabled, $readonly)
+    {
+        return <<<INPUT
+<input type="text" class="form-control" id="input-{$name}" value="{$value}" placeholder="{$placeholder}" {$disabled} {$readonly} />
+INPUT;
+    }
 
-		$yes          = ArrayHelper::getValue($options, 0, 'Yes');
-		$no           = ArrayHelper::getValue($options, 1, 'No');
+    /**
+     * getBool
+     *
+     * @param string $name
+     * @param string $label
+     * @param string $value
+     * @param array  $option
+     *
+     * @return  string
+     */
+    public function getBool($name, $label, $value, $options, $option = [])
+    {
+        $left  = ArrayHelper::getValue($option, 'left', 3);
+        $right = ArrayHelper::getValue($option, 'right', 7);
 
-		$active1 = $value == 1 ? 'active' : '';
-		$active2 = $value == 0 ? 'active' : '';
+        $yes = ArrayHelper::getValue($options, 0, 'Yes');
+        $no  = ArrayHelper::getValue($options, 1, 'No');
 
-		return <<<LIST
+        $active1 = $value == 1 ? 'active' : '';
+        $active2 = $value == 0 ? 'active' : '';
+
+        return <<<LIST
 <div class="form-group">
     <div class="col-lg-{$left} control-label">
         <label for="input-{$name}">{$label}</label>
@@ -86,27 +104,27 @@ TEXT;
     </div>
 </div>
 LIST;
-	}
+    }
 
-	/**
-	 * getList
-	 *
-	 * @param string $name
-	 * @param string $label
-	 * @param string $value
-	 * @param array  $option
-	 *
-	 * @return  string
-	 */
-	public function getList($name, $label, $value, $options, $option = array())
-	{
-		$left           = ArrayHelper::getValue($option, 'left', 3);
-		$right          = ArrayHelper::getValue($option, 'right', 7);
-		$placeholder    = ArrayHelper::getValue($option, 'placeholder', $label);
-		$disabled       = ArrayHelper::getValue($option, 'disabled') ? 'disabled' : '';
-		$readonly       = ArrayHelper::getValue($option, 'readonly') ? 'readonly' : '';
+    /**
+     * getList
+     *
+     * @param string $name
+     * @param string $label
+     * @param string $value
+     * @param array  $option
+     *
+     * @return  string
+     */
+    public function getList($name, $label, $value, $options, $option = [])
+    {
+        $left        = ArrayHelper::getValue($option, 'left', 3);
+        $right       = ArrayHelper::getValue($option, 'right', 7);
+        $placeholder = ArrayHelper::getValue($option, 'placeholder', $label);
+        $disabled    = ArrayHelper::getValue($option, 'disabled') ? 'disabled' : '';
+        $readonly    = ArrayHelper::getValue($option, 'readonly') ? 'readonly' : '';
 
-		return <<<LIST
+        return <<<LIST
 <div class="form-group">
     <div class="col-lg-{$left} control-label">
         <label for="input-{$name}">{$label}</label>
@@ -118,29 +136,50 @@ LIST;
     </div>
 </div>
 LIST;
-	}
+    }
 
-	/**
-	 * getCalendar
-	 *
-	 * @param string $name
-	 * @param string $label
-	 * @param string $value
-	 * @param array  $option
-	 *
-	 * @return  string
-	 */
-	public function getCalendar($name, $label, $value = '', $option = array())
-	{
-		$left           = ArrayHelper::getValue($option, 'left', 3);
-		$right          = ArrayHelper::getValue($option, 'right', 7);
-		$placeholder    = ArrayHelper::getValue($option, 'placeholder', $label);
-		$disabled       = ArrayHelper::getValue($option, 'disabled') ? 'disabled' : '';
-		$readonly       = ArrayHelper::getValue($option, 'readonly') ? 'readonly' : '';
+    /**
+     * getOptions
+     *
+     * @param string $value
+     * @param array  $options
+     *
+     * @return  string
+     */
+    public function getOptions($value = '', $options)
+    {
+        $html = [];
 
-		$value = $value ?: date('Y-m-d H:i:s');
+        foreach ($options as $key => $option) {
+            $selected = $value == $key ? 'selected' : '';
 
-		return <<<CAL
+            $html[] = "<option value=\"{$value}\" {$selected}>{$option}</option>";
+        }
+
+        return implode("\n", $html);
+    }
+
+    /**
+     * getCalendar
+     *
+     * @param string $name
+     * @param string $label
+     * @param string $value
+     * @param array  $option
+     *
+     * @return  string
+     */
+    public function getCalendar($name, $label, $value = '', $option = [])
+    {
+        $left        = ArrayHelper::getValue($option, 'left', 3);
+        $right       = ArrayHelper::getValue($option, 'right', 7);
+        $placeholder = ArrayHelper::getValue($option, 'placeholder', $label);
+        $disabled    = ArrayHelper::getValue($option, 'disabled') ? 'disabled' : '';
+        $readonly    = ArrayHelper::getValue($option, 'readonly') ? 'readonly' : '';
+
+        $value = $value ?: date('Y-m-d H:i:s');
+
+        return <<<CAL
 <div class="form-group">
     <label for="input-category" class="col-lg-{$left} control-label">{$label}</label>
 
@@ -155,27 +194,27 @@ LIST;
     </div>
 </div>
 CAL;
-	}
+    }
 
-	/**
-	 * getUser
-	 *
-	 * @param string $name
-	 * @param string $label
-	 * @param string $value
-	 * @param array  $option
-	 *
-	 * @return  string
-	 */
-	public function getUser($name, $label, $value = '', $option = array())
-	{
-		$left           = ArrayHelper::getValue($option, 'left', 3);
-		$right          = ArrayHelper::getValue($option, 'right', 7);
-		$placeholder    = ArrayHelper::getValue($option, 'placeholder', $label);
-		$disabled       = ArrayHelper::getValue($option, 'disabled') ? 'disabled' : '';
-		$readonly       = ArrayHelper::getValue($option, 'readonly') ? 'readonly' : '';
+    /**
+     * getUser
+     *
+     * @param string $name
+     * @param string $label
+     * @param string $value
+     * @param array  $option
+     *
+     * @return  string
+     */
+    public function getUser($name, $label, $value = '', $option = [])
+    {
+        $left        = ArrayHelper::getValue($option, 'left', 3);
+        $right       = ArrayHelper::getValue($option, 'right', 7);
+        $placeholder = ArrayHelper::getValue($option, 'placeholder', $label);
+        $disabled    = ArrayHelper::getValue($option, 'disabled') ? 'disabled' : '';
+        $readonly    = ArrayHelper::getValue($option, 'readonly') ? 'readonly' : '';
 
-		return <<<USER
+        return <<<USER
 <div class="form-group">
     <label for="input-category" class="col-lg-{$left} control-label">{$label}</label>
 
@@ -190,45 +229,5 @@ CAL;
     </div>
 </div>
 USER;
-	}
-
-	/**
-	 * getInput
-	 *
-	 * @param string  $name
-	 * @param string  $value
-	 * @param string  $placeholder
-	 * @param boolean $disabled
-	 * @param boolean $readonly
-	 *
-	 * @return  string
-	 */
-	public function getInput($name, $value, $placeholder, $disabled, $readonly)
-	{
-		return <<<INPUT
-<input type="text" class="form-control" id="input-{$name}" value="{$value}" placeholder="{$placeholder}" {$disabled} {$readonly} />
-INPUT;
-	}
-
-	/**
-	 * getOptions
-	 *
-	 * @param string $value
-	 * @param array  $options
-	 *
-	 * @return  string
-	 */
-	public function getOptions($value = '', $options)
-	{
-		$html = array();
-
-		foreach ($options as $key => $option)
-		{
-			$selected = $value == $key ? 'selected' : '';
-
-			$html[] = "<option value=\"{$value}\" {$selected}>{$option}</option>";
-		}
-
-		return implode("\n", $html);
-	}
+    }
 }

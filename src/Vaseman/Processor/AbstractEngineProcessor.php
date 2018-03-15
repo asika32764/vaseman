@@ -21,100 +21,98 @@ use Windwalker\Utilities\Queue\PriorityQueue;
  */
 abstract class AbstractEngineProcessor extends AbstractFileProcessor
 {
-	/**
-	 * Property renderer.
-	 *
-	 * @var  AbstractRenderer
-	 */
-	protected $renderer;
+    /**
+     * Property renderer.
+     *
+     * @var  AbstractRenderer
+     */
+    protected $renderer;
 
-	/**
-	 * render
-	 *
-	 * @return  string
-	 */
-	public function render()
-	{
-		$output = $this->doRender();
+    /**
+     * render
+     *
+     * @return  string
+     */
+    public function render()
+    {
+        $output = $this->doRender();
 
-		return $this->output = $this->renderParentLayout($output);
-	}
+        return $this->output = $this->renderParentLayout($output);
+    }
 
-	/**
-	 * doRender
-	 *
-	 * @return  string
-	 */
-	abstract protected function doRender();
+    /**
+     * doRender
+     *
+     * @return  string
+     */
+    abstract protected function doRender();
 
-	/**
-	 * renderLayout
-	 *
-	 * @param string $content
-	 *
-	 * @return  string
-	 */
-	protected function renderParentLayout($content = null)
-	{
-		$data = $this->getData();
+    /**
+     * renderLayout
+     *
+     * @param string $content
+     *
+     * @return  string
+     */
+    protected function renderParentLayout($content = null)
+    {
+        $data = $this->getData();
 
-		$data->content = $content;
+        $data->content = $content;
 
-		$config = new Structure($data->config);
+        $config = new Structure($data->config);
 
-		if (!$config['layout'])
-		{
-			return $content;
-		}
+        if (!$config['layout']) {
+            return $content;
+        }
 
-		$data->config['layout'] = null;
+        $data->config['layout'] = null;
 
-		$view = new PageHtmlView;
+        $view = new PageHtmlView;
 
-		$view->setPath($config['path.templates']);
-		$view->addPath($config['path.templates'], PriorityQueue::HIGH);
-		$view->getData()->bind($data);
+        $view->setPath($config['path.templates']);
+        $view->addPath($config['path.templates'], PriorityQueue::HIGH);
+        $view->getData()->bind($data);
 
-		$this->processor = $processor = $view->setLayout($config['layout'])->render();
+        $this->processor = $processor = $view->setLayout($config['layout'])->render();
 
-		return $processor->getOutput();
-	}
+        return $processor->getOutput();
+    }
 
-	/**
-	 * Method to get property Target
-	 *
-	 * @return  string
-	 */
-	public function getTarget()
-	{
-		if (!$this->target)
-		{
-			$this->target = ltrim($this->getLayout(), '\\/');
+    /**
+     * Method to get property Target
+     *
+     * @return  string
+     */
+    public function getTarget()
+    {
+        if (!$this->target) {
+            $this->target = ltrim($this->getLayout(), '\\/');
 
-			$this->target = File::stripExtension($this->target) . '.html';
-		}
+            $this->target = File::stripExtension($this->target) . '.html';
+        }
 
-		return $this->target;
-	}
+        return $this->target;
+    }
 
-	/**
-	 * Method to get property Renderer
-	 *
-	 * @return  AbstractRenderer
-	 */
-	abstract public function getRenderer();
+    /**
+     * Method to get property Renderer
+     *
+     * @return  AbstractRenderer
+     */
+    abstract public function getRenderer();
 
-	/**
-	 * Method to set property renderer
-	 *
-	 * @param   AbstractRenderer $renderer
-	 *
-	 * @return  static  Return self to support chaining.
-	 */
-	public function setRenderer(AbstractRenderer $renderer)
-	{
-		$this->renderer = $renderer;
+    /**
+     * Method to set property renderer
+     *
+     * @param   AbstractRenderer $renderer
+     *
+     * @return  static  Return self to support chaining.
+     */
+    public function setRenderer(AbstractRenderer $renderer)
+    {
+        $this->renderer = $renderer;
 
-		return $this;
-	}
+        return $this;
+    }
 }

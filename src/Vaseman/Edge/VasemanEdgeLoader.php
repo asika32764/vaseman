@@ -18,49 +18,49 @@ use Windwalker\Edge\Loader\EdgeFileLoader;
  */
 class VasemanEdgeLoader extends EdgeFileLoader
 {
-	/**
-	 * Property processor.
-	 *
-	 * @var  EdgeProcessor
-	 */
-	protected $processor;
+    /**
+     * Property processor.
+     *
+     * @var  EdgeProcessor
+     */
+    protected $processor;
 
-	/**
-	 * loadFile
-	 *
-	 * @param   string  $path
-	 *
-	 * @return  string
-	 */
-	public function load($path)
-	{
-		$tmpl = $this->processor->prepareData(file_get_contents($path));
+    /**
+     * loadFile
+     *
+     * @param   string $path
+     *
+     * @return  string
+     */
+    public function load($path)
+    {
+        $tmpl = $this->processor->prepareData(file_get_contents($path));
 
-		// Push new data to environment
-		return '<?php foreach ($this->loader->getProcessor()->getData()->dump() as $__key => $__value) { $$__key = $__value; }; ?> ' . $tmpl;
-	}
+        // Push new data to environment
+        return '<?php foreach ($this->loader->getProcessor()->getData()->dump() as $__key => $__value) { $$__key = $__value; }; ?> ' . $tmpl;
+    }
 
-	/**
-	 * Method to get property Processor
-	 *
-	 * @return  EdgeProcessor
-	 */
-	public function getProcessor()
-	{
-		return $this->processor;
-	}
+    /**
+     * Method to get property Processor
+     *
+     * @return  EdgeProcessor
+     */
+    public function getProcessor()
+    {
+        return $this->processor;
+    }
 
-	/**
-	 * Method to set property processor
-	 *
-	 * @param   EdgeProcessor $processor
-	 *
-	 * @return  static  Return self to support chaining.
-	 */
-	public function setProcessor($processor)
-	{
-		$this->processor = $processor;
+    /**
+     * Method to set property processor
+     *
+     * @param   EdgeProcessor $processor
+     *
+     * @return  static  Return self to support chaining.
+     */
+    public function setProcessor($processor)
+    {
+        $this->processor = $processor;
 
-		return $this;
-	}
+        return $this;
+    }
 }

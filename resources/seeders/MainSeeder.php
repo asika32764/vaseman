@@ -13,7 +13,7 @@ use Windwalker\Core\Seeder\AbstractSeeder;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class DatabaseSeeder extends AbstractSeeder
+class MainSeeder extends AbstractSeeder
 {
 	/**
 	 * doExecute
@@ -30,9 +30,8 @@ class DatabaseSeeder extends AbstractSeeder
 	 *
 	 * @return  void
 	 */
-	public function doClean()
+	public function doClear()
 	{
 		$this->command->out('Database clean.')->out();
 	}
 }
- 

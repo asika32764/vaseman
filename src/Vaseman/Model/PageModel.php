@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -12,52 +12,50 @@ use Vaseman\Asset\Asset;
 use Vaseman\Entry\Page;
 use Vaseman\View\Page\PageHtmlView;
 use Windwalker\Core\Model\Model;
-use Windwalker\Core\Renderer\RendererHelper;
 use Windwalker\Filesystem\File;
 
 /**
  * The Page class.
- * 
+ *
  * @since  {DEPLOY_VERSION}
  */
 class PageModel extends Model
 {
-	/**
-	 * generateEntries
-	 *
-	 * @param   Asset[]  $entries
-	 *
-	 * @return  Page[]
-	 */
-	public function generateEntries($entries)
-	{
-		$results = array();
+    /**
+     * generateEntries
+     *
+     * @param   Asset[] $entries
+     *
+     * @return  Page[]
+     */
+    public function generateEntries($entries)
+    {
+        $results = [];
 
-		foreach ($entries as $entry)
-		{
-			$results[] = $this->generateEntry($entry);
-		}
+        foreach ($entries as $entry) {
+            $results[] = $this->generateEntry($entry);
+        }
 
-		return $results;
-	}
+        return $results;
+    }
 
-	/**
-	 * generateEntry
-	 *
-	 * @param   Asset $entry
-	 *
-	 * @return  Page
-	 */
-	public function generateEntry(Asset $entry)
-	{
-		$view = new PageHtmlView;
+    /**
+     * generateEntry
+     *
+     * @param   Asset $entry
+     *
+     * @return  Page
+     */
+    public function generateEntry(Asset $entry)
+    {
+        $view = new PageHtmlView;
 
-		$layout = File::stripExtension($entry->getPath());
+        $layout = File::stripExtension($entry->getPath());
 
-		$html = $view->setLayout($layout)->render();
+        $html = $view->setLayout($layout)->render();
 
-		$file = $layout . '.html';
+        $file = $layout . '.html';
 
-		return new Page($file, $html);
-	}
+        return new Page($file, $html);
+    }
 }

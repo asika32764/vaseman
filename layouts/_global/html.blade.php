@@ -20,7 +20,8 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ $uri['base'] }}">{{ $config['project.name'] }}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -36,7 +37,8 @@
                         <a class="nav-link disabled" href="#">Disabled</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
@@ -57,13 +59,13 @@
     @yield('content-top')
 
     @section('body')
-    <div class="main-body pb-4">
+        <div class="main-body pb-4">
         @section('content-wrapper')
             @section('content')
-            {!! $content or 'Content' !!}
+                {!! $content or 'Content' !!}
             @show
         @show
-    </div>
+        </div>
     @show
 
     @yield('content-bottom')

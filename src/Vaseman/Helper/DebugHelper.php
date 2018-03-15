@@ -17,165 +17,143 @@ use Windwalker\Core\View\Helper\AbstractHelper;
  */
 class DebugHelper extends AbstractHelper
 {
-	/**
-	 * A proxy to php ver_dump().
-	 *
-	 * @return void
-	 */
-	public function var_dump()
-	{
-		$args = func_get_args();
+    /**
+     * A proxy to php ver_dump().
+     *
+     * @return void
+     */
+    public function var_dump()
+    {
+        $args = func_get_args();
 
-		call_user_func_array('var_dump', $args);
-	}
+        call_user_func_array('var_dump', $args);
+    }
 
-	/**
-	 * recursive print variables and limit by level.
-	 *
-	 * @param   mixed  $data   The variable you want to dump.
-	 * @param   int    $level  The level number to limit recursive loop.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  string  Dumped data.
-	 */
-	public function printRLevel($data, $level = 5)
-	{
-		static $innerLevel = 1;
+    /**
+     * Dump Array or Object as tree node. If send multiple params in this method, this function will batch print it.
+     *
+     * @param   mixed $data Array or Object to dump.
+     *
+     * @internal param int $level The level number to limit recursive loop.
+     * @since    1.0
+     * @return  void
+     */
+    public function show($data)
+    {
+        $args = func_get_args();
 
-		static $tabLevel = 1;
+        $last = array_pop($args);
 
-		$self = __FUNCTION__;
+        if (is_int($last)) {
+            $level = $last;
+        } else {
+            $level = 4;
 
-		$type       = gettype($data);
-		$tabs       = str_repeat('    ', $tabLevel);
-		$quoteTabes = str_repeat('    ', $tabLevel - 1);
-		$output     = '';
-		$elements   = array();
+            $args[] = $last;
+        }
 
-		$recursiveType = array('object', 'array');
+        // Dump Multiple values
+        if (count($args) > 1) {
+            $prints = [];
 
-		// Recursive
-		if (in_array($type, $recursiveType))
-		{
-			// If type is object, try to get properties by Reflection.
-			if ($type == 'object')
-			{
-				$output     = get_class($data) . ' ' . ucfirst($type);
-				$ref        = new \ReflectionObject($data);
-				$properties = $ref->getProperties();
+            $i = 1;
 
-				foreach ($properties as $property)
-				{
-					$property->setAccessible(true);
+            foreach ($args as $arg) {
+                $prints[] = "[Value " . $i . "]\n" . $this->printRLevel($arg, $level);
+                $i++;
+            }
 
-					$pType = $property->getName();
+            echo '<pre>' . implode("\n\n", $prints) . '</pre>';
+        } else {
+            // Dump one value.
+            echo '<pre>' . $this->printRLevel($data, $level) . '</pre>';
+        }
+    }
 
-					if ($property->isProtected())
-					{
-						$pType .= ":protected";
-					}
-					elseif ($property->isPrivate())
-					{
-						$pType .= ":" . $property->class . ":private";
-					}
+    /**
+     * recursive print variables and limit by level.
+     *
+     * @param   mixed $data  The variable you want to dump.
+     * @param   int   $level The level number to limit recursive loop.
+     *
+     * @since   1.0
+     *
+     * @return  string  Dumped data.
+     */
+    public function printRLevel($data, $level = 5)
+    {
+        static $innerLevel = 1;
 
-					if ($property->isStatic())
-					{
-						$pType .= ":static";
-					}
+        static $tabLevel = 1;
 
-					$elements[$pType] = $property->getValue($data);
-				}
-			}
-			// If type is array, just retun it's value.
-			elseif ($type == 'array')
-			{
-				$output   = ucfirst($type);
-				$elements = $data;
-			}
+        $self = __FUNCTION__;
 
-			// Start dumping data
-			if ($level == 0 || $innerLevel < $level)
-			{
-				// Start recursive print
-				$output .= "\n{$quoteTabes}(";
+        $type       = gettype($data);
+        $tabs       = str_repeat('    ', $tabLevel);
+        $quoteTabes = str_repeat('    ', $tabLevel - 1);
+        $output     = '';
+        $elements   = [];
 
-				foreach ($elements as $key => $element)
-				{
-					$output .= "\n{$tabs}[{$key}] => ";
+        $recursiveType = ['object', 'array'];
 
-					// Increment level
-					$tabLevel = $tabLevel + 2;
-					$innerLevel++;
+        // Recursive
+        if (in_array($type, $recursiveType)) {
+            // If type is object, try to get properties by Reflection.
+            if ($type == 'object') {
+                $output     = get_class($data) . ' ' . ucfirst($type);
+                $ref        = new \ReflectionObject($data);
+                $properties = $ref->getProperties();
 
-					$output  .= in_array(gettype($element), $recursiveType) ? $self($element, $level) : $element;
+                foreach ($properties as $property) {
+                    $property->setAccessible(true);
 
-					// Decrement level
-					$tabLevel = $tabLevel - 2;
-					$innerLevel--;
-				}
+                    $pType = $property->getName();
 
-				$output .= "\n{$quoteTabes})\n";
-			}
-			else
-			{
-				$output .= "\n{$quoteTabes}*MAX LEVEL*\n";
-			}
-		}
-		else
-		{
-			$output = $data;
-		}
+                    if ($property->isProtected()) {
+                        $pType .= ":protected";
+                    } elseif ($property->isPrivate()) {
+                        $pType .= ":" . $property->class . ":private";
+                    }
 
-		return $output;
-	}
+                    if ($property->isStatic()) {
+                        $pType .= ":static";
+                    }
 
-	/**
-	 * Dump Array or Object as tree node. If send multiple params in this method, this function will batch print it.
-	 *
-	 * @param   mixed $data Array or Object to dump.
-	 *
-	 * @internal param int $level The level number to limit recursive loop.
-	 * @since    1.0
-	 * @return  void
-	 */
-	public function show($data)
-	{
-		$args = func_get_args();
+                    $elements[$pType] = $property->getValue($data);
+                }
+            } // If type is array, just retun it's value.
+            elseif ($type == 'array') {
+                $output   = ucfirst($type);
+                $elements = $data;
+            }
 
-		$last = array_pop($args);
+            // Start dumping data
+            if ($level == 0 || $innerLevel < $level) {
+                // Start recursive print
+                $output .= "\n{$quoteTabes}(";
 
-		if (is_int($last))
-		{
-			$level = $last;
-		}
-		else
-		{
-			$level = 4;
+                foreach ($elements as $key => $element) {
+                    $output .= "\n{$tabs}[{$key}] => ";
 
-			$args[] = $last;
-		}
+                    // Increment level
+                    $tabLevel = $tabLevel + 2;
+                    $innerLevel++;
 
-		// Dump Multiple values
-		if (count($args) > 1)
-		{
-			$prints = array();
+                    $output .= in_array(gettype($element), $recursiveType) ? $self($element, $level) : $element;
 
-			$i = 1;
+                    // Decrement level
+                    $tabLevel = $tabLevel - 2;
+                    $innerLevel--;
+                }
 
-			foreach ($args as $arg)
-			{
-				$prints[] = "[Value " . $i . "]\n" . $this->printRLevel($arg, $level);
-				$i++;
-			}
+                $output .= "\n{$quoteTabes})\n";
+            } else {
+                $output .= "\n{$quoteTabes}*MAX LEVEL*\n";
+            }
+        } else {
+            $output = $data;
+        }
 
-			echo '<pre>' . implode("\n\n", $prints) . '</pre>';
-		}
-		else
-		{
-			// Dump one value.
-			echo '<pre>' . $this->printRLevel($data, $level) . '</pre>';
-		}
-	}
+        return $output;
+    }
 }

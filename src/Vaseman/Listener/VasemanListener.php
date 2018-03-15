@@ -8,12 +8,9 @@
 
 namespace Vaseman\Listener;
 
-use Windwalker\Core\Renderer\RendererHelper;
-use Windwalker\Environment\Environment;
 use Windwalker\Event\Event;
 use Windwalker\Ioc;
 use Windwalker\Loader\ClassLoader;
-use Windwalker\Utilities\Queue\PriorityQueue;
 
 /**
  * The VasemanListener class.
@@ -22,72 +19,67 @@ use Windwalker\Utilities\Queue\PriorityQueue;
  */
 class VasemanListener
 {
-	/**
-	 * onAfterInitialise
-	 *
-	 * @param Event $event
-	 *
-	 * @return  void
-	 *
-	 * @since  __DEPLOY_VERSION__
-	 */
-	public function onAfterInitialise(Event $event)
-	{
-		$app = $event['app'];
-		$config = $app->config;
+    /**
+     * onAfterInitialise
+     *
+     * @param Event $event
+     *
+     * @return  void
+     *
+     * @since  __DEPLOY_VERSION__
+     */
+    public function onAfterInitialise(Event $event)
+    {
+        $app    = $event['app'];
+        $config = $app->config;
 
-		switch ($config['mode'])
-		{
-			case 'test':
-				$root = WINDWALKER_ROOT;
-				break;
-			default:
-				$root = $config->get('project.path.root');
+        switch ($config['mode']) {
+            case 'test':
+                $root = WINDWALKER_ROOT;
+                break;
+            default:
+                $root = $config->get('project.path.root');
 
-				$root = $root ? : WINDWALKER_ROOT;
-				break;
-		}
+                $root = $root ?: WINDWALKER_ROOT;
+                break;
+        }
 
-		$data = $config->get('outer_project') ? $root . '/.vaseman' : $root;
+        $data = $config->get('outer_project') ? $root . '/.vaseman' : $root;
 
-		$config['path.templates']  = $data . '/layouts';
+        $config['path.templates'] = $data . '/layouts';
 
-		$config->set('project.path.root', $root);
-		$config->set('project.path.data', $data);
-		$config->set('project.path.entries', $data . '/entries');
-		$config->set('project.path.layouts', $data . '/layouts');
+        $config->set('project.path.root', $root);
+        $config->set('project.path.data', $data);
+        $config->set('project.path.entries', $data . '/entries');
+        $config->set('project.path.layouts', $data . '/layouts');
 
-		// Config
-		if ($config->get('outer_project'))
-		{
-			$file = $config->get('project.path.root') . '/.vaseman/config.php';
+        // Config
+        if ($config->get('outer_project')) {
+            $file = $config->get('project.path.root') . '/.vaseman/config.php';
 
-			if (is_file($file))
-			{
-				$config->loadFile($file, 'php');
-			}
-		}
+            if (is_file($file)) {
+                $config->loadFile($file, 'php');
+            }
+        }
 
-		// Loader
-		$loader = new ClassLoader;
+        // Loader
+        $loader = new ClassLoader;
 
-		$loader->register();
+        $loader->register();
 
-		if ($config->get('outer_project') || $config->get('mode') == 'test')
-		{
-			$loader->addPsr4('Vaseman\\', $config->get('project.path.data') . '/src');
-		}
+        if ($config->get('outer_project') || $config->get('mode') == 'test') {
+            $loader->addPsr4('Vaseman\\', $config->get('project.path.data') . '/src');
+        }
 
-		// Plugins
-		$plugins = $config->get('plugins', array());
-		$dispatcher = Ioc::getDispatcher();
+        // Plugins
+        $plugins    = $config->get('plugins', []);
+        $dispatcher = Ioc::getDispatcher();
 
-		foreach ($plugins as $plugin)
-		{
-			if (class_exists($plugin) && is_subclass_of($plugin, 'Vaseman\\Plugin\\AbstractPlugin') && $plugin::$isEnabled)
-			{
-				$dispatcher->addListener(new $plugin);
-			}
-		}
-	}
+        foreach ($plugins as $plugin) {
+            if (class_exists($plugin) && is_subclass_of($plugin,
+                    'Vaseman\\Plugin\\AbstractPlugin') && $plugin::$isEnabled) {
+                $dispatcher->addListener(new $plugin);
+            }
+        }
+    }
 }

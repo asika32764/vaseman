@@ -13,30 +13,30 @@ use Windwalker\Web\Application;
 
 /**
  * The TestApplication class.
- * 
+ *
  * @since  2.1.1
  */
 class TestApplication extends Application
 {
-	/**
-	 * Property name.
-	 *
-	 * @var  string
-	 */
-	protected $name = 'test';
+    /**
+     * Property name.
+     *
+     * @var  string
+     */
+    protected $name = 'test';
 
-	/**
-	 * initialise
-	 *
-	 * @return  void
-	 */
-	protected function init()
-	{
-		parent::init();
+    /**
+     * initialise
+     *
+     * @return  void
+     */
+    protected function init()
+    {
+        parent::init();
 
-		$this->boot();
+        $this->boot();
 
-		$session = $this->session;
-		$session->setBridge(new MockArrayBridge);
-	}
+        $session = $this->session;
+        $session->setBridge(new MockArrayBridge);
+    }
 }

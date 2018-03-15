@@ -15,10 +15,10 @@ namespace Vaseman\Processor;
  */
 class BladeProcessor extends EdgeProcessor
 {
-	/**
-	 * Property ext.
-	 *
-	 * @var  string
-	 */
-	protected $ext = '.blade.php';
+    /**
+     * Property ext.
+     *
+     * @var  string
+     */
+    protected $ext = '.blade.php';
 }

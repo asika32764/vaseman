@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of vaseman project. 
+ * Part of vaseman project.
  *
  * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -8,45 +8,68 @@
 
 namespace Vaseman\View;
 
-use Vaseman\Processor\AbstractFileProcessor;
 use Vaseman\Helper\Set\HelperSet;
+use Vaseman\Processor\AbstractFileProcessor;
 use Windwalker\Data\Data;
-use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Structure\Structure;
 
 /**
  * The VasemanFileProcessor class.
- * 
+ *
  * @since  {DEPLOY_VERSION}
  */
 class VasemanView extends \Windwalker\Core\View\HtmlView
 {
-	/**
-	 * Property config.
-	 *
-	 * @var Structure
-	 */
-	protected $config;
+    /**
+     * Property config.
+     *
+     * @var Structure
+     */
+    protected $config;
 
-	/**
-	 * Property paths.
-	 *
-	 * @var string
-	 */
-	protected $path;
+    /**
+     * Property paths.
+     *
+     * @var string
+     */
+    protected $path;
 
-	/**
-	 * Property allowPageExts.
-	 *
-	 * @var  array
-	 */
-	protected $allowPageExts = [
-		'.twig',
-		'.md',
-		'.blade.php',
-		'.edge.php'
-	];
+    /**
+     * Property allowPageExts.
+     *
+     * @var  array
+     */
+    protected $allowPageExts = [
+        '.twig',
+        '.md',
+        '.blade.php',
+        '.edge.php'
+    ];
+
+    /**
+     * Method to get property Config
+     *
+     * @return  Structure
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Method to set property config
+     *
+     * @param   Structure $config
+     *
+     * @return  static  Return self to support chaining.
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
 
     /**
      * doRender
@@ -56,129 +79,100 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
      * @return string
      * @throws \UnexpectedValueException
      */
-	protected function doRender($data)
-	{
-		$this->prepareGlobals($this->getData());
+    protected function doRender($data)
+    {
+        $this->prepareGlobals($this->getData());
 
-		$file = $this->findPaths();
+        $file = $this->findPaths();
 
-		if ($file === null)
-		{
-			throw new \UnexpectedValueException('Layout: ' . $this->getLayout() . ' not found');
-		}
+        if ($file === null) {
+            throw new \UnexpectedValueException('Layout: ' . $this->getLayout() . ' not found');
+        }
 
-		$processor = AbstractFileProcessor::getInstance($file->getExtension(), $file, $this->path, $this->config->get('layout.folder'));
+        $processor = AbstractFileProcessor::getInstance($file->getExtension(), $file, $this->path,
+            $this->config->get('layout.folder'));
 
-		$processor->setData($this->getData());
-		$processor->render();
+        $processor->setData($this->getData());
+        $processor->render();
 
-		return $processor;
-	}
+        return $processor;
+    }
 
-	/**
-	 * findPaths
-	 *
-	 * @param string $layout
-	 *
-	 * @return  \SplFileInfo
-	 */
-	public function findPaths($layout = null)
-	{
-		$layout = $layout ? : $this->getLayout();
+    /**
+     * prepareGlobals
+     *
+     * @param \Windwalker\Data\Data $data
+     *
+     * @return  void
+     */
+    protected function prepareGlobals($data)
+    {
+        $this->data->helper = new HelperSet($this);
 
-		if (is_file($this->getPath() . '/' . $layout))
-		{
-			return new \SplFileInfo(realpath($this->getPath() . '/' . $layout));
-		}
+        $this->data->bind(GlobalProvider::loadGlobalProvider());
+    }
 
-		$layout = explode('/', $layout);
-		$name = array_pop($layout);
+    /**
+     * findPaths
+     *
+     * @param string $layout
+     *
+     * @return  \SplFileInfo
+     */
+    public function findPaths($layout = null)
+    {
+        $layout = $layout ?: $this->getLayout();
 
-		$layout = implode('/', $layout);
+        if (is_file($this->getPath() . '/' . $layout)) {
+            return new \SplFileInfo(realpath($this->getPath() . '/' . $layout));
+        }
 
-		if (is_dir($this->getPath() . '/' . $layout))
-		{
-			$files = Filesystem::find($this->path . '/' . $layout, $name);
+        $layout = explode('/', $layout);
+        $name   = array_pop($layout);
 
-			/** @var \SplFileInfo $file */
-			foreach ($files as $file)
-			{
-				$filename = $file->getFilename();
+        $layout = implode('/', $layout);
 
-				foreach ($this->allowPageExts as $ext)
-				{
-					$lookName = $name . $ext;
+        if (is_dir($this->getPath() . '/' . $layout)) {
+            $files = Filesystem::find($this->path . '/' . $layout, $name);
 
-					if ($lookName == $filename)
-					{
-						return $file;
-					}
-				}
-			}
-		}
+            /** @var \SplFileInfo $file */
+            foreach ($files as $file) {
+                $filename = $file->getFilename();
 
-		return null;
-	}
+                foreach ($this->allowPageExts as $ext) {
+                    $lookName = $name . $ext;
 
-	/**
-	 * prepareGlobals
-	 *
-	 * @param \Windwalker\Data\Data $data
-	 *
-	 * @return  void
-	 */
-	protected function prepareGlobals($data)
-	{
-		$this->data->helper = new HelperSet($this);
+                    if ($lookName == $filename) {
+                        return $file;
+                    }
+                }
+            }
+        }
 
-		$this->data->bind(GlobalProvider::loadGlobalProvider());
-	}
+        return null;
+    }
 
-	/**
-	 * Method to get property Config
-	 *
-	 * @return  Structure
-	 */
-	public function getConfig()
-	{
-		return $this->config;
-	}
+    /**
+     * Method to get property Path
+     *
+     * @return  string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
 
-	/**
-	 * Method to set property config
-	 *
-	 * @param   Structure $config
-	 *
-	 * @return  static  Return self to support chaining.
-	 */
-	public function setConfig($config)
-	{
-		$this->config = $config;
+    /**
+     * Method to set property path
+     *
+     * @param   string $path
+     *
+     * @return  static  Return self to support chaining.
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
 
-		return $this;
-	}
-
-	/**
-	 * Method to get property Path
-	 *
-	 * @return  string
-	 */
-	public function getPath()
-	{
-		return $this->path;
-	}
-
-	/**
-	 * Method to set property path
-	 *
-	 * @param   string $path
-	 *
-	 * @return  static  Return self to support chaining.
-	 */
-	public function setPath($path)
-	{
-		$this->path = $path;
-
-		return $this;
-	}
+        return $this;
+    }
 }
