@@ -40,7 +40,9 @@ class VasemanPackage extends AbstractPackage
 
         parent::boot();
 
-        GlobalContainer::addExtension('vaseman', new VasemanTwigExtension);
+        if (class_exists(\Twig_Extension::class)) {
+            GlobalContainer::addExtension('vaseman', new VasemanTwigExtension);
+        }
     }
 
     /**
