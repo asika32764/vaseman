@@ -1,6 +1,6 @@
 ---
 layout: documentation.twig
-title: Use Twig Pages
+title: Use Blade Pages
 
 ---
 
