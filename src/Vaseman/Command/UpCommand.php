@@ -101,8 +101,6 @@ class UpCommand extends Command
         $this->console->set('project.path.root', realpath($root));
         $this->console->set('project.path.data', realpath($dataRoot));
 
-        $folders = $this->console->get('folders', []);
-
         if (!is_dir($dataRoot)) {
             throw new \RuntimeException(sprintf('%s is not a Vaseman project.', realpath($root) . '/.vaseman'));
         }
@@ -116,6 +114,8 @@ class UpCommand extends Command
         $app->set('project', $this->console->get('project'));
         $app->boot();
         $app->getRouter();
+
+        $folders = $app->get('folders', []);
 
         $package = $app->getPackage('vaseman');
 
@@ -135,13 +135,13 @@ class UpCommand extends Command
         $assets     = [];
         $processors = [];
 
-        foreach ($folders as $folder) {
-            $files = Filesystem::files($dataRoot . '/' . $folder, true);
+        foreach ($folders as $srcFolder => $destFolder) {
+            $files = Filesystem::files($dataRoot . '/' . $srcFolder, true);
 
             foreach ($files as $file) {
                 $this->out('[<option>Rendering file</option>]: ' . $file);
 
-                $asset = new Asset($file, $dataRoot . '/' . $folder);
+                $asset = new Asset($file, $dataRoot . '/' . $srcFolder);
 
                 $layout = Path::clean($asset->getPath(), '/');
 
@@ -149,7 +149,7 @@ class UpCommand extends Command
 
                 $config = $controller->getConfig();
                 $config->set('layout_path', $asset->getRoot());
-                $config->set('layout_folder', $folder);
+                $config->set('layout_folder', $destFolder);
 
                 $controller->setInput($input)->execute();
 

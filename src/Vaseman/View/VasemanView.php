@@ -93,7 +93,7 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
             $file->getExtension(),
             $file,
             $this->path,
-            $this->config->get('layout.folder')
+            $this->config->get('layout_folder')
         );
 
         $processor->setConfig($this->config);
