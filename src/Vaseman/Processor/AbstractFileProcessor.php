@@ -138,6 +138,8 @@ abstract class AbstractFileProcessor
 		// URI
 		$uri = Ioc::get('view.data.uri');
 
+		$this->config->merge(Ioc::getConfig());
+
 		try
 		{
 			if (\count($template) !== 3)
@@ -146,16 +148,13 @@ abstract class AbstractFileProcessor
 			}
 
 			$config = Yaml::parse($template[1]);
+			$this->config->load($config);
 
 			if ($config)
 			{
 				array_shift($template);
 				array_shift($template);
 			}
-
-			$this->config->load($config);
-			$this->config->merge(Ioc::getConfig());
-			$this->getData()->bind(array('config' => $this->config->toArray()));
 
 			// Target permalink
 			if ($this->config->get('permalink'))
@@ -167,8 +166,8 @@ abstract class AbstractFileProcessor
 					$this->target .= '/index.html';
 				}
 
-				$uri['base']  = ProcessorHelper::getBackwards($this->target) ?: './';
-				$uri['media'] = ProcessorHelper::getBackwards($this->target) . 'media/';
+				$uri['base']  = ProcessorHelper::getBackwards($this->target) ?: '.';
+				$uri['asset'] = ProcessorHelper::getBackwards($this->target) . 'asset';
 			}
 			else
 			{
@@ -186,8 +185,9 @@ abstract class AbstractFileProcessor
 			$template = implode('---', $template);
 		}
 
-		$this->data->uri  = $uri;
-		$this->data->path = Ioc::get('view.data.path');
+		$this->data->bind(array('config' => $this->config));
+		$this->data->uri   = $uri;
+		$this->data->paths = Ioc::get('view.data.path');
 
 		$event              = new Event('loadProvider');
 		$event['data']      = $this->data;

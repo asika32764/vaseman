@@ -73,10 +73,10 @@ class InitCommand extends Command
 
 		$this->out()->out('<comment>Start initialise Vaseman project.</comment>')->out();
 
-		$this->copyFolder($systemRoot . '/media', $projectRoot . '/media');
+		$this->copyFolder($systemRoot . '/asset', $projectRoot . '/asset');
 		$this->copyFolder($systemRoot . '/entries', $projectRoot . '/entries');
 		$this->copyFolder($systemRoot . '/layouts', $projectRoot . '/layouts');
-		$this->copyFile($systemRoot . '/etc/config.yml', $projectRoot . '/config.yml');
+		$this->copyFile($systemRoot . '/etc/config.php', $projectRoot . '/config.php');
 
 		$this->createFolder($projectRoot . '/src/Plugin');
 		$this->createFolder($projectRoot . '/src/Helper');

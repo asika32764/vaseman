@@ -49,7 +49,7 @@ class PageRenderTest extends AbstractBaseTestCase
 		$compare = <<<HTML
 No config Twig file
 uri.base: ./
-uri.media: media/
+uri.asset: asset
 HTML;
 
 		$this->assertStringDataEquals($compare, $this->controller->execute());
@@ -67,7 +67,7 @@ HTML;
 		$compare = <<<HTML
 Has config Twig file
 uri.base: ./
-uri.media: media/
+uri.asset: asset
 config.foo.bar: baz
 HTML;
 
@@ -86,7 +86,7 @@ HTML;
 		$compare = <<<HTML
 File: sakura/index
 uri.base: ../
-uri.media: ../media/
+uri.asset: ../asset
 HTML;
 
 		$this->assertStringDataEquals($compare, $this->controller->execute());
@@ -104,7 +104,7 @@ HTML;
 		$compare = <<<HTML
 File: sakura/permalink
 uri.base: ../
-uri.media: ../media/
+uri.asset: ../asset
 config.permalink: foo/bar.html
 HTML;
 
@@ -127,7 +127,7 @@ HTML;
 		$compare = <<<HTML
 File: sakura/permalink2
 uri.base: ../../../
-uri.media: ../../../media/
+uri.asset: ../../../asset
 config.permalink: foo/bar/baz/yoo.html
 HTML;
 
@@ -150,7 +150,7 @@ HTML;
 		$compare = <<<HTML
 File: sakura/permalink3
 uri.base: ../../../
-uri.media: ../../../media/
+uri.asset: ../../../asset
 config.permalink: foo/bar/baz/
 HTML;
 
@@ -174,7 +174,7 @@ HTML;
 <p>
 	File: flower/index
 	uri.base: ../
-	uri.media: ../media/
+	uri.asset: ../asset
 </p>
 HTML;
 

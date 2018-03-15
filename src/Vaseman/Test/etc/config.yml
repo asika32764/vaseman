@@ -18,6 +18,6 @@ language:
     path: resources/languages
 folders:
     - entries
-    - media
+    - asset
 plugins:
     - Vaseman\Plugin\TestPlugin

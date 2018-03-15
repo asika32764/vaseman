@@ -52,11 +52,11 @@ class VasemanListener
 		// Config
 		if ($config->get('outer_project'))
 		{
-			$file = $config->get('project.path.root') . '/.vaseman/config.yml';
+			$file = $config->get('project.path.root') . '/.vaseman/config.php';
 
 			if (is_file($file))
 			{
-				$config->loadFile($file, 'yaml');
+				$config->loadFile($file, 'php');
 			}
 		}
 

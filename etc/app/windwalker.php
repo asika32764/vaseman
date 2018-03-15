@@ -56,7 +56,7 @@ return [
 	 * will be the latest file and override all configs.
 	 */
 	'configs' => [
-		100 => WINDWALKER_ETC . '/config.yml',
+		100 => WINDWALKER_ETC . '/config.php',
 		800 => WINDWALKER_ETC . '/secret.yml',
 	],
 
