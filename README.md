@@ -10,83 +10,32 @@
 
 Vaseman is nothing but only pretty face. He is a prototype system and static site generator.
 
+[Documentation](http://about.asika.tw/vaseman/documentation/getting-started.html)
+
 ## Installation
 
-### Install by Download
-
-Please download from here:
-https://github.com/asika32764/vaseman/releases
-
-### Install by Composer
+Use Vaseman as simple PHP site.
 
 ``` bash
-$ php composer.phar create-project asika/vaseman [project-dir] 2.*
+composer create-project asika/vaseman vaseman 3.*
 ```
 
-## Getting Started
+Use Vaseman as static page generator.
 
-### View Pages
-
-Open project dir by browser, you can see the index page.
-
-![index](http://cl.ly/SnuG/p2013-12-05-1.jpg)
-
-And click *Admin* button on top left, this is a back-end page example.
-
-![admin](http://cl.ly/SoKm/p2013-12-05-2.jpg)
-
-### Writing Pages
-
-Just create your `*.twig` in `entries` folder.
-
-The template file path are match the url path. If you go `path/to/your/page`, Vaseman will render `entries/path/to/your/page.twig` for you.
-
-### Base URI
-
-Using `{{ uri.base }}` to add subfolder for assets url.
-
-For Example, If you put your project in `http://localhost/subfolder`
-
-``` twig
-<script src="{{ uri.base }}assets/js/main.js"></script>
+``` bash
+composer global require asika/vaseman 3.*
 ```
 
-Will render as:
+## Preview
 
-``` html
-<script src="/subfolder/assets/js/main.js"></script>
-```
+![index](https://i.imgur.com/pSp7y4K.jpg)
 
-That avoid the loading failure by relative path.
+![](https://i.imgur.com/jK4fGKy.jpg)
 
-### Helper
-
-Create your own helper class in `src/Helper`:
-
-``` php
-<?php
-// src/Helper/Myhelper.php
-
-namespace Vaseman\Helper;
-
-use Vaseman\Helper\Set\AbstractHelper as Helper;
-
-class Myhelper extends AbstractHelper
-{
-    public function getSomeThing($foo = '')
-    {
-        return 'Something is ' . $foo;
-    }
-}
-```
-
-Then you can use this helper in templates:
-
-``` twig
-<div class="{{ helper.myhelper.getSomeThing('bar') }}"></div>
-```
+![](https://i.imgur.com/ryldijh.jpg)
 
 ## License
+
 GNU General Public License version 2 or later;
 
 ## Resources
