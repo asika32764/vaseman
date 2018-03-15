@@ -67,7 +67,7 @@ class GetController extends AbstractController
 		$path = $this->config->get('layout.path', $this->app->get('project.path.entries'));
 
 		$view->setPath($path);
-		// $view->addPath($this->app->get('project.path.layouts'), Priority::NORMAL);
+		$view->addPath($this->app->get('project.path.layouts'));
 
 		$view['path'] = (array) $paths;
 

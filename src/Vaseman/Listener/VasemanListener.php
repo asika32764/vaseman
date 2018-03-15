@@ -22,6 +22,15 @@ use Windwalker\Utilities\Queue\PriorityQueue;
  */
 class VasemanListener
 {
+	/**
+	 * onAfterInitialise
+	 *
+	 * @param Event $event
+	 *
+	 * @return  void
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
 	public function onAfterInitialise(Event $event)
 	{
 		$app = $event['app'];
@@ -33,8 +42,7 @@ class VasemanListener
 				$root = WINDWALKER_ROOT;
 				break;
 			default:
-				$env = new Environment;
-				$root = $env->platform->getWorkingDirectory();
+				$root = $config->get('project.path.root');
 
 				$root = $root ? : WINDWALKER_ROOT;
 				break;
@@ -46,8 +54,8 @@ class VasemanListener
 
 		$config->set('project.path.root', $root);
 		$config->set('project.path.data', $data);
-		$config->set('project.path.entries', $root . '/entries');
-		$config->set('project.path.layouts', $root . '/layouts');
+		$config->set('project.path.entries', $data . '/entries');
+		$config->set('project.path.layouts', $data . '/layouts');
 
 		// Config
 		if ($config->get('outer_project'))

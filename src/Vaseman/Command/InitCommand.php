@@ -49,7 +49,7 @@ class InitCommand extends Command
 	 *
 	 * @var  string
 	 */
-	protected $usage = 'up <cmd><command></cmd> <option>[options]</option>';
+	protected $usage = 'up <cmd><path></cmd> <option>[options]</option>';
 
 	/**
 	 * doExecute
@@ -58,7 +58,26 @@ class InitCommand extends Command
 	 */
 	protected function doExecute()
 	{
-		$projectRoot = $this->console->get('project.path.data');
+		$working = $this->console->get('project.path.working');
+
+		$root = $this->getArgument(0);
+
+		if (!$root)
+		{
+			$root = $working;
+		}
+		else
+		{
+			if (strpos($root, '/') === 0)
+			{
+				$root = $working . '/' . $root;
+			}
+		}
+
+		$dataRoot = $root . '/.vaseman';
+
+		$this->console->set('project.path.root', realpath($root));
+		$this->console->set('project.path.data', realpath($dataRoot));
 
 		$systemRoot = WINDWALKER_ROOT;
 
@@ -73,14 +92,15 @@ class InitCommand extends Command
 
 		$this->out()->out('<comment>Start initialise Vaseman project.</comment>')->out();
 
-		$this->copyFolder($systemRoot . '/asset', $projectRoot . '/asset');
-		$this->copyFolder($systemRoot . '/entries', $projectRoot . '/entries');
-		$this->copyFolder($systemRoot . '/layouts', $projectRoot . '/layouts');
-		$this->copyFile($systemRoot . '/etc/config.php', $projectRoot . '/config.php');
+		$this->copyFolder($systemRoot . '/asset', $dataRoot . '/asset');
+		$this->copyFolder($systemRoot . '/entries', $dataRoot . '/entries');
+		$this->copyFolder($systemRoot . '/layouts', $dataRoot . '/layouts');
+		$this->copyFolder($systemRoot . '/resources/packages', $dataRoot, false);
+		$this->copyFile($systemRoot . '/etc/config.php', $dataRoot . '/config.php');
 
-		$this->createFolder($projectRoot . '/src/Plugin');
-		$this->createFolder($projectRoot . '/src/Helper');
-		$this->createFolder($projectRoot . '/src/Twig');
+		$this->createFolder($dataRoot . '/src/Plugin');
+		$this->createFolder($dataRoot . '/src/Helper');
+		$this->createFolder($dataRoot . '/src/Twig');
 
 		$this->out()->out('<info>Project generated.</info>')->out();
 
@@ -92,14 +112,15 @@ class InitCommand extends Command
 	 *
 	 * @param string $src
 	 * @param string $dest
+	 * @param bool   $overwrite
 	 *
 	 * @return  void
 	 */
-	protected function copyFolder($src, $dest)
+	protected function copyFolder($src, $dest, $overwrite = true)
 	{
 		$this->out('<info>Create</info>: ' . $dest);
 
-		if (is_dir($dest))
+		if (is_dir($dest) && $overwrite)
 		{
 			Folder::delete($dest);
 		}

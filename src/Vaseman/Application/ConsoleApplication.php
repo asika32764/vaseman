@@ -32,14 +32,13 @@ class ConsoleApplication extends Application
 
 		ConsoleErrorHandler::register();
 
-		parent::boot();
-
 		$env = new Environment;
 
-		$root = $env->platform->getWorkingDirectory();
+		$working = $env->platform->getWorkingDirectory();
 
-		$this->set('project.path.root', $root);
-		$this->set('project.path.data', $root . '/.vaseman');
+		$this->set('project.path.working', $working);
+
+		parent::boot();
 	}
 
 	/**

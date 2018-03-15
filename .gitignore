@@ -11,6 +11,9 @@
 # Composer
 /vendor
 composer.lock
+/node_modules
 
 #Test
 /phpunit.xml
+.gitignore
+package.json

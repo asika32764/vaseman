@@ -53,7 +53,7 @@ class UpCommand extends Command
 	 *
 	 * @var  string
 	 */
-	protected $usage = 'up <cmd><command></cmd> <option>[options]</option>';
+	protected $usage = 'up <cmd><path></cmd> <option>[options]</option>';
 
 	/**
 	 * initialise
@@ -80,16 +80,46 @@ class UpCommand extends Command
 			->out('-----------------------------')->out()
 			->out('<comment>Start generating site</comment>')->out();
 
-		$dataRoot = $this->console->get('project.path.data', WINDWALKER_ROOT);
+		$working = $this->console->get('project.path.working');
+
+		$root = $this->getArgument(0);
+
+		if (!$root)
+		{
+			$root = $working;
+		}
+		else
+		{
+			if (!is_dir($root))
+			{
+				$root = $working . '/' . $root;
+			}
+
+			if (!is_dir($root))
+			{
+				$root = $working;
+			}
+		}
+
+		$dataRoot = $root . '/.vaseman';
+
+		$this->console->set('project.path.root', realpath($root));
+		$this->console->set('project.path.data', realpath($dataRoot));
+
 		$folders = $this->console->get('folders', array());
 
-		$profile = Ioc::getProfile();
+		if (!is_dir($dataRoot))
+		{
+			throw new \RuntimeException(sprintf('%s is not a Vaseman project.', realpath($root) . '/.vaseman'));
+		}
 
 		Ioc::setProfile('web');
 
 		/** @var Application $app */
-		$app = new Application;
+		$app = new Application(null);
 		$app->set('outer_project', $this->console->get('outer_project'));
+		$app->set('path', $this->console->get('path'));
+		$app->set('project', $this->console->get('project'));
 		$app->boot();
 		$app->getRouter();
 
