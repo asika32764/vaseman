@@ -5,7 +5,7 @@
         {% for id, item in section %}
             {% set page = path|last %}
             <li class="{{ page|slice(0, -3) == id ? 'uk-active' : '' }}">
-                <a href="{{ uri.base }}documentation/{{ id }}.html">{{ item }}</a>
+                <a href="{{ uri.base }}/documentation/{{ id }}.html">{{ item }}</a>
             </li>
         {% endfor %}
 

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="../media/images/ico/favicon.ico" />
+        <link rel="shortcut icon" href="../asset/images/ico/favicon.ico" />
 
         <title>Config And Data | Vaseman, The PHP Static Site Generator</title>
 
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
-        <link href="../media/css/main.css" rel="stylesheet">
+        <link href="../asset/css/main.css" rel="stylesheet">
 
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
@@ -24,9 +24,9 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="../media/js/jquery.js"></script>
+        <script src="../asset/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="../media/js/highlight.pack.js"></script>
+        <script src="../asset/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
                 $('.article-content pre code').each(function(i, block) {
@@ -41,13 +41,13 @@
         <div class="uk-container uk-container-center">
 
             <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../">
-                <img class="uk-margin uk-margin-remove" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" src="../asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
 
             <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../">
-                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
@@ -87,6 +87,9 @@
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
                                 <li class="">
+                <a href="../documentation/blade-pages.html">Use Blade Pages</a>
+            </li>
+                                <li class="">
                 <a href="../documentation/twig-pages.html">Use Twig Pages</a>
             </li>
                                 <li class="">
@@ -106,7 +109,7 @@
                 <a href="../documentation/static-pages.html">Generate Static Pages</a>
             </li>
                                 <li class="">
-                <a href="../documentation/outer-project.html">Create Project In Outer Folder</a>
+                <a href="../documentation/outside-project.html">Use In Outside Folder</a>
             </li>
                                 <li class="">
                 <a href="../documentation/permalink.html">Permalink</a>
@@ -129,18 +132,17 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>            </div>
+   </ul>
+            </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
                     <h1>Add Page Config</h1>
-
 <p>We can use <a href="http://www.yaml.org/">YAML</a> format at top of every page to set config. Separate config and content by 3 dashes (<code>---</code>).</p>
-
 <p>For Example:</p>
-
-<pre><code class="twig">layout: html.twig
+<pre><code class="language-twig">---
+layout: html.twig
 title: My Site
 flower:
     sakura: World
@@ -153,46 +155,40 @@ flower:
 &lt;body&gt;
     Hello {{ config.flower.sakura }}
 &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-
+&lt;/html&gt;</code></pre>
 <p>All config data will put in <code>config</code> property.</p>
-
 <h1>Page Properties</h1>
-
 <p>There has some default properties in every twig pages.</p>
-
 <table>
 <thead>
 <tr>
-  <th>Name</th>
-  <th>Description</th>
+<th>Name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>config</td>
-  <td>All config data at page header</td>
+<td>config</td>
+<td>All config data at page header</td>
 </tr>
 <tr>
-  <td>uri</td>
-  <td>Contains <code>uri.base</code> and <code>uri.media</code> to set relative link path</td>
+<td>uri</td>
+<td>Contains <code>base</code> and <code>asset</code> to set relative link path</td>
 </tr>
 <tr>
-  <td>view</td>
-  <td>Some view and layout properties</td>
+<td>view</td>
+<td>Some view and layout properties</td>
 </tr>
 <tr>
-  <td>path</td>
-  <td>An array or current route</td>
+<td>path</td>
+<td>An array or current route</td>
 </tr>
 <tr>
-  <td>content</td>
-  <td>The page data</td>
+<td>content</td>
+<td>The page data</td>
 </tr>
 </tbody>
 </table>
-
 
                     <p class="uk-text-center">
                         Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
@@ -209,7 +205,7 @@ flower:
 
             <div class="footer-logo">
                 <a href="#" data-uk-smooth-scroll>
-                    <img src="../media/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
+                    <img src="../asset/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
                 </a>
             </div>
 
@@ -222,7 +218,7 @@ flower:
             </p>
 
             <p>
-                Copyright &copy; 2014 Vaseman. All Rights Reserved.
+                Copyright &copy; 2018 Vaseman. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>

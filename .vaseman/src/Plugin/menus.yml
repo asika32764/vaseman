@@ -1,12 +1,13 @@
 Basic:
   getting-started: Getting Started
+  blade-pages: Use Blade Pages
   twig-pages: Use Twig Pages
   markdown-pages: Use Markdown Pages
   config-data: Config And Data
   debug: Debugging
 Static Pages:
   static-pages: Generate Static Pages
-  outer-project: Create Project In Outer Folder
+  outside-project: Use In Outside Folder
   permalink: Permalink
 Extending:
   helpers: View Helpers

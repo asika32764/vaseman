@@ -2,15 +2,15 @@
 
 {% block nav %}
     <li>
-        <a href="{{ uri.base }}index.html"><small><i class="glyphicon glyphicon-chevron-left"></i></small> Front-End</a>
+        <a href="{{ uri.base }}/index.html"><small><i class="glyphicon glyphicon-chevron-left"></i></small> Front-End</a>
     </li>
 
     <li class="{{ helper.page.isActive(path, 'admin.article') }}">
-        <a href="{{ uri.base }}admin/article/index.html">Article</a>
+        <a href="{{ uri.base }}/admin/article/index.html">Article</a>
     </li>
 
     <li class="{{ helper.page.isActive(path, 'admin.category') }}">
-        <a href="{{ uri.base }}admin/category/index.html">Categories</a>
+        <a href="{{ uri.base }}/admin/category/index.html">Categories</a>
     </li>
 {% endblock %}
 

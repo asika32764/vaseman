@@ -1,9 +1,10 @@
+---
 layout: documentation.twig
 title: View Helpers
 
 ---
 
-# View Helper For Twig
+# View Helper
 
 We cannot use php functions in Twig, so if we want to add custom functions, there is a way to add some helpers.
 
@@ -20,9 +21,9 @@ use Windwalker\Core\View\Helper\AbstractHelper;
 
 class BlogHelper extends AbstractHelper
 {
-	public function getData($date = 'now')
+	public function getData($date = 'now', $format = 'Y-m-d H:i:s')
 	{
-		return new \DateTime($date);
+		return (new \DateTime($date))->format($format);
 	}
 }
 ```
@@ -30,7 +31,19 @@ class BlogHelper extends AbstractHelper
 Now we can use this method in Twig:
 
 ``` twig
+{# Twig #}
 Created date: {{ helper.blog.getDate('now') }}
+```
+
+```php
+{{-- Blade --}}
+Created date: {{ $helper->blog->getDate('now') }}
+```
+
+In Blade, you can simply use php class:
+
+```php
+<a class="nav-link {{ \MyProject\Helper\MyClass::isActive($path, 'foo') }}">...</a>
 ```
 
 # Fake Data

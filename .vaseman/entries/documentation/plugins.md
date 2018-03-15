@@ -1,3 +1,4 @@
+---
 layout: documentation.twig
 title: Plugins And DataProvider
 
@@ -43,9 +44,10 @@ class DataPlugin extends AbstractPlugin implements DataProviderInterface
 And add this namespace to `config.yml`
 
 ``` yaml
-# Plugin classes with namespace (Array)
-plugins:
-    - Vaseman\Plugin\DataPlugin
+    // Plugin classes with namespace (Array)
+    'plugins' => [
+        Vaseman\Plugin\DataPlugin::class
+    ]
 ```
 
 Now we can get this articles data in Twig:
@@ -55,4 +57,13 @@ Now we can get this articles data in Twig:
 	Title: {{ item.title }}
 	Author: {{ item.author }}
 {% endfor %}
+```
+
+OR Blade
+
+```php
+@foreach ($articles as $item)
+	Title: {{ $item->title }}
+	Author: {{ $item->author }}
+@endforeach
 ```

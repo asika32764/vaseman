@@ -105,10 +105,10 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">Static Pages</li>
 
-                                <li class="uk-active">
+                                <li class="">
                 <a href="../documentation/static-pages.html">Generate Static Pages</a>
             </li>
-                                <li class="">
+                                <li class="uk-active">
                 <a href="../documentation/outside-project.html">Use In Outside Folder</a>
             </li>
                                 <li class="">
@@ -138,22 +138,22 @@
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>Generate Pages In Vaseman Project</h1>
-<p>Now we create many pages in <code>/entries</code>, all pages are render dynamically. If we want to put our site on static web spaces
-(like <a href="https://pages.github.com/">GitHub Pages</a>), we can use command line to generate <code>.html</code> files.</p>
-<p>Open your terminal and type:</p>
-<pre><code class="language-bash">cd /your/vaseman/project
-php bin/console</code></pre>
-<p>You will see console help:</p>
-<pre><code class="language-bash">Vaseman - version: 3
+                    <h1>Use Vaseman As CLI Tools</h1>
+<p>Vaseman can use as a CLI tools to generate multiple projects, that we don't necessary to clone Vaseman for every project.</p>
+<pre><code class="language-bash">composer global require asika/vaseman 3.*</code></pre>
+<p>Make sure your composer bin folder is in your system <code>PATH</code> env variable.</p>
+<p>Now, type <code>vaseman</code> in everywhere, Vaseman will be a global command:</p>
+<pre><code class="language-bash">&gt; vaseman
+
+Vaseman - version: 2.0
 ------------------------------------------------------------
 
-[console Help]
+[vaseman Help]
 
 Vaseman console system.
 
 Usage:
-  console &lt;command&gt; [option]
+  vaseman &lt;command&gt; [option]
 
 Options:
 
@@ -164,69 +164,63 @@ Options:
 
 Commands:
 
-  up    Generate site.
+  up      Generate site.
+  init    Initialise a site project.
 </code></pre>
-<p>There is only one command now. Just type:</p>
-<pre><code class="language-bash">php bin/console up</code></pre>
-<p>Then Vaseman will generate all pages and media files to <code>/output</code> folder:</p>
+<p>Note there is a new <code>init</code> command if we use Vaseman as global tools.</p>
+<h2>Initialise A New Project</h2>
+<p>Type these commands.</p>
+<pre><code class="language-bash">mkdir mysite
+cd mysite
+vaseman init</code></pre>
+<p>Vaseman will create default pages:</p>
+<pre><code class="language-bash">This action will remove all current files, are you sure to continue? [Y/n]: y
+
+Start initialise Vaseman project.
+
+Create: /private/var/www/test/mysite/.vaseman/media
+Create: /private/var/www/test/mysite/.vaseman/entries
+Create: /private/var/www/test/mysite/.vaseman/layouts
+Create: /private/var/www/test/mysite/.vaseman/config.yml
+Create: /private/var/www/test/mysite/.vaseman/src/Plugin
+Create: /private/var/www/test/mysite/.vaseman/src/Helper
+Create: /private/var/www/test/mysite/.vaseman/src/Twig
+
+Project generated.
+</code></pre>
+<h2>Generate Pages</h2>
+<p>Generate pages in outer project is same as inner project:</p>
+<pre><code class="language-bash">$ vaseman up</code></pre>
+<p>Then Vaseman will generate all pages to root.</p>
 <pre><code class="language-bash">Vaseman generator
 -----------------------------
 
 Start generating site
 
-Write file: /private/var/www/vaseman/output/admin/article/edit.html
-Write file: /private/var/www/vaseman/output/admin/article/index.html
-Write file: /private/var/www/vaseman/output/admin/category/edit.html
-Write file: /private/var/www/vaseman/output/admin/category/index.html
-Write file: /private/var/www/vaseman/output/article.html
-Write file: /private/var/www/vaseman/output/index.html
-Write file: /private/var/www/vaseman/output/media/css/bootstrap.min.css
-Write file: /private/var/www/vaseman/output/media/css/project.css
-Write file: /private/var/www/vaseman/output/media/fonts/glyphicons-halflings-regular.eot
-Write file: /private/var/www/vaseman/output/media/fonts/glyphicons-halflings-regular.svg
-Write file: /private/var/www/vaseman/output/media/fonts/glyphicons-halflings-regular.ttf
-Write file: /private/var/www/vaseman/output/media/fonts/glyphicons-halflings-regular.woff
-Write file: /private/var/www/vaseman/output/media/images/favicon.ico
-Write file: /private/var/www/vaseman/output/media/js/bootstrap.min.js
-Write file: /private/var/www/vaseman/output/media/js/jquery.js
+Write file: /private/var/www/test/mysite/admin/article/edit.html
+Write file: /private/var/www/test/mysite/admin/article/index.html
+Write file: /private/var/www/test/mysite/admin/category/edit.html
+Write file: /private/var/www/test/mysite/admin/category/index.html
+Write file: /private/var/www/test/mysite/article.html
+Write file: /private/var/www/test/mysite/index.html
+Write file: /private/var/www/test/mysite/media/css/bootstrap.css
+Write file: /private/var/www/test/mysite/media/css/project.css
+Write file: /private/var/www/test/mysite/media/fonts/glyphicons-halflings-regular.eot
+Write file: /private/var/www/test/mysite/media/fonts/glyphicons-halflings-regular.svg
+Write file: /private/var/www/test/mysite/media/fonts/glyphicons-halflings-regular.ttf
+Write file: /private/var/www/test/mysite/media/fonts/glyphicons-halflings-regular.woff
+Write file: /private/var/www/test/mysite/media/images/favicon.ico
+Write file: /private/var/www/test/mysite/media/js/bootstrap.js
+Write file: /private/var/www/test/mysite/media/js/jquery.js
 
-Complete</code></pre>
-<p>Now theses files can safely put on static web spaces.</p>
-<blockquote>
-<p>We also provide phar file to quickly use: <a href="https://github.com/asika32764/vaseman/releases">Download Phar</a></p>
-</blockquote>
-<h1>Folder to Generate</h1>
-<p>Open <code>/etc/config.php</code> or <code>/.vaseman/config.php</code>, you will see:</p>
-<pre><code class="language-yaml">&lt;?php
-
-return [
-    'project' =&gt; [
-        'name' =&gt; 'Vaseman'
-    ],
-
-    // Which folders you want to generate (Array)
-    'folders' =&gt; [
-        'entries' =&gt; '',
-        'asset' =&gt; 'asset'
-    ],
-
-    // Plugin classes with namespace (Array)
-    'plugins' =&gt; [
-    ],
-
-    'system' =&gt; [
-        'debug' =&gt; 0,
-        'timezone' =&gt; 'UTC',
-        'error_reporting' =&gt; -1,
-    ],
-];
+Complete
 </code></pre>
-<p>Just add <code>folders</code> element that Vaseman will parse all files in the folders you set:</p>
-<pre><code class="language-yaml">    'folders' =&gt; [
-        'entries' =&gt; '',
-        'asset' =&gt; 'asset',
-        'myfolder' =&gt; 'myfolder123'
-    ],</code></pre>
+<h2>Watch Files</h2>
+<p>Vaseman provides a simple gulp watch task. please cd to <code>.vaseman</code> folder, first run:</p>
+<pre><code class="language-bash">npm install</code></pre>
+<p>OR</p>
+<pre><code class="language-bash">yarn install</code></pre>
+<p>Then run <code>gulp watch</code>, and the Gulp will auto re-build files after you modified any file.</p>
 
                     <p class="uk-text-center">
                         Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation

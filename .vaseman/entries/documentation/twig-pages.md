@@ -1,3 +1,4 @@
+---
 layout: documentation.twig
 title: Use Twig Pages
 
@@ -28,6 +29,7 @@ We need a HTML layout to wrap our content, there has 2 ways to extends layouts.
 Add layout config on above:
 
 ``` twig
+---
 layout: html.twig
 ---
 <h1>Flower</h1>

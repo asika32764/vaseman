@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="../media/images/ico/favicon.ico" />
+        <link rel="shortcut icon" href="../asset/images/ico/favicon.ico" />
 
         <title>Getting Started | Vaseman, The PHP Static Site Generator</title>
 
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
-        <link href="../media/css/main.css" rel="stylesheet">
+        <link href="../asset/css/main.css" rel="stylesheet">
 
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
@@ -24,9 +24,9 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="../media/js/jquery.js"></script>
+        <script src="../asset/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="../media/js/highlight.pack.js"></script>
+        <script src="../asset/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
                 $('.article-content pre code').each(function(i, block) {
@@ -41,13 +41,13 @@
         <div class="uk-container uk-container-center">
 
             <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../">
-                <img class="uk-margin uk-margin-remove" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" src="../asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
 
             <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../">
-                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
@@ -87,6 +87,9 @@
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
                                 <li class="">
+                <a href="../documentation/blade-pages.html">Use Blade Pages</a>
+            </li>
+                                <li class="">
                 <a href="../documentation/twig-pages.html">Use Twig Pages</a>
             </li>
                                 <li class="">
@@ -106,7 +109,7 @@
                 <a href="../documentation/static-pages.html">Generate Static Pages</a>
             </li>
                                 <li class="">
-                <a href="../documentation/outer-project.html">Create Project In Outer Folder</a>
+                <a href="../documentation/outside-project.html">Use In Outside Folder</a>
             </li>
                                 <li class="">
                 <a href="../documentation/permalink.html">Permalink</a>
@@ -129,81 +132,37 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>            </div>
+   </ul>
+            </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
                     <h1>Installation</h1>
-
-<h2>Install by Download</h2>
-
-<p>Please download from <a href="https://github.com/asika32764/vaseman/releases">Github</a>, then run <code>composer install</code> to install vendors.</p>
-
-<p>Or just use <a href="https://github.com/asika32764/vaseman/releases">Phar</a> file.</p>
-
-<h2>Install by Composer</h2>
-
-<pre><code class="bash">$ php composer.phar create-project asika/vaseman vaseman 2.*
-</code></pre>
-
-<h2>Install By Git</h2>
-
-<pre><code class="bash">git clone https://github.com/asika32764/vaseman vaseman
-cd vaseman
-composer install
-</code></pre>
-
-<h2>Build your phar file</h2>
-
-<p>After vendor installed. Run this command:</p>
-
-<pre><code class="bash">$ php bin/build.php -d=../../vaseman.phar
-</code></pre>
-
+<p>Use Vaseman as simple PHP site.</p>
+<pre><code class="language-bash">composer create-project asika/vaseman vaseman 3.*</code></pre>
+<p>Use Vaseman as static page generator.</p>
+<pre><code class="language-bash">composer global require asika/vaseman 3.*</code></pre>
 <h1>Default Pages</h1>
-
 <p>Now we can use browser open Vaseman root, Vaseman will render page dynamically.</p>
-
 <h2>View Pages</h2>
-
 <p>Open project dir by browser, you can see the index page.</p>
-
-<p><img src="http://cl.ly/SnuG/p2013-12-05-1.jpg" alt="index" /></p>
-
-<p>And click <em>Admin</em> button on top left, this is a back-end page example.</p>
-
-<p><img src="http://cl.ly/SoKm/p2013-12-05-2.jpg" alt="admin" /></p>
-
-<blockquote>
-  <p>We'll convert default lorem text to English version in the future. Currently is Traditional Chinese.</p>
-  
-  <p>The Chinese lorem generated by: <a href="http://more.handlino.com/?corpus=xuzhimo">MoreText.js</a></p>
-</blockquote>
-
-<h2>Writing Pages</h2>
-
-<p>Create your <code>*.twig</code> in <code>entries</code> folder.</p>
-
+<p><img src="https://i.imgur.com/pSp7y4K.jpg" alt="index" /></p>
+<p>Click the grey buttons at below content, you can see an sample article page. (<code>entries/article/article.blade.php</code>)</p>
+<p><img src="https://i.imgur.com/jK4fGKy.jpg" alt="" /></p>
+<p>Click Markdown link at sidebar, you will see a markdown page example. (<code>entries/article/markdown.md</code>)</p>
+<p><img src="https://i.imgur.com/ryldijh.jpg" alt="" /></p>
+<h2>Create Pages</h2>
+<p>Create your <code>*.blade.php</code> in <code>entries</code> folder.</p>
 <p>The template file path will matches the url path.
-If you go <code>path/to/your/page</code>, Vaseman will render <code>entries/path/to/your/page.twig</code> for you.</p>
-
+If you go <code>path/to/your/page</code>, Vaseman will render this file as a new page.</p>
 <h2>Base URI</h2>
-
 <p>Using <code>{{ uri.base }}</code> to add subfolder for assets url.</p>
-
 <p>For Example, If you are in a page <code>foo/bar/baz.html</code>, You can use this url as link href:</p>
-
-<pre><code class="twig">&lt;a href="{{ uri.base }}sakura.html"&gt;Link&lt;/a&gt;
-</code></pre>
-
+<pre><code class="language-twig">&lt;a href="{{ $uri['base'] }}sakura.html"&gt;Link&lt;/a&gt;</code></pre>
 <p>The link will render as:</p>
-
-<pre><code class="html">&lt;a href="../../sakura.html"&gt;Link&lt;/a&gt;
-</code></pre>
-
+<pre><code class="language-html">&lt;a href="../../sakura.html"&gt;Link&lt;/a&gt;</code></pre>
 <p>So the page link will not break in every pages.</p>
-
 
                     <p class="uk-text-center">
                         Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
@@ -220,7 +179,7 @@ If you go <code>path/to/your/page</code>, Vaseman will render <code>entries/path
 
             <div class="footer-logo">
                 <a href="#" data-uk-smooth-scroll>
-                    <img src="../media/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
+                    <img src="../asset/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
                 </a>
             </div>
 
@@ -233,7 +192,7 @@ If you go <code>path/to/your/page</code>, Vaseman will render <code>entries/path
             </p>
 
             <p>
-                Copyright &copy; 2014 Vaseman. All Rights Reserved.
+                Copyright &copy; 2018 Vaseman. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>

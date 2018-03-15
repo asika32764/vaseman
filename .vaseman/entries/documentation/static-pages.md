@@ -1,3 +1,4 @@
+---
 layout: documentation.twig
 title: Generate Static Pages
 
@@ -18,7 +19,7 @@ php bin/console
 You will see console help:
 
 ``` bash
-Vaseman - version: 2.0
+Vaseman - version: 3
 ------------------------------------------------------------
 
 [console Help]
@@ -81,31 +82,41 @@ Now theses files can safely put on static web spaces.
 
 # Folder to Generate
 
-Open `/etc/config.yml` or `/.vaseman/config.yml`, you will see:
+Open `/etc/config.php` or `/.vaseman/config.php`, you will see:
 
 ``` yaml
-system:
-    debug: 1
-    timezone: 'UTC'
-project:
-    name: Vaseman
+<?php
 
-# Which folders you want to generate (Array)
-folders:
-    - entries
-    - media
+return [
+    'project' => [
+        'name' => 'Vaseman'
+    ],
 
-# Plugin classes with namespace (Array)
-plugins:
+    // Which folders you want to generate (Array)
+    'folders' => [
+        'entries' => '',
+        'asset' => 'asset'
+    ],
+
+    // Plugin classes with namespace (Array)
+    'plugins' => [
+    ],
+
+    'system' => [
+        'debug' => 0,
+        'timezone' => 'UTC',
+        'error_reporting' => -1,
+    ],
+];
 
 ```
 
 Just add `folders` element that Vaseman will parse all files in the folders you set:
 
 ``` yaml
-folders:
-    - entries
-    - media
-    - myfolder
-    - misc
+    'folders' => [
+        'entries' => '',
+        'asset' => 'asset',
+        'myfolder' => 'myfolder123'
+    ],
 ```

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="../media/images/ico/favicon.ico" />
+        <link rel="shortcut icon" href="../asset/images/ico/favicon.ico" />
 
         <title>Use Markdown Pages | Vaseman, The PHP Static Site Generator</title>
 
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
-        <link href="../media/css/main.css" rel="stylesheet">
+        <link href="../asset/css/main.css" rel="stylesheet">
 
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
@@ -24,9 +24,9 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="../media/js/jquery.js"></script>
+        <script src="../asset/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="../media/js/highlight.pack.js"></script>
+        <script src="../asset/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
                 $('.article-content pre code').each(function(i, block) {
@@ -41,13 +41,13 @@
         <div class="uk-container uk-container-center">
 
             <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../">
-                <img class="uk-margin uk-margin-remove" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" src="../asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
 
             <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../">
-                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
@@ -87,6 +87,9 @@
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
                                 <li class="">
+                <a href="../documentation/blade-pages.html">Use Blade Pages</a>
+            </li>
+                                <li class="">
                 <a href="../documentation/twig-pages.html">Use Twig Pages</a>
             </li>
                                 <li class="uk-active">
@@ -106,7 +109,7 @@
                 <a href="../documentation/static-pages.html">Generate Static Pages</a>
             </li>
                                 <li class="">
-                <a href="../documentation/outer-project.html">Create Project In Outer Folder</a>
+                <a href="../documentation/outside-project.html">Use In Outside Folder</a>
             </li>
                                 <li class="">
                 <a href="../documentation/permalink.html">Permalink</a>
@@ -129,29 +132,24 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>            </div>
+   </ul>
+            </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
                     <h1>Create Markdown Pages</h1>
-
 <p>Create Markdwon page is very easy, just put your <code>.md</code> files in <code>/entries</code>.</p>
-
 <p>This is an example of <code>/entries/foo/sakura.md</code>.</p>
-
-<pre><code class="markdown">layout: html.twig
+<pre><code class="language-markdown">---
+layout: html.twig
 ---
 # Sakura
 
-Sakura page
-</code></pre>
-
+Sakura page</code></pre>
 <p>Do not miss <code>layout</code> config because we have to wrap markdown data with a HTML template.</p>
-
 <p>Open <code>http://localhost/{VASEMAN_PATH}/foo/sakura.html</code>, you will see:</p>
-
-<pre><code class="html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -162,24 +160,28 @@ Sakura page
 
     &lt;p&gt;Sakura page&lt;/p&gt;
 &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-
-<h1>Use Markdown In Twig Page</h1>
-
+&lt;/html&gt;</code></pre>
+<h1>Use Markdown In Twig and Blade Page</h1>
 <p>We can also render markdown in twig page, use <code>{% markdown %}</code> tag:</p>
-
-<pre><code class="twig">&lt;div class="article-content"&gt;
+<pre><code class="language-twig">&lt;div class="article-content"&gt;
     {% markdown %}
 
-    # Markdown Page
+# Markdown Page
 
-    Test Data ![img](foo.jpg)
+Test Data ![img](foo.jpg)
 
     {% endmarkdown %}
-&lt;/div&gt;
-</code></pre>
+&lt;/div&gt;</code></pre>
+<p>In Blade</p>
+<pre><code class="language-php">&lt;div class="article-content"&gt;
+    @markdown
 
+# Markdown Page
+
+Test Data ![img](foo.jpg)
+
+    @endmarkdown
+&lt;/div&gt;</code></pre>
 
                     <p class="uk-text-center">
                         Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
@@ -196,7 +198,7 @@ Sakura page
 
             <div class="footer-logo">
                 <a href="#" data-uk-smooth-scroll>
-                    <img src="../media/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
+                    <img src="../asset/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
                 </a>
             </div>
 
@@ -209,7 +211,7 @@ Sakura page
             </p>
 
             <p>
-                Copyright &copy; 2014 Vaseman. All Rights Reserved.
+                Copyright &copy; 2018 Vaseman. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>

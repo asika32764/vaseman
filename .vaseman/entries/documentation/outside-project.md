@@ -1,3 +1,4 @@
+---
 layout: documentation.twig
 title: Generate Static Pages
 
@@ -7,23 +8,11 @@ title: Generate Static Pages
 
 Vaseman can use as a CLI tools to generate multiple projects, that we don't necessary to clone Vaseman for every project.
 
-First we can download vaseman to a path you want.
-
 ``` bash
-composer create-project asika/vaseman /path/to/vaseman
+composer global require asika/vaseman 3.*
 ```
 
-For MAC, we can create a symbol link to Vaseman bin file:
-
-``` bash
-ln -s /path/to/vaseman/bin/vaseman /usr/local/bin/vaseman
-```
-
-For Windows, create a `vaseman.bat` file to a folder which has set in environment variable path.
-
-``` bat
-php "C:\your\path\of\vaseman\bin\vaseman" %*
-```
+Make sure your composer bin folder is in your system `PATH` env variable.
 
 Now, type `vaseman` in everywhere, Vaseman will be a global command:
 
@@ -62,9 +51,9 @@ Note there is a new `init` command if we use Vaseman as global tools.
 Type these commands.
 
 ``` bash
-$ mkdir mysite
-$ cd mysite
-$ vaseman init
+mkdir mysite
+cd mysite
+vaseman init
 ```
 
 Vaseman will create default pages:
@@ -121,3 +110,19 @@ Write file: /private/var/www/test/mysite/media/js/jquery.js
 Complete
 
 ```
+
+## Watch Files
+
+Vaseman provides a simple gulp watch task. please cd to `.vaseman` folder, first run:
+
+```bash
+npm install
+```
+
+OR
+
+```bash
+yarn install
+```
+
+Then run `gulp watch`, and the Gulp will auto re-build files after you modified any file.

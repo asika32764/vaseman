@@ -1,3 +1,4 @@
+---
 layout: documentation.twig
 title: Permalink
 
@@ -11,9 +12,9 @@ For example, A page which at `/entries/foo/bar/baz.twig`, the url will be `/foo/
 But we can set custom permalink in page config:
 
 ``` twig
+---
 layout: html.twig
 permalink: flower/sakura
-
 ---
 
 Content Data...
@@ -21,6 +22,6 @@ Content Data...
 
 This page will generated to `/flower/sakura.html`.
 
-> NOTE: Permalink can only use in static pages, it will not work when we open dynamic pages.
+> NOTE: Permalink can only use in static pages, it will not work in inside project.
 
 

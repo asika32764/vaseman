@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="../media/images/ico/favicon.ico" />
+        <link rel="shortcut icon" href="../asset/images/ico/favicon.ico" />
 
         <title>View Helpers | Vaseman, The PHP Static Site Generator</title>
 
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
-        <link href="../media/css/main.css" rel="stylesheet">
+        <link href="../asset/css/main.css" rel="stylesheet">
 
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
@@ -24,9 +24,9 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="../media/js/jquery.js"></script>
+        <script src="../asset/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="../media/js/highlight.pack.js"></script>
+        <script src="../asset/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
                 $('.article-content pre code').each(function(i, block) {
@@ -41,13 +41,13 @@
         <div class="uk-container uk-container-center">
 
             <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../">
-                <img class="uk-margin uk-margin-remove" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" src="../asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
 
             <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../">
-                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
@@ -87,6 +87,9 @@
                 <a href="../documentation/getting-started.html">Getting Started</a>
             </li>
                                 <li class="">
+                <a href="../documentation/blade-pages.html">Use Blade Pages</a>
+            </li>
+                                <li class="">
                 <a href="../documentation/twig-pages.html">Use Twig Pages</a>
             </li>
                                 <li class="">
@@ -106,7 +109,7 @@
                 <a href="../documentation/static-pages.html">Generate Static Pages</a>
             </li>
                                 <li class="">
-                <a href="../documentation/outer-project.html">Create Project In Outer Folder</a>
+                <a href="../documentation/outside-project.html">Use In Outside Folder</a>
             </li>
                                 <li class="">
                 <a href="../documentation/permalink.html">Permalink</a>
@@ -129,20 +132,17 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-   </ul>            </div>
+   </ul>
+            </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 
                 <article class="article-content">
-                    <h1>View Helper For Twig</h1>
-
+                    <h1>View Helper</h1>
 <p>We cannot use php functions in Twig, so if we want to add custom functions, there is a way to add some helpers.</p>
-
 <h2>Create Helper</h2>
-
 <p>Add this class in <code>src/Vaseman/Helper/BlogHelper.php</code> or <code>src/Helper/BlogHelper.php</code> in outer project.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 
 namespace Vaseman\Helper;
 
@@ -150,23 +150,21 @@ use Windwalker\Core\View\Helper\AbstractHelper;
 
 class BlogHelper extends AbstractHelper
 {
-    public function getData($date = 'now')
+    public function getData($date = 'now', $format = 'Y-m-d H:i:s')
     {
-        return new \DateTime($date);
+        return (new \DateTime($date))-&gt;format($format);
     }
-}
-</code></pre>
-
+}</code></pre>
 <p>Now we can use this method in Twig:</p>
-
-<pre><code class="twig">Created date: {{ helper.blog.getDate('now') }}
-</code></pre>
-
+<pre><code class="language-twig">{# Twig #}
+Created date: {{ helper.blog.getDate('now') }}</code></pre>
+<pre><code class="language-php">{{-- Blade --}}
+Created date: {{ $helper-&gt;blog-&gt;getDate('now') }}</code></pre>
+<p>In Blade, you can simply use php class:</p>
+<pre><code class="language-php">&lt;a class="nav-link {{ \MyProject\Helper\MyClass::isActive($path, 'foo') }}"&gt;...&lt;/a&gt;</code></pre>
 <h1>Fake Data</h1>
-
 <p>Vaseman includes <a href="https://github.com/fzaninotto/Faker">PHP Faker</a> to help you generate random fake data.</p>
-
-<pre><code class="php">&lt;?php
+<pre><code class="language-php">&lt;?php
 
 namespace Vaseman\Helper;
 
@@ -184,9 +182,7 @@ class BlogHelper extends AbstractHelper
             'text' =&gt; $faker-&gt;paragraphs(3)
         );
     }
-}
-</code></pre>
-
+}</code></pre>
 
                     <p class="uk-text-center">
                         Help <a target="_blank" href="https://github.com/asika32764/vaseman/tree/gh-pages/.vaseman/entries/documentation">improve</a> our documentation
@@ -203,7 +199,7 @@ class BlogHelper extends AbstractHelper
 
             <div class="footer-logo">
                 <a href="#" data-uk-smooth-scroll>
-                    <img src="../media/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
+                    <img src="../asset/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
                 </a>
             </div>
 
@@ -216,7 +212,7 @@ class BlogHelper extends AbstractHelper
             </p>
 
             <p>
-                Copyright &copy; 2014 Vaseman. All Rights Reserved.
+                Copyright &copy; 2018 Vaseman. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>

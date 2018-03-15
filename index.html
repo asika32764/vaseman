@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="media/images/ico/favicon.ico" />
+        <link rel="shortcut icon" href="./asset/images/ico/favicon.ico" />
 
         <title>Vaseman, The PHP Static Site Generator</title>
 
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
-        <link href="media/css/main.css" rel="stylesheet">
+        <link href="./asset/css/main.css" rel="stylesheet">
 
         <meta name="description" content="Vaseman is a static site and prototype Generator. He is Nothing But Pretty Face">
         <meta name="generator" content="The Time Machine">
@@ -26,9 +26,9 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="media/js/jquery.js"></script>
+        <script src="./asset/js/jquery.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
-        <script src="media/js/highlight.pack.js"></script>
+        <script src="./asset/js/highlight.pack.js"></script>
         <script>
             $(document).ready(function() {
                 $('.article-content pre code').each(function(i, block) {
@@ -42,20 +42,20 @@
     <nav id="header" class="uk-navbar uk-navbar-attached">
         <div class="uk-container uk-container-center">
 
-            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="">
-                <img class="uk-margin uk-margin-remove" src="media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="./">
+                <img class="uk-margin uk-margin-remove" src="./asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
 
-            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="">
-                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="media/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="./">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="./asset/images/logo/vaseman-logo-noslogen-200.png" title="Asukademy" alt="Asukademy">
             </a>
 
             <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
                                                                                                 
                 <li class="">
-                    <a href="documentation/getting-started.html">
+                    <a href="./documentation/getting-started.html">
                         <span class="menu-item-title">Documentation</span>
                     </a>
                 </li>
@@ -85,15 +85,16 @@
         <div class="uk-container uk-container-center">
             <div class="uk-grid" data-uk-grid-match>
                 <div class="uk-width-medium-1-3 feature-block">
-                    <img class="uk-border-rounded" src="media/images/features/php.png" alt="" />
-                    <h2>Build By PHP Language</h2>
+                    <img class="uk-border-rounded" src="./asset/images/features/php.png" alt="" />
+                    <h2>Multiple Template Engines</h2>
                     <p>
-                        Vaseman is a PHP program, you can easily create a static site, extending plugins or just use it as a simple cli tools.
+                        Vaseman is a PHP project, you can easily create static sites by Twig or Blade engines or use Markdown
+                        to write documentation.
                     </p>
                 </div>
 
                 <div class="uk-width-medium-1-3 feature-block">
-                    <img class="uk-border-rounded" src="media/images/features/design.png" alt="" />
+                    <img class="uk-border-rounded" src="./asset/images/features/design.png" alt="" />
                     <h2>Easy Designing</h2>
                     <p>
                         Vaseman use Twig as template engine, you can write your logic in every page.
@@ -102,7 +103,7 @@
                 </div>
 
                 <div class="uk-width-medium-1-3 feature-block">
-                    <img class="uk-border-rounded" src="media/images/features/lab.png" alt="" />
+                    <img class="uk-border-rounded" src="./asset/images/features/lab.png" alt="" />
                     <h2>Prototyping</h2>
                     <p>
                         Vaseman is not just a static page generator, it can also used like a dynamic site.
@@ -119,16 +120,13 @@
                 <div class="uk-width-medium-1-1 article-content">
                     <h1 class="page-title">Quick Start</h1>
                     <p>
-                    <pre class="home-start-code"><code style="font-size: 20px;">$ composer.phar create-project asika/vaseman vaseman 2.*</code></pre>
+                    <pre class="home-start-code"><code style="font-size: 20px;">composer global require asika/vaseman 3.*</code></pre>
                     </p>
                     <p class="uk-text-center">
                         <a style="margin-top: 50px; width: 400px" class="download-button uk-button uk-button-hero uk-button-primary"
-                                href="https://github.com/asika32764/vaseman/releases" target="_blank">
-                            Download
+                                href="./documentation/getting-started.html">
+                            Documentation
                         </a>
-                    </p>
-                    <p class="uk-text-center">
-                        Go to <a href="documentation/getting-started.html">Documentation</a>
                     </p>
                 </div>
             </div>
@@ -156,7 +154,7 @@
 
             <div class="footer-logo">
                 <a href="#" data-uk-smooth-scroll>
-                    <img src="media/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
+                    <img src="./asset/images/logo/vaseman-logo-noslogen-200.png" width="150" alt="Footer LOGO">
                 </a>
             </div>
 
@@ -169,7 +167,7 @@
             </p>
 
             <p>
-                Copyright &copy; 2014 Vaseman. All Rights Reserved.
+                Copyright &copy; 2018 Vaseman. All Rights Reserved.
             </p>
             <p class="back">
                 <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>

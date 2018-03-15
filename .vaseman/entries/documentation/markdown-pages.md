@@ -1,3 +1,4 @@
+---
 layout: documentation.twig
 title: Use Markdown Pages
 
@@ -10,6 +11,7 @@ Create Markdwon page is very easy, just put your `.md` files in `/entries`.
 This is an example of `/entries/foo/sakura.md`.
 
 ``` markdown
+---
 layout: html.twig
 ---
 # Sakura
@@ -36,7 +38,7 @@ Open `http://localhost/{VASEMAN_PATH}/foo/sakura.html`, you will see:
 </html>
 ```
 
-# Use Markdown In Twig Page
+# Use Markdown In Twig and Blade Page
 
 We can also render markdown in twig page, use `{% markdown %}` tag:
 
@@ -44,10 +46,24 @@ We can also render markdown in twig page, use `{% markdown %}` tag:
 <div class="article-content">
 	{% markdown %}
 	
-	# Markdown Page
+# Markdown Page
 
-	Test Data ![img](foo.jpg)
+Test Data ![img](foo.jpg)
 
 	{% endmarkdown %}
+</div>
+```
+
+In Blade
+
+```php
+<div class="article-content">
+	@markdown
+	
+# Markdown Page
+
+Test Data ![img](foo.jpg)
+
+	@endmarkdown
 </div>
 ```

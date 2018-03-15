@@ -1,3 +1,4 @@
+---
 home: true
 meta:
     desc: 'Vaseman is a static site and prototype Generator. He is Nothing But Pretty Face'
@@ -19,15 +20,16 @@ og:
         <div class="uk-container uk-container-center">
             <div class="uk-grid" data-uk-grid-match>
                 <div class="uk-width-medium-1-3 feature-block">
-                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/php.png" alt="" />
-                    <h2>Build By PHP Language</h2>
+                    <img class="uk-border-rounded" src="{{ uri.asset }}/images/features/php.png" alt="" />
+                    <h2>Multiple Template Engines</h2>
                     <p>
-                        Vaseman is a PHP program, you can easily create a static site, extending plugins or just use it as a simple cli tools.
+                        Vaseman is a PHP project, you can easily create static sites by Twig or Blade engines or use Markdown
+                        to write documentation.
                     </p>
                 </div>
 
                 <div class="uk-width-medium-1-3 feature-block">
-                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/design.png" alt="" />
+                    <img class="uk-border-rounded" src="{{ uri.asset }}/images/features/design.png" alt="" />
                     <h2>Easy Designing</h2>
                     <p>
                         Vaseman use Twig as template engine, you can write your logic in every page.
@@ -36,7 +38,7 @@ og:
                 </div>
 
                 <div class="uk-width-medium-1-3 feature-block">
-                    <img class="uk-border-rounded" src="{{ uri.media }}images/features/lab.png" alt="" />
+                    <img class="uk-border-rounded" src="{{ uri.asset }}/images/features/lab.png" alt="" />
                     <h2>Prototyping</h2>
                     <p>
                         Vaseman is not just a static page generator, it can also used like a dynamic site.
@@ -53,16 +55,13 @@ og:
                 <div class="uk-width-medium-1-1 article-content">
                     <h1 class="page-title">Quick Start</h1>
                     <p>
-                    <pre class="home-start-code"><code style="font-size: 20px;">$ composer.phar create-project asika/vaseman vaseman 2.*</code></pre>
+                    <pre class="home-start-code"><code style="font-size: 20px;">composer global require asika/vaseman 3.*</code></pre>
                     </p>
                     <p class="uk-text-center">
                         <a style="margin-top: 50px; width: 400px" class="download-button uk-button uk-button-hero uk-button-primary"
-                                href="https://github.com/asika32764/vaseman/releases" target="_blank">
-                            Download
+                                href="{{ uri.base }}/documentation/getting-started.html">
+                            Documentation
                         </a>
-                    </p>
-                    <p class="uk-text-center">
-                        Go to <a href="{{ uri.base }}documentation/getting-started.html">Documentation</a>
                     </p>
                 </div>
             </div>
