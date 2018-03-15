@@ -1,11 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="{{ $uri['asset'] }}/images/favicon.ico" />
 
-    <title>@yield('title', 'Vaseman Prototype System')</title>
+    <title>@yield('title', $helper->page->title($config['title']))</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous" />
@@ -15,7 +15,6 @@
     @stack('style')
 </head>
 <body>
-
 <div class="main-wrapper">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">

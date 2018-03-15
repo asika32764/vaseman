@@ -131,12 +131,10 @@ abstract class AbstractFileProcessor
     {
         $template = explode('---', $template, 3);
 
-        $config = null;
-
         // URI
         $uri = Ioc::get('view.data.uri');
 
-        $this->config->merge(Ioc::getConfig());
+        $this->config->load(Ioc::getConfig()->toArray());
 
         try {
             if (\count($template) !== 3) {
@@ -155,7 +153,7 @@ abstract class AbstractFileProcessor
             if ($this->config->get('permalink')) {
                 $this->target = rtrim($this->config->get('permalink'), '/');
 
-                if (substr($this->target, -5) != '.html') {
+                if (substr($this->target, -5) !== '.html') {
                     $this->target .= '/index.html';
                 }
 

@@ -9,6 +9,7 @@
 namespace Vaseman\Helper;
 
 use Windwalker\Core\View\Helper\AbstractHelper;
+use Windwalker\Ioc;
 
 /**
  * Class Page
@@ -17,6 +18,49 @@ use Windwalker\Core\View\Helper\AbstractHelper;
  */
 class PageHelper extends AbstractHelper
 {
+    /**
+     * active
+     *
+     * @param string $key
+     *
+     * @return  string
+     *
+     * @since  __DEPLOY_VERSION__
+     */
+    public function active($key)
+    {
+        $paths = $this->parent->getView()->get('paths');
+
+        $paths = implode('/', $paths);
+
+        if (strpos($paths, $key) !== false) {
+            return 'active';
+        }
+
+        return '';
+    }
+
+    /**
+     * title
+     *
+     * @param string $title
+     * @param string $separator
+     *
+     * @return  string
+     *
+     * @since  __DEPLOY_VERSION__
+     */
+    public function title($title, $separator = ' | ')
+    {
+        $siteName = (string) Ioc::getConfig()->get('project.name');
+
+        if (trim($title) === '') {
+            return $siteName;
+        }
+
+        return $title . $separator . $siteName;
+    }
+
     /**
      * getPageName
      *
@@ -71,34 +115,9 @@ class PageHelper extends AbstractHelper
      */
     public function isActive($path, $key)
     {
-        show($this->parent->getView()->get('paths'));
-        exit(' @Checkpoint');
-
         $path = implode('.', $path);
 
         if (strpos($path, $key) !== false) {
-            return 'active';
-        }
-
-        return '';
-    }
-
-    /**
-     * active
-     *
-     * @param string $key
-     *
-     * @return  string
-     *
-     * @since  __DEPLOY_VERSION__
-     */
-    public function active($key)
-    {
-        $paths = $this->parent->getView()->get('paths');
-
-        $paths = implode('/', $paths);
-
-        if (strpos($paths, $key) !== false) {
             return 'active';
         }
 

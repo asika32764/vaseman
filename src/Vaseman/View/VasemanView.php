@@ -89,9 +89,14 @@ class VasemanView extends \Windwalker\Core\View\HtmlView
             throw new \UnexpectedValueException('Layout: ' . $this->getLayout() . ' not found');
         }
 
-        $processor = AbstractFileProcessor::getInstance($file->getExtension(), $file, $this->path,
-            $this->config->get('layout.folder'));
+        $processor = AbstractFileProcessor::getInstance(
+            $file->getExtension(),
+            $file,
+            $this->path,
+            $this->config->get('layout.folder')
+        );
 
+        $processor->setConfig($this->config);
         $processor->setData($this->getData());
         $processor->render();
 

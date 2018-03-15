@@ -66,7 +66,9 @@ abstract class AbstractEngineProcessor extends AbstractFileProcessor
             return $content;
         }
 
+        $layout = $config['layout'];
         $data->config['layout'] = null;
+        $config['layout'] = null;
 
         $view = new PageHtmlView;
 
@@ -74,7 +76,7 @@ abstract class AbstractEngineProcessor extends AbstractFileProcessor
         $view->addPath($config['path.templates'], PriorityQueue::HIGH);
         $view->getData()->bind($data);
 
-        $this->processor = $processor = $view->setLayout($config['layout'])->render();
+        $this->processor = $processor = $view->setLayout($layout)->setConfig($config)->render();
 
         return $processor->getOutput();
     }
