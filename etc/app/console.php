@@ -64,6 +64,7 @@ return ArrayHelper::merge(include __DIR__ . '/windwalker.php', [
 			'migration' => false,
 			'seed'      => false,
 			'package'   => false,
+			'queue'     => false,
 			'up' => \Vaseman\Command\UpCommand::class
 		]
 	],

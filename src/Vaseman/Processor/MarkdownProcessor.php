@@ -9,6 +9,7 @@
 namespace Vaseman\Processor;
 
 use ParsedownExtra;
+use Vaseman\Markdown\MarkdownRenderer;
 
 /**
  * The MarkdownProcessor class.
@@ -29,10 +30,6 @@ class MarkdownProcessor extends TwigProcessor
 
         $md = $this->prepareData($md);
 
-        $markdown = new ParsedownExtra();
-
-        $content = $markdown->text($md);
-
-        return $this->output = $this->renderParentLayout($content);
+        return $this->output = $this->renderParentLayout(MarkdownRenderer::render($md));
     }
 }

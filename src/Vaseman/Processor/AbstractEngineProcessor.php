@@ -66,7 +66,7 @@ abstract class AbstractEngineProcessor extends AbstractFileProcessor
             return $content;
         }
 
-        $layout = $config['layout'];
+        $layout = $data->config['layout'];
         $data->config['layout'] = null;
         $config['layout'] = null;
 

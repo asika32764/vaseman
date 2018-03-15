@@ -9,6 +9,7 @@
 namespace Vaseman\Twig\Token;
 
 use Michelf\MarkdownExtra;
+use Vaseman\Markdown\MarkdownRenderer;
 
 /**
  * The MarkdownNode class.
@@ -41,9 +42,7 @@ class MarkdownNode extends \Twig_Node
     {
         $data = $this->getNode('value')->getAttribute('data');
 
-        $markdown = new \ParsedownExtra();
-
-        $data = $markdown->text($data);
+        $data = MarkdownRenderer::render($data);
 
         $compiler->write('echo ')->string($data)->raw(';');
     }

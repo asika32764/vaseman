@@ -44,6 +44,7 @@ return [
 		//'event'  => \Windwalker\Core\Provider\EventProvider::class,
 		//'mailer' => \Windwalker\Core\Mailer\MailerProvider::class,
 		//'mailer_adapter' => \Windwalker\Core\Mailer\SwiftMailerProvider::class
+        'queue' => false
 	],
 
 	/*

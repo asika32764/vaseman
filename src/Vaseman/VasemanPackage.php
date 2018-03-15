@@ -8,6 +8,7 @@
 
 namespace Vaseman;
 
+use Vaseman\Edge\VasemanEdgeExtension;
 use Vaseman\Twig\VasemanTwigExtension;
 use Windwalker\Core\Package\AbstractPackage;
 use Windwalker\Event\DispatcherInterface;
@@ -41,8 +42,10 @@ class VasemanPackage extends AbstractPackage
         parent::boot();
 
         if (class_exists(\Twig_Extension::class)) {
-            GlobalContainer::addExtension('vaseman', new VasemanTwigExtension);
+            GlobalContainer::addExtension('vaseman', new VasemanTwigExtension());
         }
+
+        \Windwalker\Renderer\Edge\GlobalContainer::addExtension(new VasemanEdgeExtension());
     }
 
     /**

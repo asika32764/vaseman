@@ -64,7 +64,7 @@ class GetController extends AbstractController
         $view = new PageHtmlView;
         $view->setConfig($this->config);
 
-        $path = $this->config->get('layout.path', $this->app->get('project.path.entries'));
+        $path = $this->config->get('layout_path', $this->app->get('project.path.entries'));
 
         $view->setPath($path);
         $view->addPath($this->app->get('project.path.layouts'));

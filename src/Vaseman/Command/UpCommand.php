@@ -148,8 +148,8 @@ class UpCommand extends Command
                 $input = new Input(['paths' => explode('/', $layout)]);
 
                 $config = $controller->getConfig();
-                $config->set('layout.path', $asset->getRoot());
-                $config->set('layout.folder', $folder);
+                $config->set('layout_path', $asset->getRoot());
+                $config->set('layout_folder', $folder);
 
                 $controller->setInput($input)->execute();
 
