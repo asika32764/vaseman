@@ -1,4 +1,6 @@
-{{-- Part of vaseman project. --}}
+---
+title: Sample Blog Post
+---
 @extends('_global.main-layout')
 
 @section('banner')
