@@ -12,6 +12,7 @@ use Vaseman\Edge\VasemanEdgeLoader;
 use Windwalker\Core\Renderer\EdgeRenderer;
 use Windwalker\Core\Renderer\RendererHelper;
 use Windwalker\Edge\Cache\EdgeArrayCache;
+use Windwalker\Edge\Exception\EdgeException;
 use Windwalker\Filesystem\File;
 use Windwalker\Utilities\Queue\PriorityQueue;
 
@@ -33,6 +34,7 @@ class EdgeProcessor extends AbstractEngineProcessor
      * render
      *
      * @return  string
+     * @throws EdgeException
      */
     public function doRender()
     {
@@ -40,11 +42,17 @@ class EdgeProcessor extends AbstractEngineProcessor
 
         $layout = $this->getLayout();
 
-        if (substr($layout, -strlen($this->ext)) == $this->ext) {
-            $layout = substr($layout, 0, -strlen($this->ext));
+        if (substr($layout, -\strlen($this->ext)) === $this->ext) {
+            $layout = substr($layout, 0, -\strlen($this->ext));
         }
 
-        return $renderer->render($layout, (array) $this->data);
+        try {
+            return $renderer->render($layout, (array) $this->data);
+        } catch (EdgeException $e) {
+            $message = $this->renderException($e);
+
+            throw new EdgeException($message, $e->getCode(), $e->getFile(), $e->getLine(), $e);
+        }
     }
 
     /**
@@ -84,5 +92,53 @@ class EdgeProcessor extends AbstractEngineProcessor
         }
 
         return $this->target;
+    }
+
+    /**
+     * renderException
+     *
+     * @param \Exception|\Throwable $e
+     *
+     * @return  string
+     *
+     * @since  __DEPLOY_VERSION__
+     */
+    protected function renderException($e)
+    {
+        $lines = file($e->getFile());
+        $count = \count($lines);
+
+        $line = $e->getLine();
+        $start = $line - 3;
+
+        if ($start <= 0) {
+            $start = 0;
+        }
+
+        $end = $line + 3;
+
+        if ($end > $count) {
+            $end = $count;
+        }
+
+        $view = '';
+
+        foreach (range($start, $end) as $i) {
+            $l = trim($lines[$i], "\n\r");
+
+            if ($i - 1 === $line) {
+                $l .= ' <---- (THIS LINE)';
+            }
+
+            $view .= $l . "\n";
+        }
+        
+        return <<<TEXT
+{$e->getMessage()} ({$e->getLine()})
+
+---------
+$view
+---------
+TEXT;
     }
 }
