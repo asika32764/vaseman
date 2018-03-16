@@ -83,7 +83,7 @@ class GetController extends AbstractController
         Ioc::getContainer()->share('view.data.path', $path);
 
         $uri          = new Structure;
-        $uri['base']  = str_repeat('..', count($layout)) ?: '.';
+        $uri['base']  = rtrim(str_repeat('../', count($layout)), '/') ?: '.';
         $uri['asset'] = $uri['base'] . '/asset';
 
         Ioc::getContainer()->share('view.data.uri', $uri);
