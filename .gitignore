@@ -4,6 +4,7 @@
 !.gitkeep
 !/.travis.yml
 !/.htaccess
+!/.editorconfig
 
 # Config
 /etc/secret.yml
@@ -15,5 +16,3 @@ composer.lock
 
 #Test
 /phpunit.xml
-.gitignore
-package.json
