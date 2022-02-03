@@ -52,6 +52,12 @@ class InitCommand implements CommandInterface
             InputArgument::OPTIONAL,
             'The init path.'
         );
+
+        $command->addArgument(
+            'tmpl',
+            InputArgument::OPTIONAL,
+            'The template name or path.'
+        );
     }
 
     /**
@@ -67,10 +73,13 @@ class InitCommand implements CommandInterface
 
         $workingDir = $this->app->config('project.working_dir') ?? getcwd();
         $root = $io->getArgument('root');
+        $tmpl = $io->getArgument('tmpl');
 
-        if (!$root) {
+        if (!$root || $root === '.') {
             $root = $workingDir;
         }
+
+        $tmpl ??= $this->getDefaultTemplate();
 
         $root = Path::realpath($root);
 
@@ -90,19 +99,35 @@ class InitCommand implements CommandInterface
 
         $io->style()->title('Start initialise Vaseman project.');
 
-        $this->copyFolder($systemRoot . '/assets', $dataRoot->getPathname() . '/assets');
-        $this->copyFolder($systemRoot . '/entries', $dataRoot->getPathname() . '/entries');
-        $this->copyFolder($systemRoot . '/layouts', $dataRoot->getPathname() . '/layouts');
-        $this->copyFolder($systemRoot . '/resources/packages', $dataRoot->getPathname(), false);
-        $this->copyFile($systemRoot . '/etc/site.php', $dataRoot->getPathname() . '/config.php');
+        if ($this->isGit($tmpl)) {
+            $dataRoot->deleteIfExists();
 
-        $this->createFolder($dataRoot . '/src/Plugin');
-        $this->createFolder($dataRoot . '/src/Helper');
-        // $this->createFolder($dataRoot . '/src/Twig');
+            $io->style()->text('<info>>> git clone ' . $tmpl . ' ' . $dataRoot . ' --depth=1</info>');
+            $process = $this->app->createProcess('git clone ' . $tmpl . ' ' . $dataRoot . ' --depth=1');
+            $process->setWorkingDirectory(getcwd());
+            $this->app->runProcess($process, null, true);
+
+            if ($io->askConfirmation('Remove VCS [Y/n]')) {
+                Filesystem::delete($dataRoot . '/.git');
+            }
+        } else {
+            $this->copyFolder($tmpl, $dataRoot->getPathname());
+        }
 
         $io->writeln('<info>Project generated.</info>');
 
         return 0;
+    }
+
+    protected function isGit(string $path): bool
+    {
+        if (str_starts_with($path, 'https://') || str_starts_with($path, 'git@')) {
+            return true;
+        }
+
+        $path = (string) Path::realpath($path);
+
+        return is_dir($path . '/.git');
     }
 
     public function copyFile(string $src, string $dest): void
@@ -146,5 +171,10 @@ class InitCommand implements CommandInterface
         }
 
         return $path;
+    }
+
+    public function getDefaultTemplate(): string
+    {
+        return WINDWALKER_ROOT . '/templates/default';
     }
 }
