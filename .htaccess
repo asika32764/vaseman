@@ -1,0 +1,5 @@
+# Protect .git
+RedirectMatch 404 /\.git
+
+# No index
+Options -Indexes

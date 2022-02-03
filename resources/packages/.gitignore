@@ -1,0 +1,11 @@
+# System
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea
+
+# Libraries
+/node_modules
+
+# Project

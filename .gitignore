@@ -1,0 +1,35 @@
+# OS generated files #
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# IDE Ignores #
+.idea/
+
+# Extra #
+!.gitkeep
+
+# Configuration #
+.env
+.env.local
+.env*.local
+!.env.dist
+
+# Libraries
+/vendor
+/node_modules
+/bower_components
+/yarn-error.log
+
+# Remove above lines when you start a project
+composer.lock
+yarn.lock
+package-lock.json
+
+#Test
+/phpunit.xml
+/phpunit.core.xml
+
+# Others

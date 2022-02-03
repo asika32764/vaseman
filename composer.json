@@ -1,0 +1,47 @@
+{
+    "name": "windwalker/starter",
+    "description": "Windwalker Starter.",
+    "homepage": "https://github.com/windwalker-io/starter",
+    "license": "MIT",
+    "minimum-stability": "beta",
+    "authors": [
+        {
+            "name": "Simon Asika",
+            "email": "asika32764@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-json": "*",
+        "windwalker/core": "^4.0",
+        "windwalker/renderer": "^4.0",
+        "windwalker/dom": "^4.0",
+        "windwalker/edge": "^4.0",
+        "asika/cross-env": "^1.0"
+    },
+    "require-dev": {
+
+    },
+    "scripts": {
+        "post-autoload-dump": []
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        },
+        "files": [
+            "src/bootstrap.php"
+        ]
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.0"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.x-dev",
+            "next": "4.x-dev"
+        }
+    }
+}

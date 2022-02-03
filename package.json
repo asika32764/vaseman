@@ -1,0 +1,23 @@
+{
+    "name": "windwalker",
+    "private": true,
+    "scripts": {
+        "build": "cross-env node_modules/.bin/gulp",
+        "build:dev": "cross-env NODE_ENV=development node_modules/.bin/gulp",
+        "build:prod": "cross-env NODE_ENV=production node_modules/.bin/gulp",
+        "watch": "cross-env NODE_ENV=development node_modules/.bin/gulp --watch=1",
+        "watch:reload": "cross-env NODE_ENV=development node_modules/.bin/gulp --watch=1 --livereload=1",
+        "postinstall": "yarn build install"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.0.0",
+        "@windwalker-io/core": "^4.0",
+        "@windwalker-io/fusion": "^1.0",
+        "bootstrap": "^5.0"
+    },
+    "//": {
+        "workspaces": [
+            "vendor/windwalker/core/assets/*"
+        ]
+    }
+}

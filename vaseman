@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2016 LYRASOFT. All rights reserved.
+ * @license    GNU General Public License version 2 or later.
+ */
+
+use Windwalker\Core\Console\ConsoleApplication;
+use Windwalker\Core\Runtime\Runtime;
+
+$autoload = __DIR__ . '/vendor/autoload.php';
+
+if (!is_file($autoload)) {
+    exit('Please run `composer install` First.');
+}
+
+include $autoload;
+
+include_once __DIR__ . '/etc/define.php';
+
+error_reporting(-1);
+
+Runtime::boot(WINDWALKER_ROOT, __DIR__);
+Runtime::loadConfig(Runtime::getRootDir() . '/etc/runtime.php');
+
+$container = Runtime::getContainer();
+
+/** @var ConsoleApplication $console */
+$console = $container->resolve('factories.console');
+
+$console->run();
