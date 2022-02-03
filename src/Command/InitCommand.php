@@ -19,7 +19,6 @@ use Windwalker\Console\IOInterface;
 use Windwalker\Core\Console\ConsoleApplication;
 use Windwalker\Filesystem\Filesystem;
 use Windwalker\Filesystem\Path;
-
 use Windwalker\Utilities\Str;
 
 use function Windwalker\fs;

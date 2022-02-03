@@ -17,10 +17,8 @@
         "windwalker/renderer": "^4.0",
         "windwalker/dom": "^4.0",
         "windwalker/edge": "^4.0",
-        "asika/cross-env": "^1.0"
-    },
-    "require-dev": {
-
+        "asika/cross-env": "^1.0",
+        "symfony/yaml": "^5.4"
     },
     "scripts": {
         "post-autoload-dump": []
