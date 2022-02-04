@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace App\Edge;
 
+use Windwalker\Edge\Exception\LayoutNotFoundException;
 use Windwalker\Edge\Loader\EdgeFileLoader;
 use Windwalker\Edge\Loader\EdgeLoaderInterface;
 
@@ -26,10 +27,14 @@ class VasemanEdgeLoader implements EdgeLoaderInterface
     public function find(string $key): string
     {
         if (strlen($key) <= PHP_MAXPATHLEN) {
-            $found = $this->fileLoader->find($key);
+            try {
+                $found = $this->fileLoader->find($key);
 
-            if ($found) {
-                return $found;
+                if ($found) {
+                    return $found;
+                }
+            } catch (LayoutNotFoundException) {
+                //
             }
         }
 
