@@ -13,7 +13,7 @@ export async function watch() {
   const rebuildWatches = [
     'entries/**/*',
     'layouts/**/*',
-    'asset/**/*'
+    'assets/**/*'
   ];
 
   gulpWatch(rebuildWatches, build);

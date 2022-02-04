@@ -87,8 +87,8 @@ class UpCommand implements CommandInterface
         if (!$root || $root === '.') {
             $root = $workingDir;
         }
-
-        $root = fs($root);
+        
+        $root = fs(Path::realpath($root));
         $dataRoot = $root->appendPath('/.vaseman');
         $configFile = $dataRoot->appendPath('/config.php');
 
@@ -121,7 +121,7 @@ class UpCommand implements CommandInterface
 
         foreach ($folders as $srcFolder => $destFolder) {
             $dataRoot = fs($dataRoot);
-            $destFolder = fs(Path::realpath($destFolder ?: '.'));
+            $destFolder = $root->appendPath('/' . $destFolder);
             $files = Filesystem::files($dataRoot . '/' . $srcFolder, true);
 
             foreach ($files as $file) {
