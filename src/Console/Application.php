@@ -24,7 +24,9 @@ class Application extends ConsoleApplication
         parent::__construct($container);
 
         $this->setName('Vaseman');
-        $this->setVersion('');
+        $this->setVersion(
+            trim(file_get_contents(WINDWALKER_ROOT . '/VERSION'))
+        );
     }
 
     /**
