@@ -1,7 +1,8 @@
 {
-    "name": "windwalker/starter",
-    "description": "Windwalker Starter.",
-    "homepage": "https://github.com/windwalker-io/starter",
+    "name": "asika/vaseman",
+    "description": "Yet another PHP static site generator.",
+    "keywords": ["static site", "prototype", "windwalker", "static pages"],
+    "homepage": "https://github.com/asika32764/vaseman",
     "license": "MIT",
     "minimum-stability": "beta",
     "authors": [
@@ -29,7 +30,7 @@
         "erusev/parsedown-extra": "^0.8"
     },
     "require-dev": {
-        "windwalker/framework": "dev-master"
+
     },
     "scripts": {
         "post-autoload-dump": []
@@ -52,5 +53,8 @@
             "dev-master": "4.x-dev",
             "next": "4.x-dev"
         }
-    }
+    },
+    "bin": [
+        "vaseman"
+    ]
 }
