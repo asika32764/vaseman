@@ -34,6 +34,7 @@ class EdgeFactory
         $components['template'] = XComponent::class;
 
         $edge->addExtension(new ComponentExtension($edge, $components));
+        $edge->addExtension(new VasemanExtension());
 
         return $edge;
     }
