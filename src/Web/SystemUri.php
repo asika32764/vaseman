@@ -46,7 +46,7 @@ class SystemUri
 
         if ($suffix !== null) {
             $suffix = ltrim($suffix, '/');
-            $uri .= '/' . $suffix;
+            $uri .= $suffix;
         }
 
         return $uri;

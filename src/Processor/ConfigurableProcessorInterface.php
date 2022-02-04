@@ -12,12 +12,8 @@ declare(strict_types=1);
 namespace App\Processor;
 
 /**
- * The AbstractProcessor class.
+ * Interface ConfigurableProcessorInterrface
  */
-class AbstractProcessor
+interface ConfigurableProcessorInterface
 {
-    public function process()
-    {
-
-    }
 }

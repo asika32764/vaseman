@@ -15,6 +15,7 @@ use App\Data\ConvertResult;
 use App\Data\Template;
 use App\Exception\NoConfigException;
 use App\Plugin\PluginRegistry;
+use App\Processor\ConfigurableProcessorInterface;
 use App\Processor\ProcessorFactory;
 use App\Web\GlobalVariables;
 use React\Filesystem\Filesystem;
@@ -41,13 +42,19 @@ class LayoutService
             return $filesystem->getContents($file->getPathname())->then(
                 function (string $content) use ($srcRoot, $filesystem, $file, $destRoot) {
                     $extension = $file->getExtension();
-                    $tmpl = $this->parseTemplateString($content);
+                    $processor = $this->processorFactory->create($extension);
+
+                    if ($processor instanceof ConfigurableProcessorInterface) {
+                        $tmpl = $this->parseTemplateString($content);
+                    } else {
+                        $tmpl = new Template();
+                    }
 
                     $tmpl->setSrc($file);
                     $tmpl->setDataRoot($srcRoot);
                     $tmpl->setDestRoot($destRoot);
                     $tmpl->setDestDir($destRoot);
-                    $tmpl->setDestFile($destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
+                    $tmpl->setDestFile($destFile = $destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
 
                     $config = array_merge(
                         $this->getGlobalConfig($srcRoot),
@@ -55,7 +62,7 @@ class LayoutService
                     );
                     $tmpl->setConfig($config);
 
-                    $processor = $this->processorFactory->create($extension);
+                    $destFile->getParent()->mkdir();
 
                     return $processor->createProcessor($tmpl)($filesystem)?->then(fn () => $tmpl);
                 }
@@ -79,7 +86,7 @@ class LayoutService
                 throw new NoConfigException('No config');
             }
 
-            $config = Yaml::parse($templateParts[1]);
+            $config = (array) (Yaml::parse($templateParts[1]) ?: []);
 
             if ($config) {
                 array_shift($templateParts);

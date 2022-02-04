@@ -14,7 +14,6 @@ namespace App\Processor;
 use App\Data\Template;
 use React\Filesystem\Filesystem;
 use React\Promise\PromiseInterface;
-use Windwalker\Filesystem\FileObject;
 
 /**
  * The CopyFileProcessor class.

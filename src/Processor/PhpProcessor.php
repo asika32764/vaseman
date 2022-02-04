@@ -19,7 +19,7 @@ use function Windwalker\fs;
 /**
  * The PhpProcessor class.
  */
-class PhpProcessor implements ProcessorInterface
+class PhpProcessor implements ProcessorInterface, ConfigurableProcessorInterface
 {
     public function __construct(protected ProcessorFactory $processorFactory)
     {

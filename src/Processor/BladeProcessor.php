@@ -21,7 +21,7 @@ use Windwalker\Edge\Exception\EdgeException;
 /**
  * The BladeProcessor class.
  */
-class BladeProcessor implements ProcessorInterface
+class BladeProcessor implements ProcessorInterface, ConfigurableProcessorInterface
 {
     public function __construct(protected EdgeFactory $edgeFactory, protected GlobalVariables $globalVariables)
     {

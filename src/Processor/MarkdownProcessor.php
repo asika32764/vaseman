@@ -22,7 +22,7 @@ use function Windwalker\fs;
 /**
  * The MarkdownProcessor class.
  */
-class MarkdownProcessor implements ProcessorInterface
+class MarkdownProcessor implements ProcessorInterface, ConfigurableProcessorInterface
 {
     public function __construct(protected ProcessorFactory $processorFactory, protected EdgeFactory $edgeFactory)
     {

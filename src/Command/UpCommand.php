@@ -14,6 +14,7 @@ namespace App\Command;
 use App\Data\Template;
 use App\Plugin\PluginRegistry;
 use App\Service\LayoutService;
+use FilesystemIterator;
 use React\EventLoop\Loop;
 use React\Filesystem\Filesystem as ReactFilesystem;
 use React\Promise\PromiseInterface;
@@ -68,6 +69,13 @@ class UpCommand implements CommandInterface
             InputOption::VALUE_REQUIRED,
             'Directory to convert.'
         );
+
+        $command->addOption(
+            'hard',
+            null,
+            InputOption::VALUE_NONE,
+            'Hard copy link files.'
+        );
     }
 
     /**
@@ -106,6 +114,8 @@ class UpCommand implements CommandInterface
         $loader->addPsr4('App\\', $dataRoot . '/src/');
 
         $config = include $configFile->getPathname();
+
+        // Convert
         $folders = $config['folders'] ?? [];
 
         $loop = Loop::get();
@@ -122,7 +132,12 @@ class UpCommand implements CommandInterface
         foreach ($folders as $srcFolder => $destFolder) {
             $dataRoot = fs($dataRoot);
             $destFolder = $root->appendPath('/' . $destFolder);
-            $files = Filesystem::files($dataRoot . '/' . $srcFolder, true);
+            $files = Filesystem::files(
+                $dataRoot . '/' . $srcFolder,
+                true,
+                FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO
+                | FilesystemIterator::FOLLOW_SYMLINKS
+            );
 
             foreach ($files as $file) {
                 $io->writeln('[<comment>Prepare</comment>]: ' . $file->getRelativePathname());
@@ -159,6 +174,40 @@ class UpCommand implements CommandInterface
 
         if ($this->exception) {
             throw $this->exception;
+        }
+
+        // Links
+        $hard = $io->getOption('hard');
+        $links = $config['links'] ?? [];
+
+        foreach ($links as $srcFolder => $destFolder) {
+            $dataRoot = fs($dataRoot);
+            $destFolder = $root->appendPath('/' . $destFolder);
+
+            if ($destFolder->isLink()) {
+                unlink($destFolder->getPathname());
+            }
+
+            if ($hard) {
+                $destFolder->deleteIfExists();
+
+                $files = Filesystem::files(
+                    $dataRoot . '/' . $srcFolder,
+                    true,
+                    FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO
+                    | FilesystemIterator::FOLLOW_SYMLINKS
+                );
+
+                foreach ($files as $file) {
+                    $io->writeln('[<info>Copy</info>]: ' . $file->getRelativePathname());
+
+                    $file->copyTo($destFolder . '/' . $file->getBasename(), true);
+                }
+            } else {
+                Filesystem::symlink($dataRoot . '/' . $srcFolder, $destFolder->getPathname());
+
+                $io->writeln('[<info>Link</info>]: ' . $destFolder->getRelativePathname($root));
+            }
         }
 
         $io->newLine();
