@@ -12,8 +12,12 @@ declare(strict_types=1);
 namespace App\Processor;
 
 /**
- * The MdProcessor class.
+ * The AbstractProcessor class.
  */
-class MdProcessor extends MarkdownProcessor
+class AbstractProcessor
 {
+    public function process()
+    {
+
+    }
 }

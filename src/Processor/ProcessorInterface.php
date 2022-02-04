@@ -11,9 +11,12 @@ declare(strict_types=1);
 
 namespace App\Processor;
 
+use App\Data\Template;
+
 /**
- * The MdProcessor class.
+ * Interface ProcessorInterface
  */
-class MdProcessor extends MarkdownProcessor
+interface ProcessorInterface
 {
+    public function createProcessor(Template $template, array $data = []): \Closure;
 }

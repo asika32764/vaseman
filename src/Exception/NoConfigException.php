@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace App\Processor;
+namespace App\Exception;
 
 /**
- * The MdProcessor class.
+ * The NoConfigException class.
  */
-class MdProcessor extends MarkdownProcessor
+class NoConfigException extends \RuntimeException
 {
 }

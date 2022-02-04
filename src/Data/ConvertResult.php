@@ -9,11 +9,14 @@
 
 declare(strict_types=1);
 
-namespace App\Processor;
+namespace App\Data;
+
+use Windwalker\Data\ValueObject;
 
 /**
- * The MdProcessor class.
+ * The ConvertResult class.
  */
-class MdProcessor extends MarkdownProcessor
+class ConvertResult extends ValueObject
 {
+
 }

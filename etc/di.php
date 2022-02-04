@@ -32,10 +32,14 @@ return Arr::mergeRecursive(
     [
         'factories' => include_arrays(__DIR__ . '/di/*.php'),
         'providers' => [
-            //
+
         ],
         'bindings' => [
-            //
+            \App\Service\LayoutService::class,
+            \App\Processor\ProcessorFactory::class,
+            \App\Web\GlobalVariables::class,
+            \App\Edge\EdgeFactory::class,
+            \App\Plugin\PluginRegistry::class,
         ],
         'aliases' => [
             //

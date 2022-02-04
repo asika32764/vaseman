@@ -11,7 +11,12 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\View\PageView;
+use App\Data\Template;
+use App\Plugin\PluginRegistry;
+use App\Service\LayoutService;
+use React\EventLoop\Loop;
+use React\Filesystem\Filesystem as ReactFilesystem;
+use React\Promise\PromiseInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Windwalker\Console\CommandInterface;
@@ -19,10 +24,10 @@ use Windwalker\Console\CommandWrapper;
 use Windwalker\Console\Input\InputOption;
 use Windwalker\Console\IOInterface;
 use Windwalker\Core\Console\ConsoleApplication;
-
-use Windwalker\Core\View\View;
 use Windwalker\Filesystem\Filesystem;
+use Windwalker\Filesystem\Path;
 
+use function React\Promise\all;
 use function Windwalker\fs;
 
 /**
@@ -33,8 +38,13 @@ use function Windwalker\fs;
 )]
 class UpCommand implements CommandInterface
 {
-    public function __construct(protected ConsoleApplication $app)
-    {
+    protected ?\Throwable $exception = null;
+
+    public function __construct(
+        protected ConsoleApplication $app,
+        protected LayoutService $layoutService,
+        protected PluginRegistry $pluginRegistry
+    ) {
     }
 
     /**
@@ -73,7 +83,6 @@ class UpCommand implements CommandInterface
 
         $workingDir = $this->app->config('project.working_dir') ?? getcwd();
         $root = $io->getArgument('root');
-        $tmpl = $io->getArgument('tmpl');
 
         if (!$root || $root === '.') {
             $root = $workingDir;
@@ -92,23 +101,69 @@ class UpCommand implements CommandInterface
             );
         }
 
+        /** @var \Composer\Autoload\ClassLoader $loader */
+        $loader = include WINDWALKER_VENDOR . '/autoload.php';
+        $loader->addPsr4('App\\', $dataRoot . '/src/');
+
         $config = include $configFile->getPathname();
         $folders = $config['folders'] ?? [];
 
+        $loop = Loop::get();
+        $filesystem = ReactFilesystem::create($loop);
+
+        $promises = [];
+
+        $config = $this->layoutService->getGlobalConfig($dataRoot);
+
+        foreach ($config['plugins'] ?? [] as $plugin) {
+            $this->pluginRegistry->add($plugin);
+        }
+
         foreach ($folders as $srcFolder => $destFolder) {
+            $dataRoot = fs($dataRoot);
+            $destFolder = fs(Path::realpath($destFolder ?: '.'));
             $files = Filesystem::files($dataRoot . '/' . $srcFolder, true);
 
             foreach ($files as $file) {
-                $io->out('[<option>Rendering file</option>]: ' . $file);
+                $io->writeln('[<comment>Prepare</comment>]: ' . $file->getRelativePathname());
 
-                /** @var View $view */
-                $view = $this->app->make(PageView::class);
+                $handler = $this->layoutService->createHandler($file, $dataRoot, $destFolder);
 
+                /** @var PromiseInterface $promise */
+                $promise = $handler($filesystem);
 
+                $promises[] = $promise
+                    ->then(
+                        function (Template $tmpl) use ($root, $io) {
+                            $io->writeln(
+                                '[<info>Rendered</info>]: ' . $tmpl->getDestFile()->getRelativePathname($root)
+                            );
 
-                $view->setLayoutMap([]);
+                            return $tmpl;
+                        },
+                    );
             }
         }
+
+        all($promises)->then(
+            function () use ($loop) {
+                $loop->stop();
+            },
+            function (\Throwable $e) use ($loop) {
+                $this->exception = $e;
+                $loop->stop();
+            }
+        );
+
+        $loop->run();
+
+        if ($this->exception) {
+            throw $this->exception;
+        }
+
+        $io->newLine();
+
+        // $io->style()->success('Generate Completed.');
 
         return 0;
     }
