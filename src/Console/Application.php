@@ -23,7 +23,8 @@ class Application extends ConsoleApplication
     {
         parent::__construct($container);
 
-        $this->setVersion('4.0.0');
+        $this->setName('Vaseman');
+        $this->setVersion('');
     }
 
     /**
