@@ -9,4 +9,9 @@
 
 declare(strict_types=1);
 
-return ['up' => \App\Command\UpCommand::class, 'init' => \App\Command\InitCommand::class];
+return [
+    'up' => \App\Command\UpCommand::class,
+    'init' => \App\Command\InitCommand::class,
+    'make:plugin' => \App\Command\MakePluginCommand::class,
+    'make:helper' => \App\Command\MakeHelperCommand::class,
+];

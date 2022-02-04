@@ -34,7 +34,7 @@ use function Windwalker\fs;
  * The UpCommand class.
  */
 #[CommandWrapper(
-    description: ''
+    description: 'Generate pages.'
 )]
 class UpCommand implements CommandInterface
 {

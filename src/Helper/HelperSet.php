@@ -27,9 +27,9 @@ class HelperSet
 
     public function __construct(
         protected ApplicationInterface $app,
-        protected Template $template,
-        protected SystemUri $uri,
-        protected AssetService $asset
+        public Template $template,
+        public SystemUri $uri,
+        public AssetService $asset
     ) {
     }
 
@@ -49,6 +49,7 @@ class HelperSet
                 return $this->app->make(
                     $className,
                     [
+                        HelperSet::class => $this,
                         Template::class => $this->template,
                         SystemUri::class => $this->uri,
                         AssetService::class => $this->asset,

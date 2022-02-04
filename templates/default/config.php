@@ -17,12 +17,12 @@ return [
     // Which folders you want to generate (Array)
     'folders' => [
         'entries' => '',
-        'asset' => 'asset'
+        'assets' => 'assets'
     ],
 
     // Plugin classes with namespace (Array)
     'plugins' => [
-
+        \App\Plugin\TestPlugin::class
     ],
 
     'system' => [

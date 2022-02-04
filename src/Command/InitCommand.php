@@ -27,7 +27,7 @@ use function Windwalker\fs;
  * The InitCommand class.
  */
 #[CommandWrapper(
-    description: ''
+    description: 'Init a new project.'
 )]
 class InitCommand implements CommandInterface
 {

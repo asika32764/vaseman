@@ -19,12 +19,12 @@
                 <aside class="side-nav sticky-top" style="top: 70px;">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <a class="nav-link {{ $helper->page->active('article/article') }}"
-                                href="{{ $uri['base'] }}/article/article.html">Blade</a>
+                            <a class="nav-link {{ $helper->menu->active('article/article') }}"
+                                href="{{ $uri->path() }}article/article.html">Blade</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $helper->page->active('article/markdown') }}"
-                                href="{{ $uri['base'] }}/article/markdown.html">Markdown</a>
+                            <a class="nav-link {{ $helper->menu->active('article/markdown') }}"
+                                href="{{ $uri->path() }}article/markdown.html">Markdown</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Link</a>

@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{{ $uri['asset'] }}/images/favicon.ico" />
+    <link rel="shortcut icon" href="{{ $asset->path('images/favicon.ico') }}" />
 
-    <title>@yield('title', $helper->page->title($config['title']))</title>
+    <title>@yield('title', $helper->page->title($config['title'] ?? ''))</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous" />
-    <link href="{{ $uri['asset'] }}/css/main.css" rel="stylesheet">
+    <link href="{{ $asset->path('css/main.css') }}" rel="stylesheet">
 
     @yield('style')
     @stack('style')
 </head>
-<body>
+<body class="{{ $helper->page->bodyClass() }}">
 <div class="main-wrapper">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ $uri['base'] }}">{{ $config['project.name'] }}</a>
+            <a class="navbar-brand" href="{{ $uri->path }}">{{ $config['project']['name'] ?? '' }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ $uri['base'] }}">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ $uri->path }}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
