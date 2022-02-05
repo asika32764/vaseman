@@ -1,10 +1,13 @@
 <?php
+
 /**
- * Part of Vaseman project.
+ * Part of vaseman4 project.
  *
- * @copyright  Copyright (C) 2018 ${ORGANIZATION}.
+ * @copyright  Copyright (C) 2022 __ORGANIZATION__.
  * @license    __LICENSE__
  */
+
+declare(strict_types=1);
 
 return [
     'project' => [
@@ -14,12 +17,21 @@ return [
     // Which folders you want to generate (Array)
     'folders' => [
         'entries' => '',
-        'asset' => 'asset'
+    ],
+
+    'links' => [
+        'assets' => 'assets'
     ],
 
     // Plugin classes with namespace (Array)
     'plugins' => [
-        \Vaseman\Plugin\MenuPlugin::class
+        \App\Plugin\MenuPlugin::class
+    ],
+
+    'components' => [
+        'hero-banner' => 'components.hero-banner',
+        'breadcrumb' => 'components.breadcrumb',
+        'pagination' => 'components.pagination',
     ],
 
     'system' => [

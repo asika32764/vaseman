@@ -1,5 +1,5 @@
 ---
-layout: documentation.twig
+layout: documentation
 title: Use Markdown Pages
 
 ---
@@ -12,16 +12,22 @@ This is an example of `/entries/foo/sakura.md`.
 
 ``` markdown
 ---
-layout: html.twig
+layout: global.html
 ---
 # Sakura
 
 Sakura page
 ```
 
-Do not miss `layout` config because we have to wrap markdown data with a HTML template.
+Don't miss `layout` config because we have to wrap markdown data with a HTML template.
 
-Open `http://localhost/{VASEMAN_PATH}/foo/sakura.html`, you will see:
+Run: 
+
+```shell
+vaseman up
+```
+
+Open `{VASEMAN_PATH}/foo/sakura.html`, you will see:
 
 ``` html
 <!DOCTYPE html>
@@ -38,32 +44,18 @@ Open `http://localhost/{VASEMAN_PATH}/foo/sakura.html`, you will see:
 </html>
 ```
 
-# Use Markdown In Twig and Blade Page
+# Use Markdown In Blade Page
 
-We can also render markdown in twig page, use `{% markdown %}` tag:
-
-``` twig
-<div class="article-content">
-	{% markdown %}
-	
-# Markdown Page
-
-Test Data ![img](foo.jpg)
-
-	{% endmarkdown %}
-</div>
-```
-
-In Blade
+We can also render markdown in twig page, use `@markdown` directive:
 
 ```php
 <div class="article-content">
-	@markdown
+@markdown
 	
 # Markdown Page
 
 Test Data ![img](foo.jpg)
 
-	@endmarkdown
+@endmarkdown
 </div>
 ```

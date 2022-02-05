@@ -1,5 +1,18 @@
 {
+    "private": true,
+    "scripts": {
+        "build": "cross-env node_modules/.bin/gulp",
+        "build:dev": "cross-env NODE_ENV=development node_modules/.bin/gulp",
+        "build:prod": "cross-env NODE_ENV=production node_modules/.bin/gulp",
+        "watch": "cross-env NODE_ENV=development node_modules/.bin/gulp --watch=1",
+        "watch:reload": "cross-env NODE_ENV=development node_modules/.bin/gulp --watch=1 --livereload=1",
+        "postinstall": "yarn build install"
+    },
     "dependencies": {
-        "gulp": "^3.9.1"
+        "@fortawesome/fontawesome-free": "^6.0.0-beta3",
+        "@windwalker-io/core": "^4.0.5",
+        "@windwalker-io/fusion": "^1.0.5",
+        "bootstrap": "^5.1.3",
+        "jquery": "^3.6.0"
     }
 }

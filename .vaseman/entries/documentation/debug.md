@@ -1,5 +1,5 @@
 ---
-layout: documentation.twig
+layout: documentation
 title: Debugging
 
 ---

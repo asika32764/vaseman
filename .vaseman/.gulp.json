@@ -1,0 +1,6 @@
+{
+    "description": "Windwalker Fusion",
+    "flags": {
+        "gulpfile": "fusionfile.mjs"
+    }
+}

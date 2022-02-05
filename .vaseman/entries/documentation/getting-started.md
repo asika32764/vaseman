@@ -1,22 +1,66 @@
 ---
-layout: documentation.twig
+layout: documentation
 title: Getting Started
 
 ---
 
 # Installation
 
-Use Vaseman as simple PHP site.
+Install Vaseman globally. 
 
 ``` bash
-composer create-project asika/vaseman vaseman 3.*
+composer global require asika/vaseman
 ```
 
-Use Vaseman as static page generator.
+# Init a Project
 
-``` bash
-composer global require asika/vaseman 3.*
+To init a project, use this commands:
+
+```shell
+mkdir site
+vaseman init site
 ```
+
+Init with custom template:
+
+```shell
+vaseman init {dir} /path/to/template 
+```
+
+Init with custom template on GitHub:
+
+```shell
+vaseman init {dir} git@github.com:{org}/vaseman-my-template.git
+```
+
+Vaseman will create a `.vaseman` folder to store project file.
+
+And the current folder will be public folder.
+
+# Render Pages
+
+Type:
+
+```shell
+vaseman up
+```
+
+Then the pages will render to HTML.
+
+```shell
+Start generating site
+=====================
+
+[Prepare]: index.blade.php
+[Prepare]: article/markdown.md
+[Prepare]: article/article.blade.php
+[Rendered]: index.html
+[Rendered]: article/article.html
+[Rendered]: article/markdown.html
+[Link]: assets
+```
+
+Open the `index.html`, you will see project home page.
 
 # Default Pages
 
@@ -40,17 +84,17 @@ Click Markdown link at sidebar, you will see a markdown page example. (`entries/
 
 Create your `*.blade.php` in `entries` folder.
 
-The template file path will matches the url path.
+The template file path will match the url path.
 If you go `path/to/your/page`, Vaseman will render this file as a new page.
 
 ## Base URI
 
-Using `{{ uri.base }}` to add subfolder for assets url.
+Using `{{ $uri->path() }}` to add subfolder for assets url.
 
 For Example, If you are in a page `foo/bar/baz.html`, You can use this url as link href:
 
 ``` twig
-<a href="{{ $uri['base'] }}sakura.html">Link</a>
+<a href="{{ $uri->path() }}sakura.html">Link</a>
 ```
 
 The link will render as:

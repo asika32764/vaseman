@@ -5,7 +5,14 @@ Thumbs.db
 # IDE
 .idea
 
-# Libraries
-/node_modules
-
 # Project
+
+# Libraries
+/vendor
+/node_modules
+/bower_components
+/yarn-error.log
+.npmrc
+
+# Remove above lines when you start a project
+package-lock.json

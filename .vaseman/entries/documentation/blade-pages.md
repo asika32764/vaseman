@@ -1,5 +1,5 @@
 ---
-layout: documentation.twig
+layout: documentation
 title: Use Blade Pages
 
 ---
@@ -10,11 +10,17 @@ Vaseman uses [Edge](https://github.com/ventoviro/windwalker-edge) as Blade compa
 
 All pages file located in `/entries` folder, for example, we can create a page named `/entries/flower.blade.php` with content:
 
-``` twig
+``` html
 <h1>Flower</h1>
 ```
 
-Now use browser open `http://localhost/{VASEMAN_PATH}/flower.html`. You will see this output:
+Then run:
+
+```shell
+vaseman up
+```
+
+Now use browser to open `{VASEMAN_PATH}/flower.html`. You will see this output:
 
 ``` html
 <h1>Flower</h1>
@@ -40,7 +46,7 @@ layout: _global/html
 Or use Blade extends syntax:
 
 ```php
-@extends('_global.html')
+@extends('global.html')
 
 @section('content')
 <h1>Flower</h1>
@@ -67,6 +73,6 @@ If you use `layout: xxx/xxx` to extend global layout, you must print `$content` 
 
 ```php
 @section('content')
-    {!! $content or '' !!}}
+    {!! $content ?? '' !!}}
 @show
 ```

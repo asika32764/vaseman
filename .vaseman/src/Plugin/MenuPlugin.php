@@ -1,35 +1,22 @@
 <?php
-/**
- * Part of Vaseman project. 
- *
- * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
- * @license    GNU General Public License version 2 or later;
- */
 
-namespace Vaseman\Plugin;
+namespace App\Plugin;
 
-use Windwalker\Event\Event;
-use Windwalker\Registry\Registry;
+use App\Plugin\DataLoaderTrait;
+use App\Event\DataProvideEvent;
+use Windwalker\Event\Attributes\EventSubscriber;
+use Windwalker\Event\Attributes\ListenTo;
 
-/**
- * The MenuPlugin class.
- * 
- * @since  {DEPLOY_VERSION}
- */
-class MenuPlugin extends AbstractPlugin implements DataProviderInterface
+#[EventSubscriber]
+class MenuPlugin
 {
-	/**
-	 * loadProvider
-	 *
-	 * @param Event $event
-	 *
-	 * @return  void
-	 */
-	public function loadProvider(Event $event)
-	{
-		$menus = new Registry;
-		$menus->loadFile(__DIR__ . '/menus.yml', 'yaml');
+    use DataLoaderTrait;
 
-		$event['data']->menus = $menus->toArray();
-	}
+    #[ListenTo(DataProvideEvent::class)]
+    public function dataProvider(DataProvideEvent $event): void
+    {
+        $data = &$event->getData();
+
+        $data['menus'] = $this->loadYaml(__DIR__ . '/../../resources/menu/menus.yml');
+    }
 }

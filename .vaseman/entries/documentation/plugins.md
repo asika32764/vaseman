@@ -1,65 +1,73 @@
 ---
-layout: documentation.twig
+layout: documentation
 title: Plugins And DataProvider
 
 ---
 
-# Create Plugin
+# Vaseman Plugin
 
-Create this class in `src/Vaseman/Plugin/DataPlugin.php` or `src/Plugin/DataPlugin.php` in outer project.
+You can create your own plugin to do something. 
 
-The `DataProviderInterface` force add a `loadProvider()` method to return data.
+> Currently, only support `DataProvideEvent`
 
-``` php
+## Create Plugin
+
+Run this command at project root:
+
+```shell
+vaseman make:plugin Data
+```
+
+Will add this class in `.vaseman/src/Plugin/DataPlugin.php`.
+
+```php
 <?php
 
-namespace Vaseman\Plugin;
+namespace App\Plugin;
 
-use Windwalker\Event\Event;
+use App\Plugin\DataLoaderTrait;
+use App\Event\DataProvideEvent;
+use Windwalker\Event\Attributes\EventSubscriber;
+use Windwalker\Event\Attributes\ListenTo;
 
-class DataPlugin extends AbstractPlugin implements DataProviderInterface
+#[EventSubscriber]
+class DataPlugin
 {
-	public function loadProvider(Event $event)
-	{
-		$faker = \Faker\Factory::create();
+    use DataLoaderTrait;
 
-		$dataset = array();
+    #[ListenTo(DataProvideEvent::class)]
+    public function dataProvider(DataProvideEvent $event): void
+    {
+        $data = &$event->getData(); // Pass by reference
+        
+        $faker = \Faker\Factory::create();
 
-		foreach (range(1, 10) as $i)
-		{
-			$dataset[] = array(
-				'title' => $faker->sentence(),
-				'author' => $faker->firstName . ' ' . $faker->lastName,
-				'text' => $faker->paragraphs(3)
-			);
-		}
+        $dataset = [];
 
-		// $event['data'] is the context data which will be send into Twig
-		$event['data']->articles = $dataset;
-	}
+        foreach (range(1, 10) as $i) {
+            $dataset[] = array(
+                'title' => $faker->sentence(),
+                'author' => $faker->firstName . ' ' . $faker->lastName,
+                'text' => $faker->paragraphs(3)
+            );
+        }
+
+        $data['articles'] = $dataset;
+    }
 }
 
 ```
 
-And add this namespace to `config.yml`
+And add this class name to `config.php`
 
-``` yaml
+``` php
     // Plugin classes with namespace (Array)
     'plugins' => [
-        Vaseman\Plugin\DataPlugin::class
+        App\Plugin\DataPlugin::class
     ]
 ```
 
 Now we can get this articles data in Twig:
-
-``` twig
-{% for (item in articles) %}
-	Title: {{ item.title }}
-	Author: {{ item.author }}
-{% endfor %}
-```
-
-OR Blade
 
 ```php
 @foreach ($articles as $item)
