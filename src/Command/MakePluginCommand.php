@@ -90,6 +90,7 @@ class MakePluginCommand implements CommandInterface
 
 namespace App\Plugin;
 
+use App\Plugin\DataLoaderTrait;
 use App\Event\DataProvideEvent;
 use Windwalker\Event\Attributes\EventSubscriber;
 use Windwalker\Event\Attributes\ListenTo;
@@ -97,6 +98,8 @@ use Windwalker\Event\Attributes\ListenTo;
 #[EventSubscriber]
 class {$className}
 {
+    use DataLoaderTrait;
+
     #[ListenTo(DataProvideEvent::class)]
     public function dataProvider(DataProvideEvent \$event): void
     {

@@ -21,7 +21,7 @@ use function Windwalker\ref;
 return [
     'ini' => [
         'display_errors' => 'on',
-        'error_reporting' => (string) WINDWALKER_DEBUG ? E_ALL : ErrorService::getReportLevel(),
+        'error_reporting' => (string) WINDWALKER_DEBUG ? E_ALL : E_NOTICE,
     ],
 
     'report_level' => ErrorService::getReportLevel(),

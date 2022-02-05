@@ -23,12 +23,12 @@ class MenuHelper
     {
     }
 
-    public function active(string $key): string
+    public function active(string $key, string $className = 'active'): string
     {
         $route = $this->uri->route;
 
         if (str_contains($route, $key)) {
-            return 'active';
+            return $className;
         }
 
         return '';

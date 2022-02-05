@@ -34,13 +34,10 @@ class BladeProcessor implements ProcessorInterface, ConfigurableProcessorInterfa
                 $content = $this->render($template, $data);
             } catch (EdgeException $e) {
                 throw new EdgeException(
-                    sprintf(
-                        'Error on: %s - %s',
-                        $template->getSrc()->getPathname(),
-                        $e->getPrevious()->getMessage()
-                    ),
+                    "Error when render: {$template->getSrc()->getPathname()} - " .
+                    $e->getMessage(),
                     $e->getCode(),
-                    $template->getSrc()->getPathname(),
+                    $e->getFile(),
                     $e->getLine(),
                     $e
                 );

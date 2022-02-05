@@ -76,6 +76,13 @@ class UpCommand implements CommandInterface
             InputOption::VALUE_NONE,
             'Hard copy link files.'
         );
+
+        $command->addOption(
+            'strict',
+            's',
+            InputOption::VALUE_NONE,
+            'Use strict mode to show errors.'
+        );
     }
 
     /**
@@ -90,6 +97,12 @@ class UpCommand implements CommandInterface
         $io->style()->title('Start generating site');
 
         $workingDir = $this->app->config('project.working_dir') ?? getcwd();
+        $strict = $io->getOption('strict');
+
+        if ($strict) {
+            error_reporting(E_ALL);
+        }
+
         $root = $io->getArgument('root');
 
         if (!$root || $root === '.') {
@@ -99,6 +112,9 @@ class UpCommand implements CommandInterface
         $root = fs(Path::realpath($root));
         $dataRoot = $root->appendPath('/.vaseman');
         $configFile = $dataRoot->appendPath('/config.php');
+
+        define('PROJECT_ROOT', $root->getPathname());
+        define('PROJECT_DATA_ROOT', $dataRoot->getPathname());
 
         if (!$dataRoot->isDir()) {
             throw new \RuntimeException(

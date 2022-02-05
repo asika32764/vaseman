@@ -13,6 +13,8 @@ namespace App\Web;
 
 /**
  * The AssetService class.
+ *
+ * @property-read string $path
  */
 class AssetService
 {
@@ -26,5 +28,14 @@ class AssetService
         $suffix = 'assets/' . $suffix;
 
         return $this->uri->path($suffix);
+    }
+
+    public function __get(string $name)
+    {
+        if ($name === 'path') {
+            return $this->path();
+        }
+
+        throw new \BadMethodCallException('No property: ' . $name);
     }
 }

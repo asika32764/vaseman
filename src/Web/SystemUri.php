@@ -19,6 +19,8 @@ use Windwalker\Filesystem\Path;
  */
 class SystemUri
 {
+    public array $routeArray = [];
+
     public static function create(Template $template): static
     {
         $destRelDir = (string) $template->getDestFile()->getRelativePath($template->getDestRoot());
@@ -33,11 +35,15 @@ class SystemUri
             $base = str_repeat('../', count($paths));
         }
 
-        return new static($base, $destRelDir);
+        $route = $template->getDestFile()->getRelativePathname($template->getDestRoot());
+        $route = Path::stripExtension($route);
+
+        return new static($base, $route);
     }
 
     public function __construct(public string $path, public string $route)
     {
+        $this->routeArray = explode('/', $route);
     }
 
     public function path(?string $suffix = null): string
