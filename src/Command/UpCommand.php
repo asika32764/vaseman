@@ -202,7 +202,7 @@ class UpCommand implements CommandInterface
             $root->isLink();
 
             if ($destFolder->isLink()) {
-                if (PHP_WINDOWS_VERSION_MAJOR) {
+                if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
                     rmdir($destFolder->getPathname());
                 } else {
                     unlink($destFolder->getPathname());
