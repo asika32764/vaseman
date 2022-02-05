@@ -223,7 +223,7 @@ class UpCommand implements CommandInterface
                     $destFile = fs($destFolder . '/' . $file->getRelativePathname());
 
                     if (!$destFile->exists() || (string) $destFile->read() !== (string) $file->read()) {
-                        $file->copyTo($destFile);
+                        $file->copyTo($destFile, true);
                         $io->writeln('[<info>Copy</info>]: ' . $file->getRelativePathname());
                     }
                 }

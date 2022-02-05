@@ -39,7 +39,7 @@ class MarkdownProcessor implements ProcessorInterface, ConfigurableProcessorInte
             $edge = $edgeProcessor->getEdgeEngine($template);
 
             $config = $template->getConfig();
-            $layout = $edge->getLoader()->find(str_replace('/', '.', $config['layout']));
+            $layout = $edge->getLoader()->find(str_replace('/', '.', $config['layout'] ?? ''));
 
             return $filesystem->getContents($layout)->then(
                 function ($wrapper) use ($edgeProcessor, $filesystem, $template) {

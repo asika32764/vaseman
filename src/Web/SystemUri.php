@@ -25,7 +25,7 @@ class SystemUri
     {
         $destRelDir = (string) $template->getDestFile()->getRelativePath($template->getDestRoot());
 
-        $destRelDir = Path::clean(dirname($destRelDir), '/');
+        $destRelDir = Path::clean($destRelDir, '/');
 
         if (!$destRelDir) {
             $base = './';
