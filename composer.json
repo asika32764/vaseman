@@ -46,6 +46,9 @@
     "config": {
         "platform": {
             "php": "8.0.0"
+        },
+        "allow-plugins": {
+            "wyrihaximus/composer-update-bin-autoload-path": true
         }
     },
     "extra": {

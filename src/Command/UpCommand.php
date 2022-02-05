@@ -199,13 +199,18 @@ class UpCommand implements CommandInterface
         foreach ($links as $srcFolder => $destFolder) {
             $dataRoot = fs($dataRoot);
             $destFolder = $root->appendPath('/' . $destFolder);
+            $root->isLink();
 
             if ($destFolder->isLink()) {
-                unlink($destFolder->getPathname());
+                if (PHP_WINDOWS_VERSION_MAJOR) {
+                    rmdir($destFolder->getPathname());
+                } else {
+                    unlink($destFolder->getPathname());
+                }
             }
 
             if ($hard) {
-                $destFolder->deleteIfExists();
+                // $destFolder->deleteIfExists();
 
                 $files = Filesystem::files(
                     $dataRoot . '/' . $srcFolder,
@@ -215,11 +220,16 @@ class UpCommand implements CommandInterface
                 );
 
                 foreach ($files as $file) {
-                    $io->writeln('[<info>Copy</info>]: ' . $file->getRelativePathname());
+                    $destFile = fs($destFolder . '/' . $file->getRelativePathname());
 
-                    $file->copyTo($destFolder . '/' . $file->getBasename(), true);
+                    if (!$destFile->exists() || (string) $destFile->read() !== (string) $file->read()) {
+                        $file->copyTo($destFile);
+                        $io->writeln('[<info>Copy</info>]: ' . $file->getRelativePathname());
+                    }
                 }
             } else {
+                $destFolder->deleteIfExists();
+
                 Filesystem::symlink($dataRoot . '/' . $srcFolder, $destFolder->getPathname());
 
                 $io->writeln('[<info>Link</info>]: ' . $destFolder->getRelativePathname($root));

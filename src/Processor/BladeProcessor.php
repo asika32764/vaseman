@@ -56,7 +56,10 @@ class BladeProcessor implements ProcessorInterface, ConfigurableProcessorInterfa
      */
     public function getEdgeEngine(Template $template): Edge
     {
-        return $this->edgeFactory->createEdge($template->getDataRoot() . '/layouts');
+        return $this->edgeFactory->createEdge(
+            $template->getDataRoot() . '/layouts',
+            $template
+        );
     }
 
     /**
