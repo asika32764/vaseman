@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Data\Template;
+use App\Event\BeforeProcessEvent;
 use App\Plugin\PluginRegistry;
 use App\Service\LayoutService;
 use Composer\Autoload\ClassLoader;
@@ -62,6 +63,12 @@ class UpCommand implements CommandInterface
             'The project root.'
         );
 
+        $command->addArgument(
+            'dest',
+            InputArgument::OPTIONAL,
+            'The dest to output site.'
+        );
+
         $command->addOption(
             'dir',
             'd',
@@ -103,13 +110,26 @@ class UpCommand implements CommandInterface
         }
 
         $root = $io->getArgument('root');
+        $dest = $io->getArgument('dest');
 
         if (!$root || Path::isRelative($root)) {
             $root = $workingDir . DIRECTORY_SEPARATOR . $root;
         }
-        
+
         $root = fs(Path::realpath($root));
-        $dataRoot = $root->appendPath('/.vaseman');
+
+        if ($dest) {
+            $dataRoot = $root->appendPath('/.vaseman');
+
+            if (Path::isRelative($dest)) {
+                $dest = $workingDir . DIRECTORY_SEPARATOR . $dest;
+            }
+
+            $root = fs($dest);
+        } else {
+            $dataRoot = $root->appendPath('/.vaseman');
+        }
+
         $configFile = $dataRoot->appendPath('/config.php');
 
         define('PROJECT_ROOT', $root->getPathname());
@@ -122,6 +142,12 @@ class UpCommand implements CommandInterface
                     $dataRoot->getPathname()
                 )
             );
+        }
+
+        $vendorAutoload = $dataRoot->appendPath('/vendor/autoload.php');
+
+        if ($vendorAutoload->isFile()) {
+            include $vendorAutoload->getPathname();
         }
 
         /** @var \Composer\Autoload\ClassLoader $loader */
@@ -166,7 +192,7 @@ class UpCommand implements CommandInterface
         foreach ($links as $srcFolder => $destFolder) {
             $dataRoot = fs($dataRoot);
             $destFolder = $root->appendPath('/' . $destFolder);
-$root->isLink();
+
             if ($destFolder->isLink()) {
                 if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
                     rmdir($destFolder->getPathname());
@@ -189,8 +215,32 @@ $root->isLink();
                     $destFile = fs($destFolder . '/' . $file->getRelativePathname());
 
                     if (!$destFile->exists() || (string) $destFile->read() !== (string) $file->read()) {
-                        $file->copyTo($destFile, true);
-                        $io->writeln('[<info>Copy</info>]: ' . $file->getRelativePathname());
+
+                        $template = (new Template())
+                            ->setSrc($file)
+                            ->setDestRoot($destFolder)
+                            ->setDestFile($destFile)
+                            ->setDestDir($destFile->getParent());
+
+                        $event = $this->pluginRegistry->emit(
+                            BeforeProcessEvent::class,
+                            compact('template')
+                        );
+
+                        if ($event->isSkip()) {
+                            continue;
+                        }
+
+                        $template = $event->getTemplate();
+
+                        $template->getSrc()->copyTo($destFile = $template->getDestFile(), true);
+
+                        $io->writeln('[<info>Copy</info>]: ' . $destFile->getRelativePathname($root));
+
+                        $event = $this->pluginRegistry->emit(
+                            BeforeProcessEvent::class,
+                            compact('template', 'destFile')
+                        );
                     }
                 }
             } else {

@@ -38,7 +38,7 @@ class Template extends ValueObject
     /**
      * @return string
      */
-    public function getContent(): string
+    public function &getContent(): string
     {
         return $this->content;
     }
@@ -58,7 +58,7 @@ class Template extends ValueObject
     /**
      * @return array
      */
-    public function getConfig(): array
+    public function &getConfig(): array
     {
         return $this->config;
     }
@@ -78,7 +78,7 @@ class Template extends ValueObject
     /**
      * @return string
      */
-    public function getPermalink(): string
+    public function &getPermalink(): string
     {
         return $this->permalink;
     }

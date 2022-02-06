@@ -11,7 +11,10 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Event\AfterProcessEvent;
+use App\Event\BeforeProcessEvent;
 use App\Event\DataProvideEvent;
+use App\Plugin\DataLoaderTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Windwalker\Console\CommandInterface;
@@ -90,13 +93,14 @@ class MakePluginCommand implements CommandInterface
 
 namespace App\Plugin;
 
-use App\Plugin\DataLoaderTrait;
+use App\Event\AfterProcessEvent;
+use App\Event\BeforeProcessEvent;
 use App\Event\DataProvideEvent;
 use Windwalker\Event\Attributes\EventSubscriber;
 use Windwalker\Event\Attributes\ListenTo;
 
 #[EventSubscriber]
-class {$className}
+class PackagingPlugin
 {
     use DataLoaderTrait;
 
@@ -104,6 +108,18 @@ class {$className}
     public function dataProvider(DataProvideEvent \$event): void
     {
         \$data = &\$event->getData();
+    }
+
+    #[ListenTo(BeforeProcessEvent::class)]
+    public function beforeProcess(BeforeProcessEvent \$event): void
+    {
+        //
+    }
+
+    #[ListenTo(AfterProcessEvent::class)]
+    public function afterProcess(AfterProcessEvent \$event): void
+    {
+        //
     }
 }
 

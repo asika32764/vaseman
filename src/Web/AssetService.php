@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace App\Web;
 
+use function Windwalker\uid;
+
 /**
  * The AssetService class.
  *
@@ -18,14 +20,29 @@ namespace App\Web;
  */
 class AssetService
 {
+    public string $v = '';
+
     public function __construct(protected SystemUri $uri)
     {
+        $this->v = uid();
     }
 
-    public function path(string $suffix = ''): string
+    public function path(string $suffix = '', bool $v = true): string
     {
+        if ($suffix === '') {
+            $v = false;
+        }
+
         $suffix = ltrim($suffix, '/');
         $suffix = 'assets/' . $suffix;
+
+        if ($v) {
+            if (str_contains($suffix, '?')) {
+                $suffix .= '&' . $this->v;
+            } else {
+                $suffix .= '?' . $this->v;
+            }
+        }
 
         return $this->uri->path($suffix);
     }

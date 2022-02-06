@@ -48,6 +48,6 @@ class PageHelper
         $view = StrNormalize::toKebabCase(implode('-', $segments)) ?: 'home';
         $layout = $layout ?: $view;
 
-        return 'view-' . $view . ' layout-' . $layout;
+        return 'view-' . $view . ' layout-' . $layout . ' route-' . str_replace('/', '-', $route);
     }
 }

@@ -34,21 +34,27 @@ class MarkdownProcessor implements ProcessorInterface, ConfigurableProcessorInte
         $destFile = Path::stripExtension((string) $template->getDestFile()) . '.html';
         $template->setDestFile(fs($destFile, $template->getDestFile()->getRoot()));
 
+        $content = MarkdownRenderer::render($template->getContent());
+
         /** @var BladeProcessor $edgeProcessor */
         $edgeProcessor = $this->processorFactory->create('blade');
         $edge = $edgeProcessor->getEdgeEngine($template);
 
         $config = $template->getConfig();
-        $layout = $edge->getLoader()->find(str_replace('/', '.', $config['layout'] ?? ''));
+        $layout = $config['layout'] ?? '';
 
-        $content = MarkdownRenderer::render($template->getContent());
+        if ($layout) {
+            $wrapper = $edge->getLoader()->find(str_replace('/', '.', $config['layout'] ?? ''));
 
-        $template->setContent(file_get_contents($layout));
+            $template->setContent(file_get_contents($wrapper));
 
-        $rendered = $edgeProcessor->render(
-            $template,
-            compact('content')
-        );
+            $rendered = $edgeProcessor->render(
+                $template,
+                compact('content')
+            );
+        } else {
+            $rendered = $content;
+        }
 
         return $template->getDestFile()->write($rendered);
     }

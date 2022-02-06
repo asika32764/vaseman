@@ -13,6 +13,7 @@ namespace App\Service;
 
 use App\Data\ConvertResult;
 use App\Data\Template;
+use App\Event\BeforeProcessEvent;
 use App\Exception\NoConfigException;
 use App\Plugin\PluginRegistry;
 use App\Processor\ConfigurableProcessorInterface;
@@ -32,8 +33,11 @@ class LayoutService
 {
     use InstanceCacheTrait;
 
-    public function __construct(protected ProcessorFactory $processorFactory, protected Container $container)
-    {
+    public function __construct(
+        protected ProcessorFactory $processorFactory,
+        protected Container $container,
+        protected PluginRegistry $pluginRegistry
+    ) {
     }
 
     public function handle(FileObject $file, FileObject $srcRoot, FileObject $destRoot)
@@ -44,28 +48,43 @@ class LayoutService
         $content = (string) $file->read();
 
         if ($processor instanceof ConfigurableProcessorInterface) {
-            $tmpl = $this->parseTemplateString($content);
+            $template = $this->parseTemplateString($content);
         } else {
-            $tmpl = new Template();
+            $template = new Template();
         }
 
-        $tmpl->setSrc($file);
-        $tmpl->setDataRoot($srcRoot);
-        $tmpl->setDestRoot($destRoot);
-        $tmpl->setDestDir($destRoot);
-        $tmpl->setDestFile($destFile = $destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
+        $template->setSrc($file);
+        $template->setDataRoot($srcRoot);
+        $template->setDestRoot($destRoot);
+        $template->setDestDir($destRoot);
+        $template->setDestFile($destFile = $destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
 
         $config = array_merge(
             $this->getGlobalConfig($srcRoot),
-            $tmpl->getConfig()
+            $template->getConfig()
         );
-        $tmpl->setConfig($config);
+        $template->setConfig($config);
 
         $destFile->getParent()->mkdir();
+        $data = [];
 
-        $processor->process($tmpl);
+        $event = $this->pluginRegistry->emit(
+            BeforeProcessEvent::class,
+            compact('template', 'data')
+        );
 
-        return $tmpl;
+        if ($event->isSkip()) {
+            return $template;
+        }
+
+        $destFile = $processor->process($template = $event->getTemplate(), $data = $event->getData());
+
+        $event = $this->pluginRegistry->emit(
+            BeforeProcessEvent::class,
+            compact('template', 'data', 'destFile')
+        );
+
+        return $event->getTemplate();
     }
 
     public function parseTemplateString(string $template): Template

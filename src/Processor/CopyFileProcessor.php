@@ -24,10 +24,10 @@ class CopyFileProcessor implements ProcessorInterface
         $content = (string) $template->getSrc()->read();
         $dest = $template->getDestFile();
 
-        if ($content !== (string) $dest->read()) {
-            $dest = $dest->write($content);
+        if ($dest->isFile() && $content === (string) $dest->read()) {
+            return $dest;
         }
 
-        return $dest;
+        return $dest->write($content);
     }
 }
