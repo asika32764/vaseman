@@ -12,11 +12,12 @@ declare(strict_types=1);
 namespace App\Processor;
 
 use App\Data\Template;
+use Windwalker\Filesystem\FileObject;
 
 /**
  * Interface ProcessorInterface
  */
 interface ProcessorInterface
 {
-    public function createProcessor(Template $template, array $data = []): \Closure;
+    public function process(Template $template, array $data = []): FileObject;
 }

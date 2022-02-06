@@ -15,6 +15,7 @@ use App\Data\Template;
 use App\Edge\EdgeFactory;
 use App\Renderer\MarkdownRenderer;
 use React\Filesystem\Filesystem;
+use Windwalker\Filesystem\FileObject;
 use Windwalker\Filesystem\Path;
 
 use function Windwalker\fs;
@@ -28,33 +29,27 @@ class MarkdownProcessor implements ProcessorInterface, ConfigurableProcessorInte
     {
     }
 
-    public function createProcessor(Template $template, array $data = []): \Closure
+    public function process(Template $template, array $data = []): FileObject
     {
         $destFile = Path::stripExtension((string) $template->getDestFile()) . '.html';
         $template->setDestFile(fs($destFile, $template->getDestFile()->getRoot()));
 
-        return function (Filesystem $filesystem) use ($template) {
-            /** @var BladeProcessor $edgeProcessor */
-            $edgeProcessor = $this->processorFactory->create('blade');
-            $edge = $edgeProcessor->getEdgeEngine($template);
+        /** @var BladeProcessor $edgeProcessor */
+        $edgeProcessor = $this->processorFactory->create('blade');
+        $edge = $edgeProcessor->getEdgeEngine($template);
 
-            $config = $template->getConfig();
-            $layout = $edge->getLoader()->find(str_replace('/', '.', $config['layout'] ?? ''));
+        $config = $template->getConfig();
+        $layout = $edge->getLoader()->find(str_replace('/', '.', $config['layout'] ?? ''));
 
-            return $filesystem->getContents($layout)->then(
-                function ($wrapper) use ($edgeProcessor, $filesystem, $template) {
-                    $content = MarkdownRenderer::render($template->getContent());
+        $content = MarkdownRenderer::render($template->getContent());
 
-                    $template->setContent($wrapper);
+        $template->setContent(file_get_contents($layout));
 
-                    $rendered = $edgeProcessor->render(
-                        $template,
-                        compact('content')
-                    );
+        $rendered = $edgeProcessor->render(
+            $template,
+            compact('content')
+        );
 
-                    return $filesystem->file((string) $template->getDestFile())->putContents($rendered);
-                }
-            );
-        };
+        return $template->getDestFile()->write($rendered);
     }
 }

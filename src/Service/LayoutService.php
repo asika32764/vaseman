@@ -36,38 +36,36 @@ class LayoutService
     {
     }
 
-    public function createHandler(FileObject $file, FileObject $srcRoot, FileObject $destRoot): \Closure
+    public function handle(FileObject $file, FileObject $srcRoot, FileObject $destRoot)
     {
-        return function (Filesystem $filesystem) use ($srcRoot, $destRoot, $file) {
-            return $filesystem->getContents($file->getPathname())->then(
-                function (string $content) use ($srcRoot, $filesystem, $file, $destRoot) {
-                    $extension = $file->getExtension();
-                    $processor = $this->processorFactory->create($extension);
+        $extension = $file->getExtension();
+        $processor = $this->processorFactory->create($extension);
 
-                    if ($processor instanceof ConfigurableProcessorInterface) {
-                        $tmpl = $this->parseTemplateString($content);
-                    } else {
-                        $tmpl = new Template();
-                    }
+        $content = (string) $file->read();
 
-                    $tmpl->setSrc($file);
-                    $tmpl->setDataRoot($srcRoot);
-                    $tmpl->setDestRoot($destRoot);
-                    $tmpl->setDestDir($destRoot);
-                    $tmpl->setDestFile($destFile = $destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
+        if ($processor instanceof ConfigurableProcessorInterface) {
+            $tmpl = $this->parseTemplateString($content);
+        } else {
+            $tmpl = new Template();
+        }
 
-                    $config = array_merge(
-                        $this->getGlobalConfig($srcRoot),
-                        $tmpl->getConfig()
-                    );
-                    $tmpl->setConfig($config);
+        $tmpl->setSrc($file);
+        $tmpl->setDataRoot($srcRoot);
+        $tmpl->setDestRoot($destRoot);
+        $tmpl->setDestDir($destRoot);
+        $tmpl->setDestFile($destFile = $destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
 
-                    $destFile->getParent()->mkdir();
+        $config = array_merge(
+            $this->getGlobalConfig($srcRoot),
+            $tmpl->getConfig()
+        );
+        $tmpl->setConfig($config);
 
-                    return $processor->createProcessor($tmpl)($filesystem)?->then(fn () => $tmpl);
-                }
-            );
-        };
+        $destFile->getParent()->mkdir();
+
+        $processor->process($tmpl);
+
+        return $tmpl;
     }
 
     public function parseTemplateString(string $template): Template

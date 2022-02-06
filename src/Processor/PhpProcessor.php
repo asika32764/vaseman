@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\Processor;
 
 use App\Data\Template;
+use Windwalker\Filesystem\FileObject;
 use Windwalker\Utilities\Str;
 
 use function Windwalker\fs;
@@ -25,7 +26,7 @@ class PhpProcessor implements ProcessorInterface, ConfigurableProcessorInterface
     {
     }
 
-    public function createProcessor(Template $template, array $data = []): \Closure
+    public function process(Template $template, array $data = []): FileObject
     {
         $srcFile = $template->getSrc()->getPathname();
 
@@ -40,7 +41,7 @@ class PhpProcessor implements ProcessorInterface, ConfigurableProcessorInterface
         }
 
         if (str_ends_with($srcFile, '.blade.php') || str_ends_with($srcFile, '.edge.php')) {
-            return $this->processorFactory->create('blade')->createProcessor($template);
+            return $this->processorFactory->create('blade')->process($template);
         }
 
         throw new \RuntimeException('Not support pure php file now.');

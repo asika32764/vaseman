@@ -14,6 +14,7 @@ namespace App\Command;
 use App\Data\Template;
 use App\Plugin\PluginRegistry;
 use App\Service\LayoutService;
+use Composer\Autoload\ClassLoader;
 use FilesystemIterator;
 use React\EventLoop\Loop;
 use React\Filesystem\Filesystem as ReactFilesystem;
@@ -39,8 +40,6 @@ use function Windwalker\fs;
 )]
 class UpCommand implements CommandInterface
 {
-    protected ?\Throwable $exception = null;
-
     public function __construct(
         protected ConsoleApplication $app,
         protected LayoutService $layoutService,
@@ -105,8 +104,8 @@ class UpCommand implements CommandInterface
 
         $root = $io->getArgument('root');
 
-        if (!$root || $root === '.') {
-            $root = $workingDir;
+        if (!$root || Path::isRelative($root)) {
+            $root = $workingDir . DIRECTORY_SEPARATOR . $root;
         }
         
         $root = fs(Path::realpath($root));
@@ -126,18 +125,13 @@ class UpCommand implements CommandInterface
         }
 
         /** @var \Composer\Autoload\ClassLoader $loader */
-        $loader = include WINDWALKER_VENDOR . '/autoload.php';
+        $loader = $this->app->service(ClassLoader::class);
         $loader->addPsr4('App\\', $dataRoot . '/src/');
 
         $config = include $configFile->getPathname();
 
         // Convert
         $folders = $config['folders'] ?? [];
-
-        $loop = Loop::get();
-        $filesystem = ReactFilesystem::create($loop);
-
-        $promises = [];
 
         $config = $this->layoutService->getGlobalConfig($dataRoot);
 
@@ -151,45 +145,18 @@ class UpCommand implements CommandInterface
             $files = Filesystem::files(
                 $dataRoot . '/' . $srcFolder,
                 true,
-                FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO
-                | FilesystemIterator::FOLLOW_SYMLINKS
+                FilesystemIterator::FOLLOW_SYMLINKS
             );
 
             foreach ($files as $file) {
-                $io->writeln('[<comment>Prepare</comment>]: ' . $file->getRelativePathname());
+                // $io->writeln('[<comment>Prepare</comment>]: ' . $file->getRelativePathname());
 
-                $handler = $this->layoutService->createHandler($file, $dataRoot, $destFolder);
+                $tmpl = $this->layoutService->handle($file, $dataRoot, $destFolder);
 
-                /** @var PromiseInterface $promise */
-                $promise = $handler($filesystem);
-
-                $promises[] = $promise
-                    ->then(
-                        function (Template $tmpl) use ($root, $io) {
-                            $io->writeln(
-                                '[<info>Rendered</info>]: ' . $tmpl->getDestFile()->getRelativePathname($root)
-                            );
-
-                            return $tmpl;
-                        },
-                    );
+                $io->writeln(
+                    '[<info>Rendered</info>]: ' . $tmpl->getDestFile()->getRelativePathname($root)
+                );
             }
-        }
-
-        all($promises)->then(
-            function () use ($loop) {
-                $loop->stop();
-            },
-            function (\Throwable $e) use ($loop) {
-                $this->exception = $e;
-                $loop->stop();
-            }
-        );
-
-        $loop->run();
-
-        if ($this->exception) {
-            throw $this->exception;
         }
 
         // Links
@@ -199,8 +166,7 @@ class UpCommand implements CommandInterface
         foreach ($links as $srcFolder => $destFolder) {
             $dataRoot = fs($dataRoot);
             $destFolder = $root->appendPath('/' . $destFolder);
-            $root->isLink();
-
+$root->isLink();
             if ($destFolder->isLink()) {
                 if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
                     rmdir($destFolder->getPathname());

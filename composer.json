@@ -21,11 +21,6 @@
         "asika/cross-env": "^1.0",
         "symfony/yaml": "^5.4",
         "symfony/var-dumper": "^5.4",
-        "react/event-loop": "^1.0",
-        "react/filesystem": "^0.1.2",
-        "wyrihaximus/react-child-process-pool": "^1.0",
-        "wyrihaximus/react-child-process-messenger": "^4.0",
-        "react/stream": "^1.2",
         "erusev/parsedown": "^1.7@stable",
         "erusev/parsedown-extra": "^0.8"
     },
