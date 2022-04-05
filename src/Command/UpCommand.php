@@ -12,8 +12,10 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Data\Template;
+use App\Event\BeforeProcessEvent;
 use App\Plugin\PluginRegistry;
 use App\Service\LayoutService;
+use Composer\Autoload\ClassLoader;
 use FilesystemIterator;
 use React\EventLoop\Loop;
 use React\Filesystem\Filesystem as ReactFilesystem;
@@ -39,8 +41,6 @@ use function Windwalker\fs;
 )]
 class UpCommand implements CommandInterface
 {
-    protected ?\Throwable $exception = null;
-
     public function __construct(
         protected ConsoleApplication $app,
         protected LayoutService $layoutService,
@@ -61,6 +61,12 @@ class UpCommand implements CommandInterface
             'root',
             InputArgument::OPTIONAL,
             'The project root.'
+        );
+
+        $command->addArgument(
+            'dest',
+            InputArgument::OPTIONAL,
+            'The dest to output site.'
         );
 
         $command->addOption(
@@ -104,13 +110,26 @@ class UpCommand implements CommandInterface
         }
 
         $root = $io->getArgument('root');
+        $dest = $io->getArgument('dest');
 
-        if (!$root || $root === '.') {
-            $root = $workingDir;
+        if (!$root || Path::isRelative($root)) {
+            $root = $workingDir . DIRECTORY_SEPARATOR . $root;
         }
-        
+
         $root = fs(Path::realpath($root));
-        $dataRoot = $root->appendPath('/.vaseman');
+
+        if ($dest) {
+            $dataRoot = $root->appendPath('/.vaseman');
+
+            if (Path::isRelative($dest)) {
+                $dest = $workingDir . DIRECTORY_SEPARATOR . $dest;
+            }
+
+            $root = fs($dest);
+        } else {
+            $dataRoot = $root->appendPath('/.vaseman');
+        }
+
         $configFile = $dataRoot->appendPath('/config.php');
 
         define('PROJECT_ROOT', $root->getPathname());
@@ -125,19 +144,20 @@ class UpCommand implements CommandInterface
             );
         }
 
+        $vendorAutoload = $dataRoot->appendPath('/vendor/autoload.php');
+
+        if ($vendorAutoload->isFile()) {
+            include $vendorAutoload->getPathname();
+        }
+
         /** @var \Composer\Autoload\ClassLoader $loader */
-        $loader = include WINDWALKER_VENDOR . '/autoload.php';
+        $loader = $this->app->service(ClassLoader::class);
         $loader->addPsr4('App\\', $dataRoot . '/src/');
 
         $config = include $configFile->getPathname();
 
         // Convert
         $folders = $config['folders'] ?? [];
-
-        $loop = Loop::get();
-        $filesystem = ReactFilesystem::create($loop);
-
-        $promises = [];
 
         $config = $this->layoutService->getGlobalConfig($dataRoot);
 
@@ -151,45 +171,18 @@ class UpCommand implements CommandInterface
             $files = Filesystem::files(
                 $dataRoot . '/' . $srcFolder,
                 true,
-                FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO
-                | FilesystemIterator::FOLLOW_SYMLINKS
+                FilesystemIterator::FOLLOW_SYMLINKS
             );
 
             foreach ($files as $file) {
-                $io->writeln('[<comment>Prepare</comment>]: ' . $file->getRelativePathname());
+                // $io->writeln('[<comment>Prepare</comment>]: ' . $file->getRelativePathname());
 
-                $handler = $this->layoutService->createHandler($file, $dataRoot, $destFolder);
+                $tmpl = $this->layoutService->handle($file, $dataRoot, $destFolder);
 
-                /** @var PromiseInterface $promise */
-                $promise = $handler($filesystem);
-
-                $promises[] = $promise
-                    ->then(
-                        function (Template $tmpl) use ($root, $io) {
-                            $io->writeln(
-                                '[<info>Rendered</info>]: ' . $tmpl->getDestFile()->getRelativePathname($root)
-                            );
-
-                            return $tmpl;
-                        },
-                    );
+                $io->writeln(
+                    '[<info>Rendered</info>]: ' . $tmpl->getDestFile()->getRelativePathname($root)
+                );
             }
-        }
-
-        all($promises)->then(
-            function () use ($loop) {
-                $loop->stop();
-            },
-            function (\Throwable $e) use ($loop) {
-                $this->exception = $e;
-                $loop->stop();
-            }
-        );
-
-        $loop->run();
-
-        if ($this->exception) {
-            throw $this->exception;
         }
 
         // Links
@@ -199,7 +192,6 @@ class UpCommand implements CommandInterface
         foreach ($links as $srcFolder => $destFolder) {
             $dataRoot = fs($dataRoot);
             $destFolder = $root->appendPath('/' . $destFolder);
-            $root->isLink();
 
             if ($destFolder->isLink()) {
                 if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
@@ -223,8 +215,32 @@ class UpCommand implements CommandInterface
                     $destFile = fs($destFolder . '/' . $file->getRelativePathname());
 
                     if (!$destFile->exists() || (string) $destFile->read() !== (string) $file->read()) {
-                        $file->copyTo($destFile, true);
-                        $io->writeln('[<info>Copy</info>]: ' . $file->getRelativePathname());
+
+                        $template = (new Template())
+                            ->setSrc($file)
+                            ->setDestRoot($destFolder)
+                            ->setDestFile($destFile)
+                            ->setDestDir($destFile->getParent());
+
+                        $event = $this->pluginRegistry->emit(
+                            BeforeProcessEvent::class,
+                            compact('template')
+                        );
+
+                        if ($event->isSkip()) {
+                            continue;
+                        }
+
+                        $template = $event->getTemplate();
+
+                        $template->getSrc()->copyTo($destFile = $template->getDestFile(), true);
+
+                        $io->writeln('[<info>Copy</info>]: ' . $destFile->getRelativePathname($root));
+
+                        $event = $this->pluginRegistry->emit(
+                            BeforeProcessEvent::class,
+                            compact('template', 'destFile')
+                        );
                     }
                 }
             } else {

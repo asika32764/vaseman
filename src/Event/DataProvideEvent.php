@@ -19,47 +19,5 @@ use Windwalker\Event\AbstractEvent;
  */
 class DataProvideEvent extends AbstractEvent
 {
-    protected Template $template;
-
-    protected array $data;
-
-    /**
-     * @return Template
-     */
-    public function getTemplate(): Template
-    {
-        return $this->template;
-    }
-
-    /**
-     * @param  Template  $template
-     *
-     * @return  static  Return self to support chaining.
-     */
-    public function setTemplate(Template $template): static
-    {
-        $this->template = $template;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function &getData(): array
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param  array  $data
-     *
-     * @return  static  Return self to support chaining.
-     */
-    public function setData(array $data): static
-    {
-        $this->data = $data;
-
-        return $this;
-    }
+    use ProcessEventTrait;
 }

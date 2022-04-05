@@ -13,6 +13,7 @@ namespace App\Service;
 
 use App\Data\ConvertResult;
 use App\Data\Template;
+use App\Event\BeforeProcessEvent;
 use App\Exception\NoConfigException;
 use App\Plugin\PluginRegistry;
 use App\Processor\ConfigurableProcessorInterface;
@@ -32,42 +33,58 @@ class LayoutService
 {
     use InstanceCacheTrait;
 
-    public function __construct(protected ProcessorFactory $processorFactory, protected Container $container)
-    {
+    public function __construct(
+        protected ProcessorFactory $processorFactory,
+        protected Container $container,
+        protected PluginRegistry $pluginRegistry
+    ) {
     }
 
-    public function createHandler(FileObject $file, FileObject $srcRoot, FileObject $destRoot): \Closure
+    public function handle(FileObject $file, FileObject $srcRoot, FileObject $destRoot)
     {
-        return function (Filesystem $filesystem) use ($srcRoot, $destRoot, $file) {
-            return $filesystem->getContents($file->getPathname())->then(
-                function (string $content) use ($srcRoot, $filesystem, $file, $destRoot) {
-                    $extension = $file->getExtension();
-                    $processor = $this->processorFactory->create($extension);
+        $extension = $file->getExtension();
+        $processor = $this->processorFactory->create($extension);
 
-                    if ($processor instanceof ConfigurableProcessorInterface) {
-                        $tmpl = $this->parseTemplateString($content);
-                    } else {
-                        $tmpl = new Template();
-                    }
+        $content = (string) $file->read();
 
-                    $tmpl->setSrc($file);
-                    $tmpl->setDataRoot($srcRoot);
-                    $tmpl->setDestRoot($destRoot);
-                    $tmpl->setDestDir($destRoot);
-                    $tmpl->setDestFile($destFile = $destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
+        if ($processor instanceof ConfigurableProcessorInterface) {
+            $template = $this->parseTemplateString($content);
+        } else {
+            $template = new Template();
+        }
 
-                    $config = array_merge(
-                        $this->getGlobalConfig($srcRoot),
-                        $tmpl->getConfig()
-                    );
-                    $tmpl->setConfig($config);
+        $template->setSrc($file);
+        $template->setDataRoot($srcRoot);
+        $template->setDestRoot($destRoot);
+        $template->setDestDir($destRoot);
+        $template->setDestFile($destFile = $destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
 
-                    $destFile->getParent()->mkdir();
+        $config = array_merge(
+            $this->getGlobalConfig($srcRoot),
+            $template->getConfig()
+        );
+        $template->setConfig($config);
 
-                    return $processor->createProcessor($tmpl)($filesystem)?->then(fn () => $tmpl);
-                }
-            );
-        };
+        $destFile->getParent()->mkdir();
+        $data = [];
+
+        $event = $this->pluginRegistry->emit(
+            BeforeProcessEvent::class,
+            compact('template', 'data')
+        );
+
+        if ($event->isSkip()) {
+            return $template;
+        }
+
+        $destFile = $processor->process($template = $event->getTemplate(), $data = $event->getData());
+
+        $event = $this->pluginRegistry->emit(
+            BeforeProcessEvent::class,
+            compact('template', 'data', 'destFile')
+        );
+
+        return $event->getTemplate();
     }
 
     public function parseTemplateString(string $template): Template

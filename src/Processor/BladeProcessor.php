@@ -17,6 +17,7 @@ use App\Web\GlobalVariables;
 use React\Filesystem\Filesystem;
 use Windwalker\Edge\Edge;
 use Windwalker\Edge\Exception\EdgeException;
+use Windwalker\Filesystem\FileObject;
 
 /**
  * The BladeProcessor class.
@@ -27,24 +28,22 @@ class BladeProcessor implements ProcessorInterface, ConfigurableProcessorInterfa
     {
     }
 
-    public function createProcessor(Template $template, array $data = []): \Closure
+    public function process(Template $template, array $data = []): FileObject
     {
-        return function (Filesystem $filesystem) use ($data, $template) {
-            try {
-                $content = $this->render($template, $data);
-            } catch (EdgeException $e) {
-                throw new EdgeException(
-                    "Error when render: {$template->getSrc()->getPathname()} - " .
-                    $e->getMessage(),
-                    $e->getCode(),
-                    $e->getFile(),
-                    $e->getLine(),
-                    $e
-                );
-            }
+        try {
+            $content = $this->render($template, $data);
+        } catch (EdgeException $e) {
+            throw new EdgeException(
+                "Error when render: {$template->getSrc()->getPathname()} - " .
+                $e->getMessage(),
+                $e->getCode(),
+                $e->getFile(),
+                $e->getLine(),
+                $e
+            );
+        }
 
-            return $filesystem->file((string) $template->getDestFile())->putContents($content);
-        };
+        return $template->getDestFile()->write($content);
     }
 
     /**

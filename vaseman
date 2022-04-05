@@ -7,6 +7,7 @@
  * @license    GNU General Public License version 2 or later.
  */
 
+use Composer\Autoload\ClassLoader;
 use Windwalker\Core\Console\ConsoleApplication;
 use Windwalker\Core\Runtime\Runtime;
 
@@ -16,7 +17,7 @@ if (!is_file($autoload)) {
     $autoload = __DIR__ . '/../../autoload.php';
 }
 
-require $autoload;
+$loader = require $autoload;
 
 include_once __DIR__ . '/etc/define.php';
 
@@ -26,6 +27,7 @@ Runtime::boot(WINDWALKER_ROOT, __DIR__);
 Runtime::loadConfig(Runtime::getRootDir() . '/etc/runtime.php');
 
 $container = Runtime::getContainer();
+$container->share(ClassLoader::class, $loader);
 
 /** @var ConsoleApplication $console */
 $console = $container->resolve('factories.console');
