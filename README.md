@@ -15,4 +15,6 @@ Use Vaseman as static page generator.
 composer global require asika/vaseman
 ```
 
-Docs WIP...
+## Docs
+
+See [Documentation](https://github.com/asika32764/vaseman)

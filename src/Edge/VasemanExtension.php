@@ -23,6 +23,16 @@ class VasemanExtension implements DirectivesExtensionInterface
         return [
             'markdown' => [$this, 'markdown'],
             'endmarkdown' => [$this, 'endmarkdown'],
+            'dump' => function ($data) {
+                return print_r($data, true);
+            },
+            'shown' => function (...$args) {
+                ob_start();
+
+                show(...$args);
+
+                return ob_get_clean();
+            }
         ];
     }
 
