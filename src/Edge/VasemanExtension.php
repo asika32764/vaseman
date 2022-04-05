@@ -28,7 +28,7 @@ class VasemanExtension implements DirectivesExtensionInterface
                 return "<?php echo print_r({$expression}, true); ?>";
             },
             'shown' => function ($expression) {
-                return "<?php ob_start(); show{$expression}; echo ob_get_clean(); ?>";
+                return "<?php echo \App\Debug\Dumper::show{$expression} ?>";
             }
         ];
     }
