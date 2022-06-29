@@ -13,6 +13,7 @@ namespace App\Service;
 
 use App\Data\ConvertResult;
 use App\Data\Template;
+use App\Event\AfterProcessEvent;
 use App\Event\BeforeProcessEvent;
 use App\Exception\NoConfigException;
 use App\Plugin\PluginRegistry;
@@ -80,7 +81,7 @@ class LayoutService
         $destFile = $processor->process($template = $event->getTemplate(), $data = $event->getData());
 
         $event = $this->pluginRegistry->emit(
-            BeforeProcessEvent::class,
+            AfterProcessEvent::class,
             compact('template', 'data', 'destFile')
         );
 
