@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Data\Template;
+use App\Event\AfterProcessEvent;
 use App\Event\BeforeProcessEvent;
 use App\Plugin\PluginRegistry;
 use App\Service\LayoutService;
@@ -238,7 +239,7 @@ class UpCommand implements CommandInterface
                         $io->writeln('[<info>Copy</info>]: ' . $destFile->getRelativePathname($root));
 
                         $event = $this->pluginRegistry->emit(
-                            BeforeProcessEvent::class,
+                            AfterProcessEvent::class,
                             compact('template', 'destFile')
                         );
                     }
