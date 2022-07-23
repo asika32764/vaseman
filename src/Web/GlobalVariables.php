@@ -33,6 +33,9 @@ class GlobalVariables
         $uri = SystemUri::create($template);
         $asset = new AssetService($uri);
         $config = $template->getConfig();
+
+        $config = $this->prepareAssets($config, $asset);
+
         $route = $uri->route;
         $helper = $this->app->make(
             HelperSet::class,
@@ -51,5 +54,28 @@ class GlobalVariables
         );
 
         return $event->getData();
+    }
+
+    /**
+     * @param array        $config
+     * @param AssetService $asset
+     *
+     * @return  array
+     */
+    protected function prepareAssets(array $config, AssetService $asset): array
+    {
+        if (isset($config['assets']['append_version'])) {
+            $asset->appendVersion = (bool) $config['assets']['append_version'];
+        }
+
+        if (isset($config['assets']['version'])) {
+            $asset->v = (string) $config['assets']['version'];
+        }
+
+        if (isset($config['assets']['folder'])) {
+            $asset->assetsFolder = (string) $config['assets']['folder'];
+        }
+
+        return $config;
     }
 }

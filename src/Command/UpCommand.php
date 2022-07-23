@@ -16,6 +16,7 @@ use App\Event\AfterProcessEvent;
 use App\Event\BeforeProcessEvent;
 use App\Plugin\PluginRegistry;
 use App\Service\LayoutService;
+use App\Web\AssetService;
 use Composer\Autoload\ClassLoader;
 use FilesystemIterator;
 use React\EventLoop\Loop;
@@ -85,6 +86,14 @@ class UpCommand implements CommandInterface
         );
 
         $command->addOption(
+            'asset-version',
+            'a',
+            InputOption::VALUE_OPTIONAL,
+            'Append version suffix to assets path.',
+            false
+        );
+
+        $command->addOption(
             'strict',
             's',
             InputOption::VALUE_NONE,
@@ -131,8 +140,6 @@ class UpCommand implements CommandInterface
             $dataRoot = $root->appendPath('/.vaseman');
         }
 
-        $configFile = $dataRoot->appendPath('/config.php');
-
         define('PROJECT_ROOT', $root->getPathname());
         define('PROJECT_DATA_ROOT', $dataRoot->getPathname());
 
@@ -155,13 +162,25 @@ class UpCommand implements CommandInterface
         $loader = $this->app->service(ClassLoader::class);
         $loader->addPsr4('App\\', $dataRoot . '/src/');
 
-        $config = include $configFile->getPathname();
+        $config = $this->layoutService->fetchGlobalConfig($dataRoot);
+
+        // Assets
+        $av = $io->getOption('asset-version');
+
+        if ($av !== false) {
+            $config['assets']['append_version'] = true;
+
+            if ($av !== null) {
+                $config['assets']['version'] = $av;
+            }
+        }
+
+        $this->layoutService->setGlobalConfig($config);
 
         // Convert
         $folders = $config['folders'] ?? [];
 
-        $config = $this->layoutService->getGlobalConfig($dataRoot);
-
+        // Plugins
         foreach ($config['plugins'] ?? [] as $plugin) {
             $this->pluginRegistry->add($plugin);
         }

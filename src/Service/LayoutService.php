@@ -61,7 +61,7 @@ class LayoutService
         $template->setDestFile($destFile = $destRoot->appendPath(DIRECTORY_SEPARATOR . $file->getRelativePathname()));
 
         $config = array_merge(
-            $this->getGlobalConfig($srcRoot),
+            $this->getGlobalConfig(),
             $template->getConfig()
         );
         $template->setConfig($config);
@@ -137,19 +137,31 @@ class LayoutService
         return str_repeat('../', count($path));
     }
 
-    public function getGlobalConfig(FileObject $srcRoot): array
+    public function fetchGlobalConfig(FileObject $dataRoot): array
     {
         return $this->once(
             'config',
-            function () use ($srcRoot) {
+            function () use ($dataRoot) {
                 $config = [];
 
-                if (is_file($srcRoot . '/config.php')) {
-                    $config = include $srcRoot . '/config.php';
+                $configFile = $dataRoot->appendPath('/config.php');
+
+                if ($configFile->isFile()) {
+                    $config = include $configFile->getPathname();
                 }
 
                 return (array) $config;
             }
         );
+    }
+
+    public function getGlobalConfig(): array
+    {
+        return $this->cacheGet('config') ?? [];
+    }
+
+    public function setGlobalConfig(array $config): mixed
+    {
+        return $this->cacheSet('config', $config);
     }
 }

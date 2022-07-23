@@ -22,6 +22,10 @@ class AssetService
 {
     public string $v = '';
 
+    public bool $appendVersion = false;
+
+    public string $assetsFolder = 'assets';
+
     public function __construct(protected SystemUri $uri)
     {
         $this->v = uid();
@@ -29,12 +33,12 @@ class AssetService
 
     public function path(string $suffix = '', bool $v = true): string
     {
-        if ($suffix === '') {
+        if ($suffix === '' || !$this->appendVersion) {
             $v = false;
         }
 
         $suffix = ltrim($suffix, '/');
-        $suffix = 'assets/' . $suffix;
+        $suffix = $this->assetsFolder . '/' . $suffix;
 
         if ($v) {
             if (str_contains($suffix, '?')) {
