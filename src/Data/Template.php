@@ -35,6 +35,8 @@ class Template extends ValueObject
 
     public string $permalink = '';
 
+    public bool $skip = false;
+
     /**
      * @return string
      */
@@ -191,6 +193,26 @@ class Template extends ValueObject
     public function setDataRoot(FileObject $dataRoot): static
     {
         $this->dataRoot = $dataRoot;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSkip(): bool
+    {
+        return $this->skip;
+    }
+
+    /**
+     * @param bool $skip
+     *
+     * @return  static  Return self to support chaining.
+     */
+    public function setSkip(bool $skip): static
+    {
+        $this->skip = $skip;
 
         return $this;
     }

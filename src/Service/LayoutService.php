@@ -75,6 +75,7 @@ class LayoutService
         );
 
         if ($event->isSkip()) {
+            $template->setSkip(true);
             return $template;
         }
 

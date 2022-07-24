@@ -43,6 +43,13 @@ use function Windwalker\fs;
 )]
 class UpCommand implements CommandInterface
 {
+    protected int $totalCount = 0;
+
+    /**
+     * @var array<int>
+     */
+    protected array $counters = [];
+
     public function __construct(
         protected ConsoleApplication $app,
         protected LayoutService $layoutService,
@@ -199,9 +206,15 @@ class UpCommand implements CommandInterface
 
                 $tmpl = $this->layoutService->handle($file, $dataRoot, $destFolder);
 
+                if ($tmpl->isSkip()) {
+                    continue;
+                }
+
                 $io->writeln(
                     '[<info>Rendered</info>]: ' . $tmpl->getDestFile()->getRelativePathname($root)
                 );
+
+                $this->addCounter($tmpl->getDestFile()->getExtension());
             }
         }
 
@@ -261,6 +274,8 @@ class UpCommand implements CommandInterface
                             AfterProcessEvent::class,
                             compact('template', 'destFile')
                         );
+
+                        $this->addCounter($destFile->getExtension());
                     }
                 }
             } else {
@@ -269,13 +284,30 @@ class UpCommand implements CommandInterface
                 Filesystem::symlink($dataRoot . '/' . $srcFolder, $destFolder->getPathname());
 
                 $io->writeln('[<info>Link</info>]: ' . $destFolder->getRelativePathname($root));
+
+                $this->addCounter('link');
             }
         }
 
         $io->newLine();
 
-        // $io->style()->success('Generate Completed.');
+        $io->style()->success('Generate Completed.');
+        $io->writeln('Total files: ' . $this->totalCount);
+        $io->writeln('File types:');
+
+        foreach ($this->counters as $type => $count) {
+            $io->writeln("- [$type]: $count");
+        }
 
         return 0;
+    }
+
+    public function addCounter(string $type, int $num = 1): void
+    {
+        $this->totalCount += $num;
+
+        $this->counters[$type] ??= 0;
+
+        $this->counters[$type] += $num;
     }
 }
