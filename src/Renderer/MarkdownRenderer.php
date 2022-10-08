@@ -61,6 +61,10 @@ class MarkdownRenderer
     {
         $markdown = new \ParsedownExtra();
 
-        return $markdown->text($text);
+        try {
+            return $markdown->text($text);
+        } catch (\Throwable $e) {
+            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 }
