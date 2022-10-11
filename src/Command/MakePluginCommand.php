@@ -100,7 +100,7 @@ use Windwalker\Event\Attributes\EventSubscriber;
 use Windwalker\Event\Attributes\ListenTo;
 
 #[EventSubscriber]
-class PackagingPlugin
+class {$className}Plugin
 {
     use DataLoaderTrait;
 

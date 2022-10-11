@@ -204,7 +204,15 @@ class UpCommand implements CommandInterface
             foreach ($files as $file) {
                 // $io->writeln('[<comment>Prepare</comment>]: ' . $file->getRelativePathname());
 
-                $tmpl = $this->layoutService->handle($file, $dataRoot, $destFolder);
+                try {
+                    $tmpl = $this->layoutService->handle($file, $dataRoot, $destFolder);
+                } catch (\Throwable $e) {
+                    throw new \RuntimeException(
+                        "Error when handling file: {$file->getRelativePathname()} - {$e->getMessage()}",
+                        $e->getCode(),
+                        $e
+                    );
+                }
 
                 if ($tmpl->isSkip()) {
                     continue;
