@@ -19,8 +19,8 @@
         "windwalker/dom": "^4.0",
         "windwalker/edge": "^4.0",
         "asika/cross-env": "^1.0",
-        "symfony/yaml": "^5.4",
-        "symfony/var-dumper": "^5.4",
+        "symfony/yaml": "^5.4||^6.0||^7.0",
+        "symfony/var-dumper": "^5.4||^6.0||^7.0",
         "erusev/parsedown": "^1.7@stable",
         "erusev/parsedown-extra": "^0.8"
     },
